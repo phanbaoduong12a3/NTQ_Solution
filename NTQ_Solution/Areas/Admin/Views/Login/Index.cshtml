@@ -46,54 +46,29 @@
                                         @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                         <form class="user">
                                             <div class="form-group">
-                                                @Html.DisplayName("Email")
+                                                @Html.DisplayNameFor(model => model.Email)
                                                 @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus" })
                                             </div>
                                             <div class="form-group">
-                                                @Html.DisplayName("Password")
+                                                @Html.DisplayNameFor(model => model.Password)
                                                 @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
                                             </div>
-                                            <div class="form-group">
-                                                <div class="custom-control custom-checkbox small">
-                                                    @Html.CheckBoxFor(model => model.RememberMe)
-                                                    <lable for="customCheck">
-                                                        Remember
-                                                        Me
-                                                    </lable>
-                                                </div>
-                                            </div>
+                                            
 
 
                                             <button type="submit" class="btn btn-primary btn-user btn-block">
                                                 Login
                                             </button>
                                             <hr>
-                                            @*<a href="index.html" class="btn btn-google btn-user btn-block">
-                                                <i class="fab fa-google fa-fw"></i> Login with Google
-                                            </a>
-                                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                                <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                            </a>*@
+                                            
                                         </form>
                                         <hr>
-                                        @*<div class="text-center">
-                                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                        </div>*@
+                                        
                                         <div class="text-center">
-                                            <a class="small" href="register.html">Create an Account!</a>
+                                            <li>@Html.ActionLink("Register?", "Index", "Register", new { area = "Admin" }, new { @class = "nav-link" })</li>
                                         </div>
                                     }
-
-                                    @*<hr>
-                                        <div class="text-center">
-                                            <a class="small" href="forgot-password.html">Forgot Password?</a>
-                                        </div>
-                                        <div class="text-center">
-                                            <a class="small" href="register.html">Create an Account!</a>
-                                        </div>*@
                                 </div>
-                            @*</div>*@
-                       @* </div>*@
                     </div>
                 </div>
 

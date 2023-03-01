@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeAdminController : BaseController
     {
         // GET: Admin/Home
         public ActionResult Index()

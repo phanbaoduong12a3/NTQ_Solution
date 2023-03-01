@@ -32,7 +32,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Session.Add(CommonConstant.USER_SESSION, userSession);
                     if (user.Role == 1)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "HomeAdmin");
                     }
                     else
                     {
@@ -41,7 +41,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 else if(result == 0)
                 {
-                    ModelState.AddModelError("", "Tài sản không tồn tại, sai email");
+                    ModelState.AddModelError("", "Không tìm thấy Email");
                 }
                 else if (result == -1)
                 {
