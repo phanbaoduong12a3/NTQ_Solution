@@ -22,7 +22,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             if(ModelState.IsValid)
             {
                 var dao = new UserDao();
-                int result = dao.Register(registerModel.UserName, registerModel.Email);
+                int result = dao.CheckUser(registerModel.UserName, registerModel.Email);
                 if(result == 1)
                 {
                     var user = new User

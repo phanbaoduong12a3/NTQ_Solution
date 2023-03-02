@@ -1,0 +1,92 @@
+﻿@model PagedList.IPagedList<DataLayer.EF.User>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+@section header{
+    Danh sách người dùng
+}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("Index", "User", FormMethod.Get))
+                    {
+
+
+
+                        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group" style="margin-top:20px;margin-bottom:20px">
+
+                                <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="search" name="searchString"
+                                       aria-label="Search" aria-describedby="basic-addon2" style="margin-right:5px">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+
+                                </div>
+
+
+
+                            </div>
+
+                        </form>
+
+                    }
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>UserName</th>
+                                    <th>Email</th>
+                                    <th>CreateAt</th>
+                                    <th>UpdateAt</th>
+                                    <th>Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr id="row_@item.ID">
+
+
+                                        <td>@item.UserName</td>
+                                        <td>@item.Email</td>
+                                        <td>@item.Create_at</td>
+                                        <td>@item.Update_at</td>
+                                        <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Status == 1 ? "Chưa xóa" : "Xóa")</a></td>
+                                        <td>
+                                            <a style="text-decoration:none" href="/Admin/User/Edit/@item.ID">Edit</a>
+                                            @Ajax.ActionLink("Xoá", "Delete", new { id = item.ID }, new AjaxOptions
+                                       {
+                                           Confirm = "Bạn có muốn xoá bản ghi này?",
+                                           OnComplete = "$('#row_" + item.ID + "').remove()",
+                                           HttpMethod = "Delete"
+                                       })
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+                    </div>
+
+
+                    <div class="input-group-append">
+                        <a class="btn btn-primary" href="/Admin/User/CreateUser">Create User</a>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

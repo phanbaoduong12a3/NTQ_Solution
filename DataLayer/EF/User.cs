@@ -2,6 +2,7 @@ namespace DataLayer.EF
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
@@ -11,14 +12,19 @@ namespace DataLayer.EF
         public int ID { get; set; }
 
         [StringLength(50)]
+        [DisplayName("Username")]
         public string UserName { get; set; }
 
         [StringLength(50)]
+
+        [DisplayName("PassWord")]
         public string PassWord { get; set; }
 
         public int? Role { get; set; }
 
         [StringLength(50)]
+
+        [DisplayName("Email")]
         public string Email { get; set; }
 
         public int? Status { get; set; }

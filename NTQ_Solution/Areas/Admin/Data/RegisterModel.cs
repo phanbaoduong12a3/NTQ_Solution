@@ -16,14 +16,15 @@ namespace NTQ_Solution.Areas.Admin.Data
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Hãy nhập Password")]
-        //[RegularExpression(@"^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,20})", ErrorMessage = "{0} chỉ từ 8 đến 20 ký tự, bao gồm ..")]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$", ErrorMessage = "{0} chỉ từ 8 đến 20 ký tự, bao gồm chữ hoa,chữ thường,kí tự đặc biệt và số")]
         [DisplayName("Password")]
         public string Password { get; set; }
 
         [DisplayName("ConfirmPassword")]
         [Required(ErrorMessage = "Hãy nhập ConfirmPassword")]
         public string ConfirmPassword { get; set; }
-        [Required(ErrorMessage = "Hãy nhập Email")]
+
+        [Required(ErrorMessage = "Hãy nhập UserName")]
         [DisplayName("UserName")]
         public string UserName { get; set; }
     }

@@ -1,8 +1,10 @@
 ﻿using DataLayer.EF;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,8 +38,26 @@ namespace DataLayer.Dao
         {
             return db.Users.SingleOrDefault(x => x.Email == email);
         }
-
-        public int Register(string userName,string email)
+        /// <summary>
+        /// Tìm kiếm User theo UserName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public User GetByUserName(string userName)
+        {
+            return db.Users.SingleOrDefault(x => x.UserName == userName);
+        }
+        public User GetById(int id)
+        {
+            return db.Users.Find(id);
+        }
+        /// <summary>
+        /// Register
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public int CheckUser(string userName,string email)
         {
             var name = db.Users.SingleOrDefault(x=>x.UserName == userName);
             var mail = db.Users.SingleOrDefault(x => x.Email == email);
@@ -51,7 +71,7 @@ namespace DataLayer.Dao
             }
             else
             {
-                return -1; //trùng Email
+                return -1; //trùng mail
             }
 
         }
@@ -86,6 +106,47 @@ namespace DataLayer.Dao
                         return -2; //sai passWord
                     }
                 }
+            }
+        }
+        /// <summary>
+        /// Phân trang
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public IEnumerable<User> ListAllPaging(int page, int pageSize)
+        {
+            return db.Users.OrderBy(x=>x.Create_at).ToPagedList(page,pageSize);
+        }
+        /// <summary>
+        /// Update
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns></returns>
+        public bool Update(User entity)
+        {
+            try
+            {
+                var user = db.Users.Find(entity.ID);
+                if (user != null)
+                {
+                    user.UserName = entity.UserName;
+                    user.PassWord = entity.PassWord;
+                    user.Email = entity.Email;
+                    user.Update_at = DateTime.Now;
+                    db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                return false;
+                Console.WriteLine(ex.ToString());
             }
         }
 

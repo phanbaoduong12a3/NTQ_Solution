@@ -13,5 +13,9 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             return View();
         }
+        public ActionResult test()
+        {
+            return View();
+        }
     }
 }
