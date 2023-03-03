@@ -2,6 +2,7 @@
 using PagedList;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Security.Cryptography.X509Certificates;
@@ -114,16 +115,25 @@ namespace DataLayer.Dao
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<User> ListAllPaging(int page, int pageSize)
+        public IEnumerable<User> ListAllPaging(string searchString,int page, int pageSize)
         {
-            return db.Users.OrderBy(x=>x.Create_at).ToPagedList(page,pageSize);
+            IQueryable<User> model = db.Users;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                model = model.Where(x => x.UserName.Contains(searchString));
+                if(model == null)
+                {
+                    return null;
+                }
+            }
+            return model.OrderBy(x=>x.Create_at).ToPagedList(page,pageSize);
         }
         /// <summary>
         /// Update
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public bool Update(User entity)
+        public void Update(User entity)
         {
             try
             {
@@ -132,21 +142,29 @@ namespace DataLayer.Dao
                 {
                     user.UserName = entity.UserName;
                     user.PassWord = entity.PassWord;
-                    user.Email = entity.Email;
                     user.Update_at = DateTime.Now;
                     db.SaveChanges();
-                    return true;
                 }
-                else
-                {
-                    return false;
-                }
-                
             }
             catch(Exception ex)
             {
-                return false;
                 Console.WriteLine(ex.ToString());
+            }
+        }
+        public bool Delete(int id)
+        {
+            try
+            {
+                var user = db.Users.Find(id);
+                user.Status = 0;
+                user.Delete_at= DateTime.Now;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
             }
         }
 

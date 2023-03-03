@@ -27,5 +27,15 @@ namespace NTQ_Solution.Areas.Admin.Data
         [Required(ErrorMessage = "Hãy nhập UserName")]
         [DisplayName("UserName")]
         public string UserName { get; set; }
+
+        public int ID { get; set; }
+        public int? Role { get; set; }
+        public bool? Status { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Create_at { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Update_at { get; set; }
+        [DataType(DataType.Date)]
+        public DateTime? Delete_at { get; set; }
     }
 }

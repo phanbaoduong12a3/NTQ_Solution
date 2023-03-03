@@ -1,4 +1,5 @@
 ﻿using DataLayer.Dao;
+using DataLayer.EF;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Printing;
@@ -12,11 +13,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
     public class ListUserController : Controller
     {
         // GET: Admin/ListUser
-        public ActionResult Index(int page = 1, int pageSize = 1)
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 1)
         {
             var dao = new UserDao();
-            var model = dao.ListAllPaging(page, pageSize);
+            var model = dao.ListAllPaging(searchString, page, pageSize);
+            ViewBag.SearchString = searchString;
             return View(model);
         }
+        
     }
 }

@@ -28,11 +28,12 @@ namespace DataLayer.EF
         public string Email { get; set; }
 
         public int? Status { get; set; }
-
+        [DataType(DataType.Date)]
         public DateTime? Create_at { get; set; }
+        [DisplayFormat(DataFormatString = "{dd/mm/yyyy}")]
 
         public DateTime? Update_at { get; set; }
-
+        [DataType(DataType.Date)]
         public DateTime? Delete_at { get; set; }
     }
 }
