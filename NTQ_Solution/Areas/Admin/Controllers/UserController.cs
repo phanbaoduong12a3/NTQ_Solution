@@ -8,24 +8,43 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using Antlr.Runtime.Tree;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         // GET: Admin/User
-        public ActionResult Index(string searchString, int page = 1, int pageSize = 10)
+        /// <summary>
+        /// Home
+        /// </summary>
+        /// <param name="active"></param>
+        /// <param name="inActive"></param>
+        /// <param name="admin"></param>
+        /// <param name="user"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public ActionResult Index(string active,string inActive,string admin,string user,string searchString, int page = 1, int pageSize = 10)
         {
             var dao = new UserDao();
-            var model = dao.ListAllPaging(searchString, page,pageSize);
-            ViewBag.SearchString = searchString;
-            return View(model);
+            var model = dao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
+            return View(model); 
         }
+        
+        /// <summary>
+        /// Create User
+        /// </summary>
+        /// <returns></returns>
+        /// 
+
         [HttpGet]
         public ActionResult CreateUser()
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult CreateUser(RegisterModel registerModel)
         {
@@ -35,27 +54,30 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 {
                     var dao = new UserDao();
                     int result = dao.CheckUser(registerModel.UserName, registerModel.Email);
-                    if (result == 1)
+                    bool checkConfirmPassword = dao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    if (result == 1 && checkConfirmPassword)
                     {
                         var user = new User
                         {
                             UserName = registerModel.UserName,
-                            PassWord = Encryptor.MD5Hash(registerModel.Password),
+                            PassWord = registerModel.Password,
                             Email = registerModel.Email,
-                            Create_at = DateTime.Now,
+                            CreateAt = DateTime.Now,
                             Role = 0,
                             Status = 1
                         };
                         dao.Insert(user);
+                        SetAlert("Create New User Seccess", "success");
                         return RedirectToAction("Index", "ListUser");
                     }
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
                     else if (result == -1)
                     {
-                        ModelState.AddModelError("", "Email đã tồn tại");
+                        ModelState.AddModelError("", "Email is invalid");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "UserName đã tồn tại");
+                        ModelState.AddModelError("", "UserName is invalid");
                     }
                 }
                 return View("CreateUser");
@@ -66,6 +88,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Update User
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
         [HttpGet]
         public ActionResult Edit(int id)
         {
@@ -85,11 +114,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 UserName = temp.UserName,
                 Email = temp.Email,
                 Password = temp.PassWord,
-                Update_at = temp.Update_at
-                
+                UpdateAt = temp.UpdateAt,
+                Role =temp.Role,
+                Status=temp.Status
             };
             return View(user);
         }
+        
         [HttpPost]
         public ActionResult Edit(RegisterModel model)
         {
@@ -98,14 +129,28 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 if (ModelState.IsValid)
                 {
                     var dao = new UserDao();
-                    var user = new User
+                    bool checkUserName = dao.CheckUserName(model.UserName);
+                    bool checkEmail = dao.CheckEmail(model.Email);
+                    bool checkConfirmPassword = dao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
+                    var userOld = dao.GetById(model.ID);
+                    if(model.UserName == userOld.UserName && model.Email == userOld.Email && checkConfirmPassword)
                     {
-                        ID = model.ID,
-                        UserName = model.UserName,
-                        PassWord = Encryptor.MD5Hash(model.Password)
-                    };
-                    dao.Update(user);
-                    return RedirectToAction("Index", "ListUser");
+                        var user = new User
+                        {
+                            ID = model.ID,
+                            Email = model.Email,
+                            UserName = model.UserName,
+                            PassWord = model.Password,
+                            Role = model.Role,
+                            Status = model.Status
+                        };
+                        dao.Update(user);
+                        SetAlert("Update Seccess", "success");
+                        return RedirectToAction("Index", "ListUser");
+                    }
+                    if(!checkEmail) { ModelState.AddModelError("", "Email is invalid"); }
+                    if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
                 }
                 return View("Edit");
             }
@@ -114,9 +159,16 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 throw;
             }
         }
+
+        /// <summary>
+        /// Delete User
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(int id)
         {
             new UserDao().Delete(id);
+            SetAlert("Delete User Seccess", "success");
             return RedirectToAction("Index");
         }
 

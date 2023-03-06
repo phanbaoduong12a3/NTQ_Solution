@@ -23,27 +23,29 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 var dao = new UserDao();
                 int result = dao.CheckUser(registerModel.UserName, registerModel.Email);
-                if(result == 1)
+                bool checkConfirmPassword = dao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                if (result == 1)
                 {
                     var user = new User
                     {
                         UserName = registerModel.UserName,
-                        PassWord = Encryptor.MD5Hash(registerModel.Password),
+                        PassWord =registerModel.Password,
                         Email = registerModel.Email,
-                        Create_at = DateTime.Now,
+                        CreateAt = DateTime.Now,
                         Role = 0,
                         Status=1
                     };
                     dao.Insert(user);
                     return RedirectToAction("Index","Login");
                 }
+                if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
                 else if(result == -1) 
                 {
-                    ModelState.AddModelError("", "Email đã tồn tại");
+                    ModelState.AddModelError("", "Email is invalid");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "UserName đã tồn tại");
+                    ModelState.AddModelError("", "UserName is invalid");
                 }
             }
             return View("Index");

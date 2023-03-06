@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.Dao;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,14 @@ namespace NTQ_Solution.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            var dao = new ProductDao();
+            var model = dao.GetAllProduct();
+            return View(model);
+        }
+        public ActionResult Detail(int id)
+        {
+            var product = new ProductDao().ViewDetail(id);
+            return View(product);
         }
     }
 }

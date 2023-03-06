@@ -14,10 +14,12 @@ namespace DataLayer.EF
         public int? ProductsID { get; set; }
 
         [StringLength(50)]
-        public string Path { get; set; }
+        public string Image { get; set; }
 
-        public DateTime? Create_at { get; set; }
+        public DateTime? CreateAt { get; set; }
 
-        public DateTime? Update_at { get; set; }
+        public DateTime? UpdateAt { get; set; }
+
+        public DateTime? DeleteAt { get; set; }
     }
 }

@@ -30,12 +30,9 @@ namespace NTQ_Solution.Areas.Admin.Data
 
         public int ID { get; set; }
         public int? Role { get; set; }
-        public bool? Status { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? Create_at { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? Update_at { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime? Delete_at { get; set; }
+        public int? Status { get; set; }
+        public DateTime? CreateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
+        public DateTime? DeleteAt { get; set; }
     }
 }

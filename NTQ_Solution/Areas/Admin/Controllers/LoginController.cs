@@ -21,7 +21,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             if(ModelState.IsValid)
             {
                 var dao = new UserDao();
-                var result = dao.Login(model.Email, Encryptor.MD5Hash(model.Password));
+                var result = dao.Login(model.Email, model.Password);
                 if(result==1)
                 {
                     var user = dao.GetByEmail(model.Email);
@@ -32,7 +32,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Session.Add(CommonConstant.USER_SESSION, userSession);
                     if (user.Role == 1)
                     {
-                        return RedirectToAction("Index", "HomeAdmin");
+                        return RedirectToAction("Index", "MyProfile");
                     }
                     else
                     {
@@ -41,19 +41,19 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 else if(result == 0)
                 {
-                    ModelState.AddModelError("", "Không tìm thấy Email");
+                    ModelState.AddModelError("", "Don't see Email");
                 }
                 else if (result == -1)
                 {
-                    ModelState.AddModelError("", "Tài sản bị xóa");
+                    ModelState.AddModelError("", "Account is InActive");
                 }
                 else if (result == -2)
                 {
-                    ModelState.AddModelError("", "Mật khẩu không đúng");
+                    ModelState.AddModelError("", "Password is incorect");
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Đăng nhập không đúng");
+                    ModelState.AddModelError("", "login fail");
                 }
             }
             return View("Index");

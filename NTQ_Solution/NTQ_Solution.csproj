@@ -46,6 +46,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CKFinder, Version=2.6.0.2792, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\Web Bán Hàng\OnlineShop\OnlineShop\assests\admin\js\plugins\ckfinder\bin\Debug\CKFinder.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -139,6 +143,8 @@
     <Compile Include="Areas\Admin\Controllers\HomeUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\LoginController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MyProfileController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisterController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Data\LoginModel.cs" />
@@ -2915,6 +2921,69 @@
     <Content Include="assests\admin\vendor\jquery\jquery.min.js" />
     <Content Include="assests\admin\vendor\jquery\jquery.slim.js" />
     <Content Include="assests\admin\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="assests\client\css\easy-responsive-tabs.css" />
+    <Content Include="assests\client\css\global.css" />
+    <Content Include="assests\client\css\slider.css" />
+    <Content Include="assests\client\css\style.css" />
+    <Content Include="assests\client\images\about_img.jpg" />
+    <Content Include="assests\client\images\arrow-next.png" />
+    <Content Include="assests\client\images\arrow-prev.png" />
+    <Content Include="assests\client\images\arrow_up.png" />
+    <Content Include="assests\client\images\compare.png" />
+    <Content Include="assests\client\images\delivery-img1.jpg" />
+    <Content Include="assests\client\images\delivery-img2.jpg" />
+    <Content Include="assests\client\images\delivery-img3.jpg" />
+    <Content Include="assests\client\images\dribbble.png" />
+    <Content Include="assests\client\images\drop_arrow-hover.png" />
+    <Content Include="assests\client\images\drop_arrow.png" />
+    <Content Include="assests\client\images\facebook.png" />
+    <Content Include="assests\client\images\feature-pic1.jpg" />
+    <Content Include="assests\client\images\feature-pic2.jpg" />
+    <Content Include="assests\client\images\feature-pic3.jpg" />
+    <Content Include="assests\client\images\feature-pic4.jpg" />
+    <Content Include="assests\client\images\linkedin.png" />
+    <Content Include="assests\client\images\list-img.png" />
+    <Content Include="assests\client\images\logo.png" />
+    <Content Include="assests\client\images\new-pic1.jpg" />
+    <Content Include="assests\client\images\new-pic2.jpg" />
+    <Content Include="assests\client\images\new-pic3.jpg" />
+    <Content Include="assests\client\images\new-pic4.jpg" />
+    <Content Include="assests\client\images\newsimg1.jpg" />
+    <Content Include="assests\client\images\newsimg2.jpg" />
+    <Content Include="assests\client\images\newsimg3.jpg" />
+    <Content Include="assests\client\images\preview.jpg" />
+    <Content Include="assests\client\images\price-rating.png" />
+    <Content Include="assests\client\images\productslide-1.jpg" />
+    <Content Include="assests\client\images\productslide-2.jpg" />
+    <Content Include="assests\client\images\productslide-3.jpg" />
+    <Content Include="assests\client\images\productslide-4.jpg" />
+    <Content Include="assests\client\images\productslide-5.jpg" />
+    <Content Include="assests\client\images\productslide-6.jpg" />
+    <Content Include="assests\client\images\quality-rating.png" />
+    <Content Include="assests\client\images\search.png" />
+    <Content Include="assests\client\images\skype.png" />
+    <Content Include="assests\client\images\slide-1-image.png" />
+    <Content Include="assests\client\images\slide-2-image.jpg" />
+    <Content Include="assests\client\images\slide-3-image.jpg" />
+    <Content Include="assests\client\images\tag.png" />
+    <Content Include="assests\client\images\thumbnailslide-1.jpg" />
+    <Content Include="assests\client\images\thumbnailslide-2.jpg" />
+    <Content Include="assests\client\images\thumbnailslide-3.jpg" />
+    <Content Include="assests\client\images\thumbnailslide-4.jpg" />
+    <Content Include="assests\client\images\thumbnailslide-5.jpg" />
+    <Content Include="assests\client\images\thumbnailslide-6.jpg" />
+    <Content Include="assests\client\images\twitter.png" />
+    <Content Include="assests\client\images\value-rating.png" />
+    <Content Include="assests\client\images\wishlist.png" />
+    <Content Include="assests\client\js\easing.js" />
+    <Content Include="assests\client\js\easyResponsiveTabs.js" />
+    <Content Include="assests\client\js\jquery-1.7.2.min.js" />
+    <Content Include="assests\client\js\jquery.accordion.js" />
+    <Content Include="assests\client\js\jquery.easing.js" />
+    <Content Include="assests\client\js\move-top.js" />
+    <Content Include="assests\client\js\script.js" />
+    <Content Include="assests\client\js\slides.min.jquery.js" />
+    <Content Include="assests\client\js\startstop-slider.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -3144,10 +3213,15 @@
     <Content Include="Areas\Admin\Views\Shared\_Layouts.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\ListUser\Index.cshtml" />
     <Content Include="Areas\Admin\Views\HomeAdmin\test.cshtml" />
     <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ListUser\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
+    <Content Include="assests\client\font\Amble-Regular-webfont.ttf" />
+    <Content Include="assests\client\images\Thumbs.db" />
+    <Content Include="Areas\Admin\Views\MyProfile\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3169,14 +3243,14 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="DataImage\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

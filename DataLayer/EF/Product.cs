@@ -27,12 +27,15 @@ namespace DataLayer.EF
         public double? Price { get; set; }
 
         [StringLength(50)]
-        public string MetaKey { get; set; }
+        public string Image { get; set; }
 
-        public DateTime? Create_at { get; set; }
+        public DateTime? CreateAt { get; set; }
 
-        public DateTime? Update_at { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
-        public DateTime? Delete_at { get; set; }
+        public DateTime? DeleteAt { get; set; }
+
+        [StringLength(50)]
+        public string ProductName { get; set; }
     }
 }

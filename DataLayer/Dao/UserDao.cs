@@ -13,10 +13,10 @@ namespace DataLayer.Dao
 {
     public class UserDao
     {
-        NTQDbContext db = null;
+        NTQDBContext db = null;
         public UserDao()
         {
-            db=new NTQDbContext();
+            db=new NTQDBContext();
         }
 
         /// <summary>
@@ -30,6 +30,7 @@ namespace DataLayer.Dao
             db.SaveChanges();
             return entity.ID;
         }
+
         /// <summary>
         /// Tìm kiếm User theo Email
         /// </summary>
@@ -39,6 +40,7 @@ namespace DataLayer.Dao
         {
             return db.Users.SingleOrDefault(x => x.Email == email);
         }
+
         /// <summary>
         /// Tìm kiếm User theo UserName
         /// </summary>
@@ -48,12 +50,68 @@ namespace DataLayer.Dao
         {
             return db.Users.SingleOrDefault(x => x.UserName == userName);
         }
+
+        /// <summary>
+        /// Search by ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public User GetById(int id)
         {
             return db.Users.Find(id);
         }
+
         /// <summary>
-        /// Register
+        /// Check Status
+        /// </summary>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public IEnumerable<User> CheckStatus(int status)
+        {
+            IQueryable<User> model = db.Users;
+            if (status == 0) return model.OrderByDescending(x => x.CreateAt).Where(x=>x.Status == 0);
+            return model.OrderByDescending(x=>x.CreateAt).Where(y=>y.Status == 1);
+
+        }
+
+        /// <summary>
+        /// Check ConfirmPassword
+        /// </summary>
+        /// <param name="confirmPassword"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public bool CheckConfirmPassword(string confirmPassword, string password)
+        {
+            if (confirmPassword == password) return true;
+            return false;
+        }
+        
+        /// <summary>
+        /// Check UserName
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <returns></returns>
+        public bool CheckUserName(string userName)
+        {
+            var name = db.Users.SingleOrDefault(x => x.UserName == userName);
+            if (name == null) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Check Email
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
+        public bool CheckEmail(string email)
+        {
+            var user = db.Users.SingleOrDefault(x => x.Email == email);
+            if (user == null) return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Check User 
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="email"></param>
@@ -109,25 +167,44 @@ namespace DataLayer.Dao
                 }
             }
         }
+
         /// <summary>
         /// Phân trang
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<User> ListAllPaging(string searchString,int page, int pageSize)
+        public IEnumerable<User> ListAllPaging(string active,string inActive,string admin,string user, string searchString,int page, int pageSize)
         {
             IQueryable<User> model = db.Users;
-            if (!string.IsNullOrEmpty(searchString))
+            if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(active) || !string.IsNullOrEmpty(inActive) || !string.IsNullOrEmpty(admin) || !string.IsNullOrEmpty(user) )
             {
                 model = model.Where(x => x.UserName.Contains(searchString));
-                if(model == null)
+                if(active != null)
+                {
+                    model = model.Where(x => x.Status == 1);
+                }
+                if(inActive != null)
+                {
+                    model = model.Where(x => x.Status == 0);
+                }
+                if(admin != null)
+                {
+                    model = model.Where(x => x.Role == 1);
+                }
+                if(user != null)
+                {
+                    model = model.Where(x => x.Role == 0);
+                }
+                if (model == null)
                 {
                     return null;
                 }
+                return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
-            return model.OrderBy(x=>x.Create_at).ToPagedList(page,pageSize);
+            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
         }
+
         /// <summary>
         /// Update
         /// </summary>
@@ -142,7 +219,7 @@ namespace DataLayer.Dao
                 {
                     user.UserName = entity.UserName;
                     user.PassWord = entity.PassWord;
-                    user.Update_at = DateTime.Now;
+                    user.UpdateAt = DateTime.Now;
                     db.SaveChanges();
                 }
             }
@@ -151,13 +228,19 @@ namespace DataLayer.Dao
                 Console.WriteLine(ex.ToString());
             }
         }
+
+        /// <summary>
+        /// Delete
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public bool Delete(int id)
         {
             try
             {
                 var user = db.Users.Find(id);
                 user.Status = 0;
-                user.Delete_at= DateTime.Now;
+                user.DeleteAt= DateTime.Now;
                 db.SaveChanges();
                 return true;
             }

@@ -8,18 +8,12 @@
             var btn = $(this);
             var id =btn.data('id');
             $.ajax({
-                url: "/Admin/User/ChangeStatus",
+                url: "/Admin/User/Delete",
                 data: { id: id },
                 dataType: "json",
                 type:"POST",
-  
                 success: function (response) {
-                    if (response.status == true) {
-                        btn.text('Kích hoạt');
-                    }
-                    else {
-                        btn.text('Khoá');
-                    }
+                    alert("Delete secessfull");
                 }
             })
         });

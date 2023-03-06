@@ -5,10 +5,10 @@ using System.Linq;
 
 namespace DataLayer.EF
 {
-    public partial class NTQDbContext : DbContext
+    public partial class NTQDBContext : DbContext
     {
-        public NTQDbContext()
-            : base("name=NTQDbContext")
+        public NTQDBContext()
+            : base("name=NTQDBContext")
         {
         }
 

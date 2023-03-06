@@ -1,0 +1,70 @@
+﻿@model NTQ_Solution.Areas.Admin.Data.RegisterModel
+@{
+    ViewBag.Title = "Profile Admin";
+    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+}
+    <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+            <div class="col-lg-6" style="text-align:center;">
+                <img class="img-profile rounded-circle"
+                     src="~/assests/admin/img/undraw_profile.svg" width="400px" height="400px">
+                <div style="margin-top:20px">
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">@Model.UserName</h2>
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">@Model.Email</h2>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <div class="panel panel-default">
+                        <div class="card shadow mb-4">
+                            <div class="p-5">
+                                <div class="card-header py-3">
+                                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">My profile</h2>
+                                </div>
+                                @using (Html.BeginForm("Edit", "User", FormMethod.Post))
+                                {
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" });
+                                    <div class="form-group">
+
+                                        @Html.LabelFor(model => model.UserName, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Type your password" })
+                                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+
+                                        @Html.LabelFor(model => model.Password, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                        @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Type your Password" })
+                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+
+                                        @Html.LabelFor(model => model.ConfirmPassword, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control form-control-user", @placeholder = "Type your ConfirmPassword" })
+                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+
+                                        @Html.LabelFor(model => model.Email, new { htmlAttribute = new { @class = "form-control form-control-user" } })
+                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                    <div class="form-group">
+                                        Type : <span style="margin-left:30px"><h2>@(Model.Role == 1 ? "Admin" : "User")</h2></span>
+                                        @*@Html.TextBoxFor(model => model.Role, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })*@
+
+                                    </div>
+                                    <a class="btn btn-success" style="text-decoration:none" href="/Admin/User/Edit/@Model.ID"><i class="fa fa-edit">Update</i></a>
+                                    <hr>
+                                }
+                                <a style="background-color:#e74a3b;" class="btn btn-primary btn-user btn-block " @Html.ActionLink("Logout", "Index", "Login")
+                            </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+    </div>
