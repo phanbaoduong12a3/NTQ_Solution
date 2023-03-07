@@ -34,7 +34,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Session.Add(CommonConstant.USER_SESSION, userSession);
                     if (user.Role == 1)
                     {
-                        return RedirectToAction("Index", "MyProfile");
+                        return RedirectToAction("Profile", "MyProfile");
                     }
                     else
                     {

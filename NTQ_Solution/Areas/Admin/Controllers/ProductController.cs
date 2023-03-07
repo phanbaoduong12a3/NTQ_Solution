@@ -2,9 +2,6 @@
 using DataLayer.EF;
 using NTQ_Solution.Areas.Admin.Data;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
@@ -12,7 +9,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
     public class ProductController : BaseController
     {
         // GET: Admin/Product
-        public ActionResult Index(string trending, string searchString, int page=1, int pageSize=15)
+        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 15)
         {
             var dao = new ProductDao();
             var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
@@ -31,7 +28,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                if(ModelState.IsValid)
+                if (ModelState.IsValid)
                 {
                     var dao = new ProductDao();
                     bool trending;
@@ -45,7 +42,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         Status = 1,
                         NumberViews = 0,
                         Trending = trending,
-                        Price= productModel.Price,
+                        Price = productModel.Price,
                         Image = productModel.Image,
                         CreateAt = DateTime.Now
                     };
@@ -53,7 +50,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     SetAlert("Create New Product Seccess", "success");
                     return RedirectToAction("Index", "Product");
                 }
-                return View("CreateProduct");
+                return View(productModel);
             }
             catch (Exception)
             {

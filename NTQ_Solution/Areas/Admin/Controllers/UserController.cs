@@ -133,7 +133,9 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     bool checkEmail = dao.CheckEmail(model.Email);
                     bool checkConfirmPassword = dao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
                     var userOld = dao.GetById(model.ID);
-                    if(model.UserName == userOld.UserName && model.Email == userOld.Email && checkConfirmPassword)
+                    if(model.UserName == userOld.UserName) checkUserName = true;
+                    if(model.Email == userOld.Email) checkEmail = true;
+                    if (checkUserName && checkEmail && checkConfirmPassword)
                     {
                         var user = new User
                         {
@@ -152,7 +154,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };
                     if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
                 }
-                return View("Edit");
+                return View(model);
             }
             catch (Exception ex)
             {

@@ -11,8 +11,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class MyProfileController : BaseController
     {
-        // GET: Admin/MyProfile
         public ActionResult Index()
+        {
+            return View();
+        }
+        // GET: Admin/MyProfile
+        [HttpGet]
+        public ActionResult Profile()
         {
             var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
             var dao = new UserDao();
@@ -30,6 +35,46 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 DeleteAt = user.DeleteAt,
             };
             return View(result);
+        }
+        [HttpPost]
+        public ActionResult Profile(RegisterModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var dao = new UserDao();
+                    var result = dao.GetByEmail(model.Email);
+                    model.ID = result.ID;
+                    bool checkUserName ;
+                    bool checkConfirmPassword = dao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
+                    var userOld = dao.GetById(model.ID);
+                    if (model.UserName == userOld.UserName) checkUserName = true;
+                    else checkUserName = dao.CheckUserName(model.UserName);
+                    if (checkUserName  && checkConfirmPassword)
+                    {
+                        var user = new User
+                        {
+                            ID = model.ID,
+                            Email = model.Email,
+                            UserName = model.UserName,
+                            PassWord = model.Password,
+                            Role = model.Role,
+                            Status = model.Status
+                        };
+                        dao.Update(user);
+                        SetAlert("Update Seccess", "success");
+                        return RedirectToAction("Profile", "MyProfile");
+                    }
+                    if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "ConfirmPassword is not correct"); }
+                }
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
