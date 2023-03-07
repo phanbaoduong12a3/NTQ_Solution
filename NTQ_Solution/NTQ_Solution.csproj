@@ -48,7 +48,7 @@
   <ItemGroup>
     <Reference Include="CKFinder, Version=2.6.0.2792, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Web Bán Hàng\ckfinder\bin\Release\CKFinder.dll</HintPath>
+      <HintPath>..\..\ckfinder\bin\Release\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
@@ -804,19 +804,6 @@
     <Content Include="assests\admin\js\plugins\ckfinder\skins\v1\skin.js" />
     <Content Include="assests\admin\js\plugins\ckfinder\skins\v1\uipanel.css" />
     <Content Include="assests\admin\js\plugins\ckfinder\translations.txt" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\aspx\popup.aspx" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\aspx\popups.aspx" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\aspx\standalone.aspx" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\ckeditor.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\index.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\popup.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\popups.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\public_api.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\sample.css" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\skin_bootstrap.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\skin_v1.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\standalone.html" />
-    <Content Include="assests\admin\js\plugins\ckfinder\_samples\standalone_v1.html" />
     <Content Include="assests\admin\js\sb-admin-2.js" />
     <Content Include="assests\admin\js\sb-admin-2.min.js" />
     <Content Include="assests\admin\vendor\bootstrap\js\bootstrap.bundle.js" />
@@ -2750,13 +2737,11 @@
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\CreateProduct.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_LayoutUsers.cshtml" />
-    <Content Include="assests\admin\js\plugins\ckfinder\desktop.ini" />
     <Content Include="assests\admin\js\plugins\ckfinder\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="assests\admin\js\plugins\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="assests\admin\js\plugins\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="assests\admin\js\plugins\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="assests\admin\js\plugins\ckfinder\skins\bootstrap\assets\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="assests\admin\js\plugins\ckfinder\userfiles\.htaccess" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
