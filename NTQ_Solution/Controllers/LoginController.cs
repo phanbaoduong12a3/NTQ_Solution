@@ -4,27 +4,25 @@ using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.HtmlControls;
 
-namespace NTQ_Solution.Areas.Admin.Controllers
+namespace NTQ_Solution.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Admin/Login
+        // GET: Login
         public ActionResult Index()
         {
             return View();
         }
         public ActionResult Login(LoginModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 var dao = new UserDao();
                 var result = dao.Login(model.Email, model.Password);
-                if(result==1)
+                if (result == 1)
                 {
                     var user = dao.GetByEmail(model.Email);
                     var userSession = new UserLogin();
@@ -32,18 +30,18 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     userSession.Email = user.Email;
                     userSession.UserName = user.UserName;
                     Session.Add(CommonConstant.USER_SESSION, userSession);
-                    if (user.Role == 1)
+                    if (user.Role == 0)
                     {
-                        return RedirectToAction("Index", "MyProfile");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
                         var product = new ProductDao().GetAllProduct();
-                        return RedirectToAction("Index", "HomeUser");
+                        return View("~/Areas/Admin/Views/Login/Index");
 
                     }
                 }
-                else if(result == 0)
+                else if (result == 0)
                 {
                     ModelState.AddModelError("", "Don't see Email");
                 }

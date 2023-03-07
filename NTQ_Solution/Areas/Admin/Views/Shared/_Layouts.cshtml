@@ -74,7 +74,7 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/Admin/Product/Index">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Product</span>
+                    <span>List Product</span>
                 </a>
             </li>
 
@@ -151,15 +151,12 @@
                             </div>
                         </li>
                         <!-- Nav Item - Messages -->
-
-
                         <div class="topbar-divider d-none d-sm-block"></div>
-                       
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                 @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
+                                @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
                                 <img class="img-profile rounded-circle"
                                      src="~/assests/admin/img/undraw_profile.svg">
@@ -167,12 +164,12 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                  aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/Admin/Profile/Index">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     My Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="/Admin/Login/Index" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -180,7 +177,6 @@
                         </li>
 
                     </ul>
-
                 </nav>
                 <!-- End of Topbar -->
                 <!-- Begin Page Content -->
@@ -220,7 +216,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-    
+
     <!-- Bootstrap core JavaScript-->
     <script src="~/assests/admin/vendor/jquery/jquery.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -234,11 +230,12 @@
 
     <!-- Page level plugins -->
     <script src="~/assests/admin/vendor/chart.js/Chart.min.js"></script>
-    <script src="/assests/admin/js/plugins/ckfinder/ckfinder.js"></script>
     <!-- Page level custom scripts -->
     <script src="~/assests/admin/js/demo/chart-area-demo.js"></script>
     <script src="~/assests/admin/js/demo/chart-pie-demo.js"></script>
-    <script src="/assests/admin/js/sb-admin-2.js"></script>
+
+    <script src="~/assests/admin/js/plugins/ckfinder/ckfinder.js"></script>
+    <script src="~/assests/admin/js/sb-admin-2.js"></script>
     @RenderSection("jsFooter", required: false)
 </body>
 

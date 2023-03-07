@@ -1,0 +1,28 @@
+﻿@model List<DataLayer.ViewModel.ReviewModel>
+<div id="div_allreview">
+    @foreach (var itemcomment in Model)
+    {
+        if (itemcomment.ParentID == 0)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="comments-list">
+                        <div class="media">
+                            <p class="pull-right"><small>@(itemcomment.CreateAt == null ? "" : itemcomment.CreateAt.Value.ToString("dd/MM/yyyy"))</small></p>
+                            <a class="media-left" href="#">
+                                <img src="http://lorempixel.com/40/40/people/1/" />
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading user_name">@itemcomment.UserName</h4>
+                                @itemcomment.Title
+                                <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        }
+
+    }

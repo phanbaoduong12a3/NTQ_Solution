@@ -17,7 +17,7 @@ namespace NTQ_Solution
                 name: "Product Detail",
                 url: "chi-tiet/{slug}-{id}",
                 defaults: new {controller = "Home",action = "Detail", id = UrlParameter.Optional},
-                namespaces: new[] {"NTQ_Solution.Controllers"}
+                namespaces: new[] { "NTQ_Solution.Controllers" }
                 ) ;
 
             routes.MapRoute(

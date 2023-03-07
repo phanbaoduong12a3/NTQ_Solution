@@ -16,6 +16,13 @@ namespace DataLayer.Dao
             db = new NTQDBContext();
         }
 
+        public int Insert(Product product)
+        {
+            db.Products.Add(product);
+            db.SaveChanges();
+            return product.ID;
+        }
+
         public List<Product> GetAllProduct()
         {
             return db.Products.ToList();

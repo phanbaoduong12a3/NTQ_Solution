@@ -2,11 +2,10 @@
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var listcomment = (List<DataLayer.ViewModel.CommentViewModel>)ViewBag.ListComment;
+    var listReview = (List<DataLayer.ViewModel.ReviewModel>)ViewBag.ListReview;
 }
 @section jsFooter{
-
-    <script src="/assests/client/controller/productController.js"></script>
+    <script src="/assests/client/js/controller/productController.js"></script>
 }
 
 <div class="content">
@@ -104,20 +103,35 @@
             <div class="product_desc">
                 <div id="horizontalTab">
                     <ul class="resp-tabs-list">
-                        <li>Tất cả các bình luận</li>
+                        <li style="color:red">Tất cả các bình luận</li>
 
                         <div class="clear"></div>
                     </ul>
                     <div class="resp-tabs-container">
-                        <div id="div_allcomment">
-                            @foreach (var itemcomment in listcomment)
+                        <div id="div_allreview">
+                            @foreach (var itemcomment in listReview)
                             {
                                 if (itemcomment.ParentID == 0)
                                 {
                                     <div class="row">
-                                        <h5 class="me-3 mb-0" style="color:red">@itemcomment.FullName : </h5>
-                                        <p class="mb-2" style="font-size:15px"> @itemcomment.CommentMsg</p>
-                                        <p class="small mb-2">@itemcomment.CommentDate</p>
+                                        <div class="col-md-8">
+                                            <div class="comments-list">
+                                                <div class="media">
+                                                    <p class="pull-right"><small>@(itemcomment.CreateAt == null ? "" : itemcomment.CreateAt.Value.ToString("dd/MM/yyyy"))</small></p>
+                                                    <a class="nav-link dropdown-toggle" role="button"
+                                                        aria-haspopup="true" aria-expanded="false">
+                                                        <img class="img-profile rounded-circle"
+                                                             src="~/assests/admin/img/undraw_profile.svg" height="30px" width="30px">
+                                                    </a>
+                                                    <div class="media-body">
+                                                        <h4 class="media-heading user_name">@itemcomment.UserName</h4>
+                                                        <span style="font-size:35px;color:black">@itemcomment.Title</span>
+                                                        <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                     </div>
 
                                 }
@@ -151,10 +165,10 @@
                                     </select>
                                     <div>
                                         <span><label>Review<span class="red">*</span></label></span>
-                                        <span><input type="text" id="txtCommentNew"> </input></span>
+                                        <span><input type="text" id="txtReviewNew"> </input></span>
                                     </div>
 
-                                    <button id="btnCommentNew" data-productid="@Model.ID" data-userid="@ViewBag.UserID">Bình luận</button>
+                                    <button id="btnReviewNew" data-productid="@Model.ID" data-userid="@ViewBag.UserID">Bình luận</button>
 
                                 </form>
                             </div>

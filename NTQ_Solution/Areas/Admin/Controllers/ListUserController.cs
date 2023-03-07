@@ -10,7 +10,7 @@ using System.Web.UI;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class ListUserController : BaseController
+    public class ListUserController : BaseController 
     {
         // GET: Admin/ListUser
         public ActionResult Index(string active, string inActive, string admin, string user, string searchString, int page = 1, int pageSize = 10)

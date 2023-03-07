@@ -9,22 +9,22 @@ namespace NTQ_Solution.Areas.Admin.Data
 {
     public class RegisterModel
     {
-        [Required(ErrorMessage = "Hãy nhập Email")]
-        [EmailAddress(ErrorMessage = "Email chưa đúng định dạng")]
-        [RegularExpression(@"^.{10,30}$", ErrorMessage = "{0} chỉ từ 10 đến 30 ký tự.")]
+        [Required(ErrorMessage = "Enter Email,please")]
+        [EmailAddress(ErrorMessage = "Email is invalid")]
+        [RegularExpression(@"^.{10,30}$", ErrorMessage = "{0} from 10 to 30 characters")]
         [DisplayName("Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Hãy nhập Password")]
-        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$", ErrorMessage = "{0} chỉ từ 8 đến 20 ký tự, bao gồm chữ hoa,chữ thường,kí tự đặc biệt và số")]
+        [Required(ErrorMessage = "Enter Password,please")]
+        [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$", ErrorMessage = "{0} from 8 to 20 characters, include uppercase, lowercase, special characters and numbers")]
         [DisplayName("Password")]
         public string Password { get; set; }
 
         [DisplayName("ConfirmPassword")]
-        [Required(ErrorMessage = "Hãy nhập ConfirmPassword")]
+        [Required(ErrorMessage = "Enter ConfirmPassword,please")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "Hãy nhập UserName")]
+        [Required(ErrorMessage = "Enter UserName,please")]
         [DisplayName("UserName")]
         public string UserName { get; set; }
 
