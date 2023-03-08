@@ -4,6 +4,7 @@ using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Web;
 using System.Web.Mvc;
 
@@ -14,17 +15,37 @@ namespace NTQ_Solution.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var dao = new ProductDao();
-            var model = dao.GetAllProduct();
-            return View(model);
+            try
+            {
+
+                var dao = new ProductDao();
+                var model = dao.GetAllProduct();
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
+
         public ActionResult Detail(int id)
         {
-            var product = new ProductDao().ViewDetail(id);
-            var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-            ViewBag.UserID = sessionUser.UserID;
-            ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
-            return View(product);
+            try
+            {
+                var dao = new ProductDao();
+                var product = dao.ViewDetail(id);
+                var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
+                ViewBag.UserID = sessionUser.UserID;
+                ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
+                dao.UpdateView(product.ID);
+                return View(product);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
         [HttpPost]
         public JsonResult AddNewReview(int productid,int userid,string title)
@@ -55,8 +76,16 @@ namespace NTQ_Solution.Controllers
 
         public ActionResult GetReview(int productid)
         {
-            var data = new ReviewDao().ListReviewViewModel(0,productid);
-            return View(data);
+            try
+            {
+                var data = new ReviewDao().ListReviewViewModel(0, productid);
+                return View(data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

@@ -15,9 +15,17 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         // GET: Admin/ListUser
         public ActionResult Index(string active, string inActive, string admin, string user, string searchString, int page = 1, int pageSize = 10)
         {
-            var dao = new UserDao();
-            var model = dao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
-            return View(model);
+            try
+            {
+                var dao = new UserDao();
+                var model = dao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
     }

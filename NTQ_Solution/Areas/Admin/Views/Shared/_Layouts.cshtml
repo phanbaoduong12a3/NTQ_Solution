@@ -18,13 +18,13 @@
           rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="~/Content/PagedList.css" rel="stylesheet"/>
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link href="~/assests/admin/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
 <body id="page-top">
-
+    @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -82,10 +82,22 @@
             <hr class="sidebar-divider  my-0">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/MyProfile/Profile">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>My Profile</span>
-                </a>
+                @if (session != null)
+                {
+
+
+                    <a class="nav-link" href="/Admin/MyProfile/Profile">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>My Profile</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link" href="/Admin/Login/Index">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>My Profile</span>
+                    </a>
+                }
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -154,26 +166,36 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
-                                <img class="img-profile rounded-circle"
-                                     src="~/assests/admin/img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="/Admin/MyProfile/Profile">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    My Profile
+
+                            @if (session != null)
+                            {
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
+                                    <img class="img-profile rounded-circle" src="~/assests/admin/img/undraw_profile.svg">
+
                                 </a>
-                                <div class="dropdown-divider"></div>
-                                
-                            @*<a class="dropdown-item" data-toggle="modal" data-target="#logoutModal">*@
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400">@Html.ActionLink("Logout", "Logout", "Login")</i>
-                            @*</a>*@
-                            </div>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="/Admin/MyProfile/Profile">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        My Profile
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+
+
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400">@Html.ActionLink("Logout", "Logout", "Login")</i>
+
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Register", "Index", "Register") <spn style="margin:0 20px">||</spn>
+                                @Html.ActionLink("Login", "Index", "Login")
+                            }
+                            <!-- Dropdown - User Information -->
+
                         </li>
 
                     </ul>

@@ -22,6 +22,8 @@ namespace DataLayer.ViewModel
 
         public string Image { get; set; }
 
+        public double? View { get; set; }
+
         public string ProductName { get; set; }
         public int? Status { get; set; }
         public int ParentID { get; set; }

@@ -20,22 +20,30 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Profile()
         {
-            var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-            var dao = new UserDao();
-            var user = dao.GetById(model.UserID);
-            var result = new RegisterModel
+            try
             {
-                ID = user.ID,
-                UserName = user.UserName,
-                Email = user.Email,
-                Password = user.PassWord,
-                Role = user.Role,
-                Status = user.Status,
-                CreateAt = user.CreateAt,
-                UpdateAt = user.UpdateAt,
-                DeleteAt = user.DeleteAt,
-            };
-            return View(result);
+                var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
+                var dao = new UserDao();
+                var user = dao.GetById(model.UserID);
+                var result = new RegisterModel
+                {
+                    ID = user.ID,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Password = user.PassWord,
+                    Role = user.Role,
+                    Status = user.Status,
+                    CreateAt = user.CreateAt,
+                    UpdateAt = user.UpdateAt,
+                    DeleteAt = user.DeleteAt,
+                };
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
         [HttpPost]
         public ActionResult Profile(RegisterModel model)
@@ -72,18 +80,43 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 return View(model);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
         public ActionResult Review(int parentID = 0, int page = 1, int pageSize = 10)
         {
-            var dao = new ReviewDao();
-            var session = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-            int userID = session.UserID;
-            var model = dao.ListMyReview(parentID, userID, page, pageSize);
-            return View(model);
+            try
+            {
+                var dao = new ReviewDao();
+                var session = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
+                int userID = session.UserID;
+                var model = dao.ListMyReview(parentID, userID, page, pageSize);
+                return View(model);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
+
+        public ActionResult Product( string trending , string searchString, int page = 1, int pageSize = 10)
+        {
+            try
+            {
+                var dao = new ProductDao();
+                var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
     }
 }

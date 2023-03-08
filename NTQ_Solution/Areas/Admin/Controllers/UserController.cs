@@ -28,9 +28,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult Index(string active,string inActive,string admin,string user,string searchString, int page = 1, int pageSize = 10)
         {
-            var dao = new UserDao();
-            var model = dao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
-            return View(model); 
+            try
+            {
+                var dao = new UserDao();
+                var model = dao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
+                return View(model);
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
         
         /// <summary>
@@ -82,9 +86,9 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 return View("CreateUser");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
@@ -98,27 +102,35 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            var dao = new UserDao();
-            var temp = dao.GetById(id);
-            if(temp.Role == 0)
+            try
             {
-                ViewBag.Role = "User";
+                var dao = new UserDao();
+                var temp = dao.GetById(id);
+                if (temp.Role == 0)
+                {
+                    ViewBag.Role = "User";
+                }
+                else
+                {
+                    ViewBag.Role = "Admin";
+                }
+                var user = new RegisterModel
+                {
+                    ID = temp.ID,
+                    UserName = temp.UserName,
+                    Email = temp.Email,
+                    Password = temp.PassWord,
+                    UpdateAt = temp.UpdateAt,
+                    Role = temp.Role,
+                    Status = temp.Status
+                };
+                return View(user);
             }
-            else
+            catch (Exception ex)
             {
-                ViewBag.Role = "Admin";
+                Console.WriteLine(ex.Message);
+                throw;
             }
-            var user = new RegisterModel
-            {
-                ID = temp.ID,
-                UserName = temp.UserName,
-                Email = temp.Email,
-                Password = temp.PassWord,
-                UpdateAt = temp.UpdateAt,
-                Role =temp.Role,
-                Status=temp.Status
-            };
-            return View(user);
         }
         
         [HttpPost]
@@ -158,6 +170,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
@@ -169,9 +182,17 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult Delete(int id)
         {
-            new UserDao().Delete(id);
-            SetAlert("Delete User Seccess", "success");
-            return RedirectToAction("Index");
+            try
+            {
+                new UserDao().Delete(id);
+                SetAlert("Delete User Seccess", "success");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
     }

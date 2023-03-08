@@ -19,22 +19,30 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult Profile()
         {
-            var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-            var dao = new UserDao();
-            var user = dao.GetById(model.UserID);
-            var result = new RegisterModel
+            try
             {
-                ID = user.ID,
-                UserName = user.UserName,
-                Email = user.Email,
-                Password = user.PassWord,
-                Role = user.Role,
-                Status = user.Status,
-                CreateAt = user.CreateAt,
-                UpdateAt = user.UpdateAt,
-                DeleteAt = user.DeleteAt,
-            };
-            return View(result);
+                var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
+                var dao = new UserDao();
+                var user = dao.GetById(model.UserID);
+                var result = new RegisterModel
+                {
+                    ID = user.ID,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    Password = user.PassWord,
+                    Role = user.Role,
+                    Status = user.Status,
+                    CreateAt = user.CreateAt,
+                    UpdateAt = user.UpdateAt,
+                    DeleteAt = user.DeleteAt,
+                };
+                return View(result);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
         [HttpPost]
         public ActionResult Profile(RegisterModel model)
@@ -73,6 +81,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }

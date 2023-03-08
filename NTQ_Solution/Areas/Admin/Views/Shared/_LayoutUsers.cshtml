@@ -10,7 +10,9 @@
     <meta name="author" content="">
 
     <title>NTQ-Solution</title>
-
+    <link href="~/assests/client/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- style css -->
+    <link href="~/assests/client/css/style.css" rel="stylesheet" />
     <!-- Custom fonts for this template-->
     <link href="~/assests/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     @*<link href="~/Content/PagedList.css" rel="stylesheet" />*@
@@ -24,7 +26,7 @@
 </head>
 
 <body id="page-top">
-
+    @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -44,10 +46,20 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/HomeUser/Profile">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Home</span>
-                </a>
+                @if (session != null)
+                {
+                    <a class="nav-link" href="/Admin/HomeUser/Profile">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Home</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link" href="/Admin/Login/Index">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Home</span>
+                    </a>
+                }
             </li>
 
             <!-- Divider -->
@@ -63,29 +75,61 @@
             <hr class="sidebar-divider  my-0">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/HomeUser/Review">
-                    <i class="fas fa-fw fa-comment"></i>
-                    <span>My Review</span>
-                </a>
+                @if (session != null)
+                {
+                    <a class="nav-link" href="/Admin/HomeUser/Review">
+                        <i class="fas fa-fw fa-comment"></i>
+                        <span>My Review</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link" href="/Admin/Login/Index">
+                        <i class="fas fa-fw fa-comment"></i>
+                        <span>My Review</span>
+                    </a>
+                }
+
             </li>
 
             <hr class="sidebar-divider  my-0">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/HomeUser/WishList">
-                    <i class="fas fa-fw fa-comment"></i>
-                    <span>My WishList</span>
-                </a>
+                @if (session != null)
+                {
+                    <a class="nav-link" href="/Admin/HomeUser/WishList">
+                        <i class="fas fa-fw fa-comment"></i>
+                        <span>My WishList</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link" href="/Admin/Login/Index">
+                        <i class="fas fa-fw fa-comment"></i>
+                        <span>My WishList</span>
+                    </a>
+                }
+
             </li>
 
             <!-- Nav Item - Charts -->
             <hr class="sidebar-divider  my-0">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/HomeUser/Profile">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>My Profile</span>
-                </a>
+                @if (session != null)
+                {
+                    <a class="nav-link" href="/Admin/HomeUser/Profile">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>My Profile</span>
+                    </a>
+                }
+                else
+                {
+                    <a class="nav-link" href="/Admin/Login/Index">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>My Profile</span>
+                    </a>
+                }
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -154,24 +198,33 @@
                         <div class="topbar-divider d-none d-sm-block"></div>
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
-                                <img class="img-profile rounded-circle"
-                                     src="~/assests/admin/img/undraw_profile.svg">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="/Admin/MyProfile/Profile">
-                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    My Profile
+                            @if (session != null)
+                            {
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
+                                    <img class="img-profile rounded-circle" src="~/assests/admin/img/undraw_profile.svg">
+
                                 </a>
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                     aria-labelledby="userDropdown">
+                                    <a class="dropdown-item" href="/Admin/MyProfile/Profile">
+                                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                        My Profile
+                                    </a>
+                                    <div class="dropdown-divider"></div>
+
+
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400">@Html.ActionLink("Logout", "Logout", "Login")</i>
-                               
-                            </div>
+
+                                </div>
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Register", "Index", "Register") <spn style="margin:0 20px">||</spn>
+                                @Html.ActionLink("Login", "Index", "Login")
+                            }
                         </li>
 
                     </ul>
@@ -229,9 +282,10 @@
     <!-- Page level plugins -->
     <script src="/assests/admin/vendor/chart.js/Chart.min.js"></script>
     <!-- Page level custom scripts -->
-    <script src="/assests/admin/js/demo/chart-area-demo.js"></script>
-    <script src="/assests/admin/js/demo/chart-pie-demo.js"></script>
-    <script src="/assests/admin/js/sb-admin-2.js"></script>
+    <script src="~/assests/admin/js/demo/chart-area-demo.js"></script>
+    <script src="~/assests/admin/js/demo/chart-pie-demo.js"></script>
+    <script src="~/assests/admin/js/sb-admin-2.js"></script>
+
     @RenderSection("jsFooter", required: false)
 </body>
 

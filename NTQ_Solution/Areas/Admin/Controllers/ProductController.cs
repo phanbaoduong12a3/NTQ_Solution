@@ -12,9 +12,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         
         public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 15)
         {
-            var dao = new ProductDao();
-            var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
-            return View(model);
+            try
+            {
+                var dao = new ProductDao();
+                var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
+                return View(model);
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
 
         [HttpGet]
@@ -52,33 +56,34 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 return View(productModel);
             }
-            catch (Exception)
-            {
-                throw;
-            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
 
         [HttpGet]
         public ActionResult UpdateProduct(int id)
         {
-            var dao = new ProductDao();
-            var temp = dao.GetProductById(id);
-            bool checkTrending;
-            if (temp.Trending == true) checkTrending = true;
-            else checkTrending = false;
-            var product = new ProductModel
+            try
             {
-                ProductName = temp.ProductName,
-                Slug = temp.Slug,
-                Detail = temp.Detail,
-                Status = temp.Status,
-                NumberViews = temp.NumberViews,
-                Trending = checkTrending,
-                Price = temp.Price,
-                Image = temp.Image,
-                UpdateAt = DateTime.Now
-            };
-            return View(product);
+                var dao = new ProductDao();
+                var temp = dao.GetProductById(id);
+                bool checkTrending;
+                if (temp.Trending == true) checkTrending = true;
+                else checkTrending = false;
+                var product = new ProductModel
+                {
+                    ProductName = temp.ProductName,
+                    Slug = temp.Slug,
+                    Detail = temp.Detail,
+                    Status = temp.Status,
+                    NumberViews = temp.NumberViews,
+                    Trending = checkTrending,
+                    Price = temp.Price,
+                    Image = temp.Image,
+                    UpdateAt = DateTime.Now
+                };
+                return View(product);
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
 
         [HttpPost]
@@ -107,17 +112,22 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
 
         public ActionResult Delete(int id)
         {
-            new ProductDao().Delete(id);
-            SetAlert("Delete Product Success", "success");
-            return RedirectToAction("Index");
+            try
+            {
+                new ProductDao().Delete(id);
+                SetAlert("Delete Product Success", "success");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
     }
 }

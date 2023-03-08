@@ -26,9 +26,17 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public int Insert(User entity)
         {
-            db.Users.Add(entity);
-            db.SaveChanges();
-            return entity.ID;
+            try
+            {
+                db.Users.Add(entity);
+                db.SaveChanges();
+                return entity.ID;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -38,7 +46,15 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public User GetByEmail(string email)
         {
-            return db.Users.SingleOrDefault(x => x.Email == email);
+            try
+            {
+                return db.Users.SingleOrDefault(x => x.Email == email);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -48,7 +64,15 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public User GetByUserName(string userName)
         {
-            return db.Users.SingleOrDefault(x => x.UserName == userName);
+            try
+            {
+                return db.Users.SingleOrDefault(x => x.UserName == userName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -58,7 +82,15 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public User GetById(int id)
         {
-            return db.Users.Find(id);
+            try
+            {
+                return db.Users.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -68,9 +100,17 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public IEnumerable<User> CheckStatus(int status)
         {
-            IQueryable<User> model = db.Users;
-            if (status == 0) return model.OrderByDescending(x => x.CreateAt).Where(x=>x.Status == 0);
-            return model.OrderByDescending(x=>x.CreateAt).Where(y=>y.Status == 1);
+            try
+            {
+                IQueryable<User> model = db.Users;
+                if (status == 0) return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 0);
+                return model.OrderByDescending(x => x.CreateAt).Where(y => y.Status == 1);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
 
         }
 
@@ -82,8 +122,16 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public bool CheckConfirmPassword(string confirmPassword, string password)
         {
-            if (confirmPassword == password) return true;
-            return false;
+            try
+            {
+                if (confirmPassword == password) return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
         
         /// <summary>
@@ -93,9 +141,17 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public bool CheckUserName(string userName)
         {
-            var name = db.Users.SingleOrDefault(x => x.UserName == userName);
-            if (name == null) return true;
-            return false;
+            try
+            {
+                var name = db.Users.SingleOrDefault(x => x.UserName == userName);
+                if (name == null) return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -105,9 +161,17 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public bool CheckEmail(string email)
         {
-            var user = db.Users.SingleOrDefault(x => x.Email == email);
-            if (user == null) return true;
-            return false;
+            try
+            {
+                var user = db.Users.SingleOrDefault(x => x.Email == email);
+                if (user == null) return true;
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -118,19 +182,27 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public int CheckUser(string userName,string email)
         {
-            var name = db.Users.SingleOrDefault(x=>x.UserName == userName);
-            var mail = db.Users.SingleOrDefault(x => x.Email == email);
-            if(name == null && mail == null)
+            try
             {
-                return 1; // thoả mãn
+                var name = db.Users.SingleOrDefault(x => x.UserName == userName);
+                var mail = db.Users.SingleOrDefault(x => x.Email == email);
+                if (name == null && mail == null)
+                {
+                    return 1; // thoả mãn
+                }
+                else if (name != null)
+                {
+                    return 0; //trùng userName
+                }
+                else
+                {
+                    return -1; //trùng mail
+                }
             }
-            else if(name != null)
+            catch (Exception ex)
             {
-                return 0; //trùng userName
-            }
-            else
-            {
-                return -1; //trùng mail
+                Console.WriteLine(ex.Message);
+                throw;
             }
 
         }
@@ -143,28 +215,36 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public int Login(string email,string password)
         {
-            var result = db.Users.SingleOrDefault(x => x.Email == email);
-            if(result == null)
+            try
             {
-                return 0; // không thấy email
-            }
-            else
-            {
-                if (result.Status == 0)
+                var result = db.Users.SingleOrDefault(x => x.Email == email);
+                if (result == null)
                 {
-                    return -1; 
+                    return 0; // không thấy email
                 }
                 else
                 {
-                    if(result.PassWord==password)
+                    if (result.Status == 0)
                     {
-                        return 1; 
+                        return -1;
                     }
                     else
                     {
-                        return -2; //sai passWord
+                        if (result.PassWord == password)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return -2; //sai passWord
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
             }
         }
 
@@ -176,33 +256,41 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public IEnumerable<User> ListAllPaging(string active,string inActive,string admin,string user, string searchString,int page, int pageSize)
         {
-            IQueryable<User> model = db.Users;
-            if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(active) || !string.IsNullOrEmpty(inActive) || !string.IsNullOrEmpty(admin) || !string.IsNullOrEmpty(user) )
+            try
             {
-                model = model.Where(x => x.UserName.Contains(searchString));
-                if(active != null)
+                IQueryable<User> model = db.Users;
+                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(active) || !string.IsNullOrEmpty(inActive) || !string.IsNullOrEmpty(admin) || !string.IsNullOrEmpty(user))
                 {
-                    model = model.Where(x => x.Status == 1);
-                }
-                if(inActive != null)
-                {
-                    model = model.Where(x => x.Status == 0);
-                }
-                if(admin != null)
-                {
-                    model = model.Where(x => x.Role == 1);
-                }
-                if(user != null)
-                {
-                    model = model.Where(x => x.Role == 0);
-                }
-                if (model == null)
-                {
-                    return null;
+                    model = model.Where(x => x.UserName.Contains(searchString));
+                    if (active != null)
+                    {
+                        model = model.Where(x => x.Status == 1);
+                    }
+                    if (inActive != null)
+                    {
+                        model = model.Where(x => x.Status == 0);
+                    }
+                    if (admin != null)
+                    {
+                        model = model.Where(x => x.Role == 1);
+                    }
+                    if (user != null)
+                    {
+                        model = model.Where(x => x.Role == 0);
+                    }
+                    if (model == null)
+                    {
+                        return null;
+                    }
+                    return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
                 }
                 return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
-            return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -226,6 +314,7 @@ namespace DataLayer.Dao
             catch(Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                throw;
             }
         }
 
@@ -246,6 +335,7 @@ namespace DataLayer.Dao
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                throw;
             }
         }
 

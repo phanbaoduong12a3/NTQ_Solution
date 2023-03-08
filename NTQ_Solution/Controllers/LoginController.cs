@@ -18,48 +18,54 @@ namespace NTQ_Solution.Controllers
         }
         public ActionResult Login(LoginModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var dao = new UserDao();
-                var result = dao.Login(model.Email, model.Password);
-                if (result == 1)
+                if (ModelState.IsValid)
                 {
-                    var user = dao.GetByEmail(model.Email);
-                    var userSession = new UserLogin();
-                    userSession.UserID = user.ID;
-                    userSession.Email = user.Email;
-                    userSession.UserName = user.UserName;
-                    Session.Add(CommonConstant.USER_SESSION, userSession);
-                    if (user.Role == 0)
+                    var dao = new UserDao();
+                    var result = dao.Login(model.Email, model.Password);
+                    if (result == 1)
                     {
+                        var user = dao.GetByEmail(model.Email);
+                        var userSession = new UserLogin();
+                        userSession.UserID = user.ID;
+                        userSession.Email = user.Email;
+                        userSession.UserName = user.UserName;
+                        Session.Add(CommonConstant.USER_SESSION, userSession);
                         return RedirectToAction("Index", "Home");
+                    }
+                    else if (result == 0)
+                    {
+                        ModelState.AddModelError("", "Don't see Email");
+                    }
+                    else if (result == -1)
+                    {
+                        ModelState.AddModelError("", "Account is InActive");
+                    }
+                    else if (result == -2)
+                    {
+                        ModelState.AddModelError("", "Password is incorect");
                     }
                     else
                     {
-                        var product = new ProductDao().GetAllProduct();
-                        return View("~/Areas/Admin/Views/Login/Index");
-
+                        ModelState.AddModelError("", "Login fail");
                     }
                 }
-                else if (result == 0)
-                {
-                    ModelState.AddModelError("", "Don't see Email");
-                }
-                else if (result == -1)
-                {
-                    ModelState.AddModelError("", "Account is InActive");
-                }
-                else if (result == -2)
-                {
-                    ModelState.AddModelError("", "Password is incorect");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Login fail");
-                }
+                return View("Index");
             }
-            return View("Index");
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
 
         }
+       
+        public ActionResult Logout()
+        {
+            try
+            {
+                Session[CommonConstant.USER_SESSION] = null;
+                return RedirectToAction("Index", "Login");
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
+        }
+        
     }
 }

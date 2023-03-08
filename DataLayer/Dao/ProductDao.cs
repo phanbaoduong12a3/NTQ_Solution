@@ -23,9 +23,17 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public int Insert(Product product)
         {
-            db.Products.Add(product);
-            db.SaveChanges();
-            return product.ID;
+            try
+            {
+                db.Products.Add(product);
+                db.SaveChanges();
+                return product.ID;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -49,11 +57,14 @@ namespace DataLayer.Dao
                     db.SaveChanges();
                 }
             }
-            catch 
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 throw;
             }
         }
+
+
 
         /// <summary>
         /// Delete product
@@ -71,6 +82,7 @@ namespace DataLayer.Dao
             catch(Exception ex)
             { 
                 Console.WriteLine(ex.Message);
+                throw;
             }
         }
 
@@ -84,21 +96,29 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public IEnumerable<Product> ListAllPagingProduct(string trending, string searchString, int page, int pageSize)
         {
-            IQueryable<Product> model = db.Products;
-            if(!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(trending))
+            try
             {
-                model = model.Where(x => x.ProductName.Contains(searchString));
-                if(trending != null)
+                IQueryable<Product> model = db.Products;
+                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(trending))
                 {
-                    model = model.Where(x => x.Trending == true);
+                    model = model.Where(x => x.ProductName.Contains(searchString));
+                    if (trending != null)
+                    {
+                        model = model.Where(x => x.Trending == true);
+                    }
+                    if (model == null)
+                    {
+                        return null;
+                    }
+                    return model.OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
                 }
-                if(model == null)
-                {
-                    return null;
-                }
-                return model.OrderByDescending(x => x.NumberViews).ToPagedList(page,pageSize);
+                return model.OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
             }
-            return model.OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -108,7 +128,15 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public Product GetProductById(int id)
         {
-            return db.Products.Find(id);
+            try
+            {
+                return db.Products.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -117,7 +145,15 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public List<Product> GetProductByView() 
         {
-            return db.Products.OrderByDescending(x => x.NumberViews).ToList();
+            try
+            {
+                return db.Products.OrderByDescending(x => x.NumberViews).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
         /// <summary>
         /// Get Product with Trending
@@ -125,7 +161,15 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public List<Product> GetProductByTrending()
         {
-            return db.Products.Where(x => x.Trending == true).ToList();
+            try
+            {
+                return db.Products.Where(x => x.Trending == true).ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
 
@@ -138,7 +182,15 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public List<Product> GetAllProduct()
         {
-            return db.Products.ToList();
+            try
+            {
+                return db.Products.ToList();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
 
         /// <summary>
@@ -148,7 +200,30 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public Product ViewDetail(int id)
         {
-            return db.Products.Find(id);
+            try
+            {
+                return db.Products.Find(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public void UpdateView(int id)
+        {
+            try
+            {
+                var product = db.Products.Find(id);
+                product.NumberViews = product.NumberViews + 1;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
     }
 }

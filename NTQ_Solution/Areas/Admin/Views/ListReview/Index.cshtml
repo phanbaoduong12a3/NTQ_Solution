@@ -24,6 +24,7 @@
                                     <th>Title</th>
                                     <th>ProductName</th>
                                     <th>Image</th>
+                                    <th>View</th>
                                     <th>CreateAt</th>
                                     <th>UpdateAt</th>
                                     <th>DeleteAt</th>
@@ -51,6 +52,7 @@
                                             <td>
                                                 <img src="@item.Image" />
                                             </td>
+                                            <td>@item.View</td>
                                             <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
                                             <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
                                             <td>@(item.DeleteAt == null ? "" : item.DeleteAt.Value.ToString("dd/MM/yyyy"))</td>

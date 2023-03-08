@@ -19,36 +19,40 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
         public ActionResult Register(RegisterModel registerModel)
         {
-            if(ModelState.IsValid)
+            try
             {
-                var dao = new UserDao();
-                int result = dao.CheckUser(registerModel.UserName, registerModel.Email);
-                bool checkConfirmPassword = dao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
-                if (result == 1)
+                if (ModelState.IsValid)
                 {
-                    var user = new User
+                    var dao = new UserDao();
+                    int result = dao.CheckUser(registerModel.UserName, registerModel.Email);
+                    bool checkConfirmPassword = dao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    if (result == 1)
                     {
-                        UserName = registerModel.UserName,
-                        PassWord =registerModel.Password,
-                        Email = registerModel.Email,
-                        CreateAt = DateTime.Now,
-                        Role = 0,
-                        Status=1
-                    };
-                    dao.Insert(user);
-                    return RedirectToAction("Index","Login");
+                        var user = new User
+                        {
+                            UserName = registerModel.UserName,
+                            PassWord = registerModel.Password,
+                            Email = registerModel.Email,
+                            CreateAt = DateTime.Now,
+                            Role = 0,
+                            Status = 1
+                        };
+                        dao.Insert(user);
+                        return RedirectToAction("Index", "Login");
+                    }
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
+                    else if (result == -1)
+                    {
+                        ModelState.AddModelError("", "Email is invalid");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "UserName is invalid");
+                    }
                 }
-                if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
-                else if(result == -1) 
-                {
-                    ModelState.AddModelError("", "Email is invalid");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "UserName is invalid");
-                }
+                return View("Index");
             }
-            return View("Index");
+            catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
     }
 }
