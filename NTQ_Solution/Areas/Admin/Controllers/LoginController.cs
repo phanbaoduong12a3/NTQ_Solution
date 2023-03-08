@@ -38,9 +38,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     }
                     else
                     {
-                        var product = new ProductDao().GetAllProduct();
-                        return RedirectToAction("Index", "HomeUser");
-
+                        return RedirectToAction("Profile", "HomeUser");
                     }
                 }
                 else if(result == 0)
@@ -67,7 +65,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         public ActionResult Logout()
         {
             Session[CommonConstant.USER_SESSION] = null;
-            return View("Index");
+            return RedirectToAction("Index","Login");
         }
     }
 }

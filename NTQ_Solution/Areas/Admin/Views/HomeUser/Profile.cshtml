@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Profile Admin";
-    Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutUsers.cshtml";
 }
 
 <div class="card-body p-0">
@@ -71,13 +71,13 @@
                             </div>
                         }
                     </div>
-                 </div>
+                </div>
 
             </div>
         </div>
 
-    
-    <script>
+
+        <script>
         function show() {
             var p = document.getElementById('password');
             p.setAttribute('type', 'text');
@@ -103,4 +103,4 @@
                 hide();
             }
         }, false);
-    </script>
+        </script>

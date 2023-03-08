@@ -26,7 +26,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             var model = dao.GetReviewById(id);
             return View(model);
         }
-
+        [HttpPost]
         public ActionResult UpdateReview(Review model)
         {
             try
@@ -40,6 +40,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 throw;
             }
+        }
+
+        public ActionResult Delete(int id)
+        {
+            new ReviewDao().Delete(id);
+            SetAlert("Delete success", "success");
+            return RedirectToAction("Index");
         }
     }
 }
