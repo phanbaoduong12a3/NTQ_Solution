@@ -11,7 +11,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
     public class BaseController : Controller
     {
         // GET: Admin/Base
-       /* protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var session = (UserLogin)Session[CommonConstant.USER_SESSION];
             if (session == null)
@@ -20,7 +20,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     RouteValueDictionary(new { controller = "Login", action = "Index", Area = "Admin" }));
             }
             base.OnActionExecuting(filterContext);
-        }*/
+        }
         protected void SetAlert(string message, string type)
         {
             TempData["AlertMessage"] = message;

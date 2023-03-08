@@ -36,7 +36,7 @@ namespace NTQ_Solution.Controllers
                 var dao = new ProductDao();
                 var product = dao.ViewDetail(id);
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-                ViewBag.UserID = sessionUser.UserID;
+               if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
                 ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
                 dao.UpdateView(product.ID);
                 return View(product);
@@ -80,6 +80,36 @@ namespace NTQ_Solution.Controllers
             {
                 var data = new ReviewDao().ListReviewViewModel(0, productid);
                 return View(data);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public ActionResult WishList(int productID)
+        {
+            try
+            {
+                var dao = new WishListDao();
+                var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
+                if (sessionUser == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+                else
+                {
+                    var userID = sessionUser.UserID;
+                    var wishList = new WishList
+                    {
+                        ProductsID = productID,
+                        UserID = userID,
+                        CreateAt = DateTime.Now,
+                        Status = 1
+                    };
+                    dao.AddNewWishList(wishList);
+                    return RedirectToAction("Index", "WishList");
+                }
             }
             catch (Exception ex)
             {

@@ -49,6 +49,8 @@ namespace DataLayer.Dao
                 {
                     entity.ProductName = product.ProductName;
                     entity.NumberViews = product.NumberViews;
+                    entity.Image = product.Image;
+                    entity.Detail = product.Detail;
                     entity.Slug = product.Slug;
                     entity.Status = product.Status;
                     entity.Price = product.Price;
@@ -225,5 +227,7 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+
+
     }
 }

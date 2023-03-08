@@ -71,7 +71,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Status = 1
                         };
                         dao.Insert(user);
-                        SetAlert("Create New User Seccess", "success");
+                        SetAlert("Create New User Success", "success");
                         return RedirectToAction("Index", "ListUser");
                     }
                     if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
@@ -159,7 +159,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Status = model.Status
                         };
                         dao.Update(user);
-                        SetAlert("Update Seccess", "success");
+                        SetAlert("Update Success", "success");
                         return RedirectToAction("Index", "ListUser");
                     }
                     if(!checkEmail) { ModelState.AddModelError("", "Email is invalid"); }
@@ -185,7 +185,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 new UserDao().Delete(id);
-                SetAlert("Delete User Seccess", "success");
+                SetAlert("Delete User Success", "success");
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

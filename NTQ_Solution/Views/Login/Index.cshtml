@@ -39,7 +39,7 @@
                         @*<div class="col-lg-6">*@
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Home Website</h1>
                             </div>
                             @using (Html.BeginForm("Login", "Login", FormMethod.Post))
                             {
@@ -67,6 +67,16 @@
                                 <div class="text-center">
                                     <li>@Html.ActionLink("Register?", "Index", "Register", new { area = "Admin" }, new { @class = "nav-link" })</li>
                                 </div>
+                                <hr />
+                                <div class="text-center">
+                                    <li>@Html.ActionLink("Login to Manage Account", "Index", "Login", new { area = "Admin" }, new { @class = "nav-link" })</li>
+                                </div>
+                                <hr />
+                                <div class="text-left">
+                                    <li>user: user1@gmail.com || Aa12345678!</li>
+                                    <li>admin: admin@gmail.com || Aa12345678!</li>
+                                </div>
+
                             }
                         </div>
                     </div>

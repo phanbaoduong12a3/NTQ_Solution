@@ -1,5 +1,6 @@
 ﻿using DataLayer.Dao;
 using DataLayer.EF;
+using Microsoft.Ajax.Utilities;
 using NTQ_Solution.Areas.Admin.Data;
 using System;
 using System.Web.Mvc;
@@ -51,7 +52,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         CreateAt = DateTime.Now
                     };
                     dao.Insert(product);
-                    SetAlert("Create New Product Seccess", "success");
+                    SetAlert("Create New Product Success", "success");
                     return RedirectToAction("Index", "Product");
                 }
                 return View(productModel);
@@ -96,6 +97,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     var dao = new ProductDao();
                     var product = new Product
                     {
+                        ID = model.ID,
                         ProductName = model.ProductName,
                         Slug = model.Slug,
                         Detail = model.Detail,

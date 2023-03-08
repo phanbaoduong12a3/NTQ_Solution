@@ -146,6 +146,7 @@
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\RegisterController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WishListController.cs" />
     <Compile Include="Areas\Admin\Data\LoginModel.cs" />
     <Compile Include="Areas\Admin\Data\ProductModel.cs" />
     <Compile Include="Areas\Admin\Data\RegisterModel.cs" />
@@ -154,6 +155,7 @@
     <Compile Include="Common\UserLogin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\WishListController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2819,6 +2821,7 @@
     <Content Include="assests\client\font\glyphicons-halflings-regular.woff" />
     <Content Include="assests\client\font\glyphicons-halflings-regular.woff2" />
     <Content Include="assests\client\images\Thumbs.db" />
+    <Content Include="Areas\Admin\Views\WishList\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2845,6 +2848,7 @@
     <Content Include="Views\Home\Detail.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
     <Content Include="Views\Home\GetReview.cshtml" />
+    <Content Include="Views\WishList\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

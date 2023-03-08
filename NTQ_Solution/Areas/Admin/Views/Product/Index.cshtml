@@ -69,7 +69,7 @@
 
                                             <td>@item.ProductName</td>
                                             <td>
-                                            <img src="@item.Image"/>
+                                                <img src="@item.Image" />
                                             </td>
                                             <td>@item.Detail</td>
                                             <td>@item.Price</td>
@@ -80,8 +80,10 @@
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Trending == true ? "Hot Trend" : "No Trend")</a></td>
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Status == 1 ? "On Sale" : "Out Sale")</a></td>
                                             <td>
-                                                <a class="btn btn-success" style="text-decoration:none" href="/Admin/Product/UpdateProduct/@item.ID"><i class="fa fa-edit">Edit</i></a>
-                                                <a class="btn btn-danger" style="text-decoration:none" href="/Admin/Product/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+                                                
+                                                    <a class="btn btn-success" style="text-decoration:none" href="/Admin/Product/UpdateProduct/@item.ID"><i class="fa fa-edit">Edit</i></a>
+                                                    <a class="btn btn-danger" style="text-decoration:none" href="/Admin/Product/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+                                               
                                             </td>
 
                                         </tr>
@@ -93,7 +95,9 @@
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
                     </div>
                     <div class="input-group-append">
-                        <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Create Product</a>
+                       
+                            <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Create Product</a>
+                        
                     </div>
 
                 </div>

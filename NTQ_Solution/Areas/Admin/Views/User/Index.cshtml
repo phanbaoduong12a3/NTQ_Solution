@@ -7,6 +7,7 @@
 @section header{
     List User
 }
+
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -77,9 +78,10 @@
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Role == 1 ? "Admin" : "User")</a></td>
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Status == 1 ? "Active" : "InActive")</a></td>
                                             <td>
-                                                <a class="btn btn-success" style="text-decoration:none" href="/Admin/User/Edit/@item.ID"><i class="fa fa-edit">Edit</i></a>
-                                                <a class="btn btn-danger" style="text-decoration:none" href="/Admin/User/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
-                                            </td>
+                                                    <a class="btn btn-success" style="text-decoration:none" href="/Admin/User/Edit/@item.ID"><i class="fa fa-edit">Edit</i></a>
+                                                    <a class="btn btn-danger" style="text-decoration:none" href="/Admin/User/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+                                                
+                                                </td>
 
                                         </tr>
                                     }
@@ -100,7 +102,10 @@
                     </script>
 
                     <div class="input-group-append">
-                        <a class="btn btn-primary" href="/Admin/User/CreateUser">Create User</a>
+                       
+                            <a class="btn btn-primary" href="/Admin/User/CreateUser">Create User</a>
+                        
+                       
                     </div>
 
                 </div>
