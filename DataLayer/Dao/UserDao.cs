@@ -234,7 +234,7 @@ namespace DataLayer.Dao
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public bool Delete(int id)
+        public void Delete(int id)
         {
             try
             {
@@ -242,12 +242,10 @@ namespace DataLayer.Dao
                 user.Status = 0;
                 user.DeleteAt= DateTime.Now;
                 db.SaveChanges();
-                return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                return false;
+                Console.WriteLine(ex.ToString());
             }
         }
 

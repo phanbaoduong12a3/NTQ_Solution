@@ -20,6 +20,9 @@ namespace DataLayer.ViewModel
 
         public string UserName { get; set; }
 
+        public string Image { get; set; }
+
+        public string ProductName { get; set; }
         public int? Status { get; set; }
         public int ParentID { get; set; }
 
