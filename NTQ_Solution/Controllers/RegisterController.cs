@@ -1,18 +1,17 @@
 ﻿using DataLayer.Dao;
 using DataLayer.EF;
 using NTQ_Solution.Areas.Admin.Data;
-using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace NTQ_Solution.Areas.Admin.Controllers
+namespace NTQ_Solution.Controllers
 {
     public class RegisterController : Controller
     {
-        // GET: Admin/Register
+        // GET: Register
         public ActionResult Index()
         {
             return View();

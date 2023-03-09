@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.SessionState;
 
 namespace NTQ_Solution.Controllers
 {
@@ -32,7 +33,16 @@ namespace NTQ_Solution.Controllers
                         userSession.Email = user.Email;
                         userSession.UserName = user.UserName;
                         Session.Add(CommonConstant.USER_SESSION, userSession);
-                        return RedirectToAction("Index", "Home");
+                        var session = (UserLogin)Session[CommonConstant.USER_SESSION];
+                        if(user.Role == 0) 
+                        { 
+                            return RedirectToAction("Index", "Home"); 
+                        }
+                        else
+                        {
+                            return Redirect("/Admin/Myprofile/Profile");
+                        }
+                       
                     }
                     else if (result == 0)
                     {

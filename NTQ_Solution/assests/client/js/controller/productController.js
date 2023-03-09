@@ -28,7 +28,7 @@
                     if (response.status == true) {
                         title.value = "";
                         window.alert("Bạn đã thêm bình luận thành công!");
-                        $("#div_allreview").load("/Home/GetReview?productid=" + productid);
+                        $("#div_allreview").load("/Home/Detail?productid=" + productid);
                     }
                     else {
                         bootbox.alert("Thêm bình luận lỗi");

@@ -198,16 +198,20 @@ namespace DataLayer.Dao
                                  UserID = a.UserID,
                                  ProductID = a.ProductsID,
                                  Title = a.Title,
+                                 Status = a.Status,
                                  ParentID = a.ParentID,
-                                 UserName = b.UserName
+                                 UserName = b.UserName,
+                                 CreateAt = a.CreateAt
                              }).AsEnumerable().Select(x => new ReviewModel()
                              {
                                  ID = x.ID,
                                  UserID = x.UserID,
                                  ProductsID = x.ProductID,
+                                 Status = x.Status,
                                  Title = x.Title,
                                  ParentID = x.ParentID,
-                                 UserName = x.UserName
+                                 UserName = x.UserName,
+                                 CreateAt = x.CreateAt
                              });
                 return model.OrderByDescending(y => y.ID).ToList();
             }

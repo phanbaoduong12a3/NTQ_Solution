@@ -1,4 +1,4 @@
-﻿@model NTQ_Solution.Areas.Admin.Data.LoginModel
+﻿@model NTQ_Solution.Areas.Admin.Data.RegisterModel
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,14 +34,14 @@
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
-                       @* <div class="d-flex p-2">*@
-                            @*<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>*@
-                            @*<div class="col-lg-6">*@
+                        @* <div class="d-flex p-2">*@
+                        @*<div class="col-lg-6 d-none d-lg-block bg-login-image"></div>*@
+                        @*<div class="col-lg-6">*@
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Manage Account</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Create New Account</h1>
                             </div>
-                            @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+                            @using (Html.BeginForm("Register", "Register", FormMethod.Post))
                             {
                                 @Html.ValidationSummary(false, "", new { @class = "text-danger" });
                                 <form class="user">
@@ -53,11 +53,19 @@
                                         @Html.DisplayNameFor(model => model.Password)
                                         @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
                                     </div>
+                                    <div class="form-group">
 
+                                        @Html.DisplayNameFor(model => model.ConfirmPassword)
+                                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
+                                    </div>
+                                    <div class="form-group">
 
+                                        @Html.DisplayNameFor(model => model.UserName)
+                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                                    </div>
 
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Login
+                                        Register
                                     </button>
                                     <hr>
 
@@ -65,19 +73,11 @@
                                 <hr>
 
                                 <div class="text-center">
-                                    <li>@Html.ActionLink("Register?", "Index", "Register", new { area = "Admin" }, new { @class = "nav-link" })</li>
-                                </div>
-
-                                <hr />
-                                <div class="text-center">
-                                    <li>@Html.ActionLink("Login to Home Website", "Index", "Login",new {area=""},new {@class = "nav-link"})</li>
-                                </div>
-                                <hr />
-                                <div class="text-left">
-                                    <li>user: user1@gmail.com || Aa12345678!</li>
-                                    <li>admin: admin@gmail.com || Aa12345678!</li>
+                                    <li>@Html.ActionLink("Back to Login", "Index", "Login",new { @class = "nav-link" })</li>
                                 </div>
                             }
+
+
                         </div>
                     </div>
                 </div>

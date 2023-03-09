@@ -14,10 +14,17 @@ namespace NTQ_Solution
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+              name: "Login",
+              url: "Login/Index",
+              defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional },
+             namespaces: new[] { "OnlineShop.Controllers" }
+             );
+
+            routes.MapRoute(
               name: "Add Cart",
               url: "add-wishlist",
               defaults: new { controller = "Home", action = "WishList", id = UrlParameter.Optional },
-             namespaces: new[] { "OnlineShop.controllersLayout" }
+             namespaces: new[] { "OnlineShop.Controllers" }
              );
 
             routes.MapRoute(

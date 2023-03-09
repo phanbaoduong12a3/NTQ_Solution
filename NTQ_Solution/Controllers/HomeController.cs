@@ -13,13 +13,12 @@ namespace NTQ_Solution.Controllers
     public class HomeController : Controller
     {
         // GET: Home
-        public ActionResult Index()
+        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 8)
         {
             try
             {
-
                 var dao = new ProductDao();
-                var model = dao.GetAllProduct();
+                var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)
@@ -36,7 +35,7 @@ namespace NTQ_Solution.Controllers
                 var dao = new ProductDao();
                 var product = dao.ViewDetail(id);
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-               if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
+                if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
                 ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
                 dao.UpdateView(product.ID);
                 return View(product);
@@ -57,6 +56,7 @@ namespace NTQ_Solution.Controllers
                 review.UserID = userid;
                 review.ProductsID = productid;
                 review.Title = title;
+                review.Status = 0;
                 review.CreateAt = DateTime.Now;
                 bool addReview = dao.InsertReview(review);
                 if(addReview)

@@ -1,43 +1,47 @@
 ﻿using DataLayer.Dao;
 using DataLayer.EF;
 using NTQ_Solution.Areas.Admin.Data;
-using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
-namespace NTQ_Solution.Areas.Admin.Controllers
+namespace NTQ_Solution.Controllers
 {
-    public class HomeUserController : BaseController
+    public class ProfileController : Controller
     {
-        // GET: Admin/HomeUser
-        public ActionResult Index()
-        {
-            return View();
-        }
+        // GET: Profile
         [HttpGet]
         public ActionResult Profile()
         {
             try
             {
                 var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-                var dao = new UserDao();
-                var user = dao.GetById(model.UserID);
-                var result = new RegisterModel
+                if (model == null)
                 {
-                    ID = user.ID,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    Password = user.PassWord,
-                    Role = user.Role,
-                    Status = user.Status,
-                    CreateAt = user.CreateAt,
-                    UpdateAt = user.UpdateAt,
-                    DeleteAt = user.DeleteAt,
-                };
-                return View(result);
+                    return RedirectToAction("Index", "Login");
+                }
+                else
+                {
+                    var dao = new UserDao();
+                    var user = dao.GetById(model.UserID);
+                    var result = new RegisterModel
+                    {
+                        ID = user.ID,
+                        UserName = user.UserName,
+                        Email = user.Email,
+                        Password = user.PassWord,
+                        Role = user.Role,
+                        Status = user.Status,
+                        CreateAt = user.CreateAt,
+                        UpdateAt = user.UpdateAt,
+                        DeleteAt = user.DeleteAt,
+                    };
+                    return View(result);
+                }
             }
             catch (Exception ex)
             {
@@ -72,8 +76,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Status = model.Status
                         };
                         dao.Update(user);
-                        SetAlert("Update Seccess", "success");
-                        return RedirectToAction("Profile", "MyProfile");
+                        return RedirectToAction("Profile", "Profile");
                     }
                     if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };
                     if (!checkConfirmPassword) { ModelState.AddModelError("", "ConfirmPassword is not correct"); }
@@ -86,37 +89,5 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 throw;
             }
         }
-        public ActionResult Review(int parentID = 0, int page = 1, int pageSize = 10)
-        {
-            try
-            {
-                var dao = new ReviewDao();
-                var session = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-                int userID = session.UserID;
-                var model = dao.ListMyReview(parentID, userID, page, pageSize);
-                return View(model);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-
-        public ActionResult Product( string trending , string searchString, int page = 1, int pageSize = 10)
-        {
-            try
-            {
-                var dao = new ProductDao();
-                var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
-                return View(model);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
-
     }
 }
