@@ -18,11 +18,11 @@ namespace DataLayer.Dao
             db = new NTQDBContext();
         }
 
-        public bool InsertReview(Review entity)
+        public bool InsertReview(Review review)
         {
             try
             {
-                db.Reviews.Add(entity);
+                db.Reviews.Add(review);
                 db.SaveChanges();
                 return true;
             }
@@ -38,13 +38,13 @@ namespace DataLayer.Dao
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
 
-        public void UpdateReview(Review entity)
+        public void UpdateReview(Review review)
         {
             try
             {
-                var review = db.Reviews.Find(entity.ID);
-                review.Title = entity.Title;
-                review.UpdateAt = DateTime.Now;
+                var model = db.Reviews.Find(review.ID);
+                model.Title = review.Title;
+                model.UpdateAt = DateTime.Now;
                 db.SaveChanges();
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
@@ -60,12 +60,12 @@ namespace DataLayer.Dao
                              join c in db.Products
                              on a.ProductsID equals c.ID
                              where a.ParentID == parentID && a.UserID == userID
-                             select new
+                             select new ReviewModel
                              {
                                  ID = a.ID,
                                  UserID = a.UserID,
-                                 ProductID = a.ProductsID,
                                  Title = a.Title,
+                                 ProductsID = a.ProductsID,
                                  ParentID = a.ParentID,
                                  UserName = b.UserName,
                                  Image = c.Image,
@@ -75,21 +75,6 @@ namespace DataLayer.Dao
                                  CreateAt = a.CreateAt,
                                  UpdateAt = a.UpdateAt,
                                  DeleteAt = a.UpdateAt
-                             }).AsEnumerable().Select(x => new ReviewModel()
-                             {
-                                 ID = x.ID,
-                                 UserID = x.UserID,
-                                 ProductsID = x.ProductID,
-                                 Title = x.Title,
-                                 ParentID = x.ParentID,
-                                 UserName = x.UserName,
-                                 Image = x.Image,
-                                 View = x.View,
-                                 ProductName = x.ProductName,
-                                 Status = x.Status,
-                                 CreateAt = x.CreateAt,
-                                 UpdateAt = x.UpdateAt,
-                                 DeleteAt = x.DeleteAt
                              });
                 return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status==0).ToPagedList(page, pageSize);
             }
@@ -110,12 +95,12 @@ namespace DataLayer.Dao
                              join c in db.Products
                              on a.ProductsID equals c.ID
                              where a.ParentID == parentID
-                             select new
+                             select new ReviewModel
                              {
                                  ID = a.ID,
                                  UserID = a.UserID,
-                                 ProductID = a.ProductsID,
                                  Title = a.Title,
+                                 ProductsID = a.ProductsID,
                                  ParentID = a.ParentID,
                                  UserName = b.UserName,
                                  Image = c.Image,
@@ -125,21 +110,6 @@ namespace DataLayer.Dao
                                  CreateAt = a.CreateAt,
                                  UpdateAt = a.UpdateAt,
                                  DeleteAt = a.UpdateAt
-                             }).AsEnumerable().Select(x => new ReviewModel()
-                             {
-                                 ID = x.ID,
-                                 UserID = x.UserID,
-                                 ProductsID = x.ProductID,
-                                 Title = x.Title,
-                                 ParentID = x.ParentID,
-                                 UserName = x.UserName,
-                                 Image = x.Image,
-                                 View = x.View,
-                                 ProductName = x.ProductName,
-                                 Status = x.Status,
-                                 CreateAt = x.CreateAt,
-                                 UpdateAt = x.UpdateAt,
-                                 DeleteAt = x.DeleteAt
                              });
                 if (!string.IsNullOrEmpty(searchString))
                 {
@@ -197,26 +167,16 @@ namespace DataLayer.Dao
                              join b in db.Users
                              on a.UserID equals b.ID
                              where a.ParentID == parentID && a.ProductsID == productID
-                             select new
+                             select new ReviewModel
                              {
                                  ID = a.ID,
                                  UserID = a.UserID,
-                                 ProductID = a.ProductsID,
+                                 ProductsID = a.ProductsID,
                                  Title = a.Title,
                                  Status = a.Status,
                                  ParentID = a.ParentID,
                                  UserName = b.UserName,
                                  CreateAt = a.CreateAt
-                             }).AsEnumerable().Select(x => new ReviewModel()
-                             {
-                                 ID = x.ID,
-                                 UserID = x.UserID,
-                                 ProductsID = x.ProductID,
-                                 Status = x.Status,
-                                 Title = x.Title,
-                                 ParentID = x.ParentID,
-                                 UserName = x.UserName,
-                                 CreateAt = x.CreateAt
                              });
                 return model.OrderByDescending(y => y.ID).ToList();
             }
