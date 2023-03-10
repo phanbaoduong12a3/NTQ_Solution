@@ -14,6 +14,13 @@ namespace NTQ_Solution
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+              name: "Logout",
+              url: "Logout/Index",
+              defaults: new { controller = "Login", action = "Logout", id = UrlParameter.Optional },
+             namespaces: new[] { "OnlineShop.Controllers" }
+             );
+
+            routes.MapRoute(
               name: "Login",
               url: "Login/Index",
               defaults: new { controller = "Login", action = "Index", id = UrlParameter.Optional },

@@ -41,8 +41,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     @if (session == null)
                     {
                         <ul>
-                            <li><a > @Html.ActionLink("Register", "Index", "Register", new { area = "Admin" }, new { @class = "nav-link" })</a></li>
-                            <li><a href="/Login/Index">Login</a></li>
+                            <li><a class="btn btn-primary" href="/Register/Index"> Register</a></li>
+                            <li><a class="btn btn-primary" href="/Login/Index">Login</a></li>
                         </ul>
                     }
                     else
