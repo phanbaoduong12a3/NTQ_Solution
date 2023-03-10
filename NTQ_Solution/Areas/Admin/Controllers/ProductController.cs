@@ -9,14 +9,18 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ProductController : BaseController
     {
+        ProductDao productDao = null;
+        public ProductController()
+        {
+            productDao = new ProductDao();
+        }
         // GET: Admin/Product
         
         public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 15)
         {
             try
             {
-                var dao = new ProductDao();
-                var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
+                var model = productDao.ListAllPagingProduct(trending, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
@@ -35,7 +39,6 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dao = new ProductDao();
                     bool trending;
                     if (productModel.Trending == true) trending = true;
                     else trending = false;
@@ -51,7 +54,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         Image = productModel.Image,
                         CreateAt = DateTime.Now
                     };
-                    dao.Insert(product);
+                    productDao.Insert(product);
                     SetAlert("Create New Product Success", "success");
                     return RedirectToAction("Index", "Product");
                 }
@@ -65,9 +68,10 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var dao = new ProductDao();
-                var temp = dao.GetProductById(id);
-                bool checkTrending;
+                var temp = productDao.GetProductById(id);
+                bool checkTrending,status;
+                if(temp.Status == 1) status = true;
+                else status = false;
                 if (temp.Trending == true) checkTrending = true;
                 else checkTrending = false;
                 var product = new ProductModel
@@ -75,7 +79,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     ProductName = temp.ProductName,
                     Slug = temp.Slug,
                     Detail = temp.Detail,
-                    Status = temp.Status,
+                    Status = status,
                     NumberViews = temp.NumberViews,
                     Trending = checkTrending,
                     Price = temp.Price,
@@ -92,23 +96,25 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
+                int status;
+                if (model.Status) status = 1;
+                else status = 0;
                 if(ModelState.IsValid)
                 {
-                    var dao = new ProductDao();
                     var product = new Product
                     {
                         ID = model.ID,
                         ProductName = model.ProductName,
                         Slug = model.Slug,
                         Detail = model.Detail,
-                        Status = model.Status,
+                        Status = status,
                         NumberViews = model.NumberViews,
                         Trending = model.Trending,
                         Price = model.Price,
                         Image = model.Image,
                         UpdateAt = DateTime.Now
                     };
-                    dao.Update(product);
+                    productDao.Update(product);
                     SetAlert("Update Product Success", "success");
                     return RedirectToAction("Index", "Product");
                 }
@@ -125,7 +131,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                new ProductDao().Delete(id);
+                productDao.Delete(id);
                 SetAlert("Delete Product Success", "success");
                 return RedirectToAction("Index");
             }

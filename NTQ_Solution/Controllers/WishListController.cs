@@ -11,18 +11,22 @@ namespace NTQ_Solution.Controllers
 {
     public class WishListController : Controller
     {
+        WishListDao wishListDao = null;
+        public WishListController() 
+        {
+            wishListDao= new WishListDao();
+        }
         // GET: WishList
        
         public ActionResult Index(int page = 1, int pageSize = 10)
         {
             try
             {
-                var dao = new WishListDao();
                 var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                 if(session != null)
                 {
                     var userID = session.UserID;
-                    var model = dao.ListAllWishList(userID, page, pageSize);
+                    var model = wishListDao.WishListShow(userID, page, pageSize);
                     return View(model);
                 }
                 else
@@ -41,8 +45,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var dao = new WishListDao();
-                dao.Delete(id);
+                wishListDao.Delete(id);
                 return RedirectToAction("Index","WishList");
             }
             catch (Exception ex)

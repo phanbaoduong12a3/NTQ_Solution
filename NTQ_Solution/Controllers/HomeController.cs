@@ -12,13 +12,21 @@ namespace NTQ_Solution.Controllers
 {
     public class HomeController : Controller
     {
+        ProductDao productDao = null;
+        ReviewDao reviewDao = null;
+        WishListDao wishListDao = null;
+        public HomeController()
+        {
+            productDao = new ProductDao();
+            reviewDao = new ReviewDao();
+            wishListDao = new WishListDao();
+        }
         // GET: Home
         public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 8)
         {
             try
             {
-                var dao = new ProductDao();
-                var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
+                var model = productDao.ListProductOnSale(trending, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)
@@ -32,12 +40,11 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var dao = new ProductDao();
-                var product = dao.ViewDetail(id);
+                var product = productDao.ViewDetail(id);
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
                 if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
                 ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
-                dao.UpdateView(product.ID);
+                productDao.UpdateView(product.ID);
                 return View(product);
             }
             catch (Exception ex)
@@ -51,14 +58,14 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var dao = new ReviewDao();
+                //var dao = new ReviewDao();
                 Review review = new Review();
                 review.UserID = userid;
                 review.ProductsID = productid;
                 review.Title = title;
                 review.Status = 0;
                 review.CreateAt = DateTime.Now;
-                bool addReview = dao.InsertReview(review);
+                bool addReview = reviewDao.InsertReview(review);
                 if(addReview)
                 {
                     return Json(new { status = true });
@@ -78,7 +85,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var data = new ReviewDao().ListReviewViewModel(0, productid);
+                var data = reviewDao.ListReviewViewModel(0, productid);
                 return View(data);
             }
             catch (Exception ex)
@@ -91,7 +98,6 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var dao = new WishListDao();
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
                 if (sessionUser == null)
                 {
@@ -107,7 +113,7 @@ namespace NTQ_Solution.Controllers
                         CreateAt = DateTime.Now,
                         Status = 1
                     };
-                    dao.AddNewWishList(wishList);
+                    wishListDao.AddNewWishList(wishList);
                     return RedirectToAction("Index", "WishList");
                 }
             }

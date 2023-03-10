@@ -1,4 +1,5 @@
-﻿using NTQ_Solution.Common;
+﻿using DataLayer.Dao;
+using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             var session = (UserLogin)Session[CommonConstant.USER_SESSION];
             if (session == null)
             {
-                filterContext.Result = new RedirectToRouteResult(new
-                    RouteValueDictionary(new { controller = "Login", action = "Index", Area = "Admin" }));
+                    filterContext.Result = new RedirectToRouteResult(new
+                        RouteValueDictionary(new { controller = "ShowWarning", action = "Index", Area = "Admin" }));
             }
             base.OnActionExecuting(filterContext);
         }

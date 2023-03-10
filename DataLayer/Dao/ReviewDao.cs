@@ -4,6 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -90,7 +91,7 @@ namespace DataLayer.Dao
                                  UpdateAt = x.UpdateAt,
                                  DeleteAt = x.DeleteAt
                              });
-                return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+                return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status==0).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -99,7 +100,7 @@ namespace DataLayer.Dao
             }
         }
 
-        public IEnumerable<ReviewModel> ListAllPagingReview(int parentID,int page,int pageSize)
+        public IEnumerable<ReviewModel> ListAllPagingReview(string searchString,int parentID,int page,int pageSize)
         {
             try
             {
@@ -140,6 +141,10 @@ namespace DataLayer.Dao
                                  UpdateAt = x.UpdateAt,
                                  DeleteAt = x.DeleteAt
                              });
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.UserName.Contains(searchString)).ToPagedList(page, pageSize);
+                }
                 return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
             catch (Exception ex)

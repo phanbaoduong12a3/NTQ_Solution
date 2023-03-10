@@ -11,6 +11,11 @@ namespace NTQ_Solution.Controllers
 {
     public class RegisterController : Controller
     {
+        UserDao userDao = null;
+        public RegisterController()
+        {
+            userDao= new UserDao();
+        }
         // GET: Register
         public ActionResult Index()
         {
@@ -22,9 +27,8 @@ namespace NTQ_Solution.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dao = new UserDao();
-                    int result = dao.CheckUser(registerModel.UserName, registerModel.Email);
-                    bool checkConfirmPassword = dao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    int result = userDao.CheckUser(registerModel.UserName, registerModel.Email);
+                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
                     if (result == 1)
                     {
                         var user = new User
@@ -36,7 +40,7 @@ namespace NTQ_Solution.Controllers
                             Role = 0,
                             Status = 1
                         };
-                        dao.Insert(user);
+                        userDao.Insert(user);
                         return RedirectToAction("Index", "Login");
                     }
                     if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }

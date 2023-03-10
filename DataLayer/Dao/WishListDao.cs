@@ -71,7 +71,50 @@ namespace DataLayer.Dao
 			}
 		}
 
-		public void Delete(int id)
+        public IEnumerable<WishListModel> WishListShow(int userID, int page, int pageSize)
+        {
+            try
+            {
+                var model = (from a in db.WishLists
+                             join b in db.Users
+                             on a.UserID equals b.ID
+                             join c in db.Products
+                             on a.ProductsID equals c.ID
+                             where a.UserID == userID
+                             select new
+                             {
+                                 ID = a.ID,
+                                 UserName = b.UserName,
+                                 ProductName = c.ProductName,
+                                 Image = c.Image,
+                                 Price = c.Price,
+                                 CreateAt = a.CreateAt,
+                                 UpdateAt = a.UpdateAt,
+                                 DeleteAt = a.DeleteAt,
+                                 Status = a.Status
+                             }).AsEnumerable().Select(x => new WishListModel()
+                             {
+                                 ID = x.ID,
+                                 UserName = x.UserName,
+                                 ProductName = x.ProductName,
+                                 Image = x.Image,
+                                 Price = x.Price,
+                                 CreateAt = x.CreateAt,
+                                 UpdateAt = x.UpdateAt,
+                                 DeleteAt = x.DeleteAt,
+                                 Status = x.Status
+                             });
+
+                return model.OrderByDescending(x => x.CreateAt).Where(x=>x.Status == 1).ToPagedList(page, pageSize);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        public void Delete(int id)
 		{
 			try
 			{

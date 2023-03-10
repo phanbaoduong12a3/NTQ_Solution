@@ -41,8 +41,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     @if (session == null)
                     {
                         <ul>
-                            <li><a class="btn btn-primary" href="/Register/Index"> Register</a></li>
-                            <li><a class="btn btn-primary" href="/Login/Index">Login</a></li>
+                            <li><a class="btn btn-primary" href="/Register/Index" style="color:white"> Register</a></li>
+                            <li><a class="btn btn-primary" href="/Login/Index" style="color:white">Login</a></li>
                         </ul>
                     }
                     else
@@ -120,7 +120,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="header_bottom">
                 <div class="menu">
                     <ul>
-                        <li class="active"><a href="/Home/Index">Home</a></li>
+                        <li><a href="/Home/Index">Home</a></li>
                         <li>@Html.ActionLink("Product", "Index", "Product")</li>
                         <li ><a href="/Review/Index">My Review</a></li>
                         <li>@Html.ActionLink("My WishList", "Index", "WishList")</li>

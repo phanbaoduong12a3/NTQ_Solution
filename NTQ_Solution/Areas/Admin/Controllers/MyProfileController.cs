@@ -11,6 +11,11 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class MyProfileController : BaseController
     {
+        UserDao userDao = null;
+        public MyProfileController() 
+        {
+            userDao = new UserDao();
+        }
         public ActionResult Index()
         {
             return View();
@@ -22,8 +27,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-                var dao = new UserDao();
-                var user = dao.GetById(model.UserID);
+                var user = userDao.GetById(model.UserID);
                 var result = new RegisterModel
                 {
                     ID = user.ID,
@@ -31,7 +35,6 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Email = user.Email,
                     Password = user.PassWord,
                     Role = user.Role,
-                    Status = user.Status,
                     CreateAt = user.CreateAt,
                     UpdateAt = user.UpdateAt,
                     DeleteAt = user.DeleteAt,
@@ -51,14 +54,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dao = new UserDao();
-                    var result = dao.GetByEmail(model.Email);
+                    var result = userDao.GetByEmail(model.Email);
                     model.ID = result.ID;
                     bool checkUserName ;
-                    bool checkConfirmPassword = dao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
-                    var userOld = dao.GetById(model.ID);
+                    bool checkConfirmPassword = userDao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
+                    var userOld = userDao.GetById(model.ID);
                     if (model.UserName == userOld.UserName) checkUserName = true;
-                    else checkUserName = dao.CheckUserName(model.UserName);
+                    else checkUserName = userDao.CheckUserName(model.UserName);
                     if (checkUserName  && checkConfirmPassword)
                     {
                         var user = new User
@@ -68,9 +70,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             UserName = model.UserName,
                             PassWord = model.Password,
                             Role = model.Role,
-                            Status = model.Status
                         };
-                        dao.Update(user);
+                        userDao.Update(user);
                         SetAlert("Update Seccess", "success");
                         return RedirectToAction("Profile", "MyProfile");
                     }

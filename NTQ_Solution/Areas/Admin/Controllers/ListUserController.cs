@@ -12,13 +12,17 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ListUserController : BaseController 
     {
+        UserDao userDao = null;
+        public ListUserController()
+        {
+            userDao = new UserDao();
+        }
         // GET: Admin/ListUser
         public ActionResult Index(string active, string inActive, string admin, string user, string searchString, int page = 1, int pageSize = 10)
         {
             try
             {
-                var dao = new UserDao();
-                var model = dao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
+                var model = userDao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)

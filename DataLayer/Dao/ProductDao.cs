@@ -124,6 +124,41 @@ namespace DataLayer.Dao
         }
 
         /// <summary>
+        /// List Product On Sale
+        /// </summary>
+        /// <param name="trending"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
+        public IEnumerable<Product> ListProductOnSale(string trending, string searchString, int page, int pageSize)
+        {
+            try
+            {
+                IQueryable<Product> model = db.Products;
+                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(trending))
+                {
+                    model = model.Where(x => x.ProductName.Contains(searchString));
+                    if (trending != null)
+                    {
+                        model = model.Where(x => x.Trending == true);
+                    }
+                    if (model == null)
+                    {
+                        return null;
+                    }
+                    return model.OrderByDescending(x => x.NumberViews).Where(x => x.Status == 1).ToPagedList(page, pageSize);
+                }
+                return model.OrderByDescending(x => x.NumberViews).Where(x => x.Status == 1).ToPagedList(page, pageSize);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get Product By Id
         /// </summary>
         /// <param name="id"></param>

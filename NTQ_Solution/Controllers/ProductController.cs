@@ -9,13 +9,17 @@ namespace NTQ_Solution.Controllers
 {
     public class ProductController : Controller
     {
+        ProductDao productDao = null;
+        public ProductController()
+        {
+            productDao= new ProductDao();
+        }
         // GET: Product
         public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 8)
         {
             try
             {
-                var dao = new ProductDao();
-                var model = dao.ListAllPagingProduct(trending, searchString, page, pageSize);
+                var model = productDao.ListProductOnSale(trending, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)

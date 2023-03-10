@@ -14,6 +14,11 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class UserController : BaseController
     {
+        UserDao userDao = null;
+        public UserController() 
+        {
+            userDao = new UserDao();
+        }
         // GET: Admin/User
         /// <summary>
         /// Home
@@ -30,8 +35,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var dao = new UserDao();
-                var model = dao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
+                var model = userDao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
@@ -56,9 +60,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dao = new UserDao();
-                    int result = dao.CheckUser(registerModel.UserName, registerModel.Email);
-                    bool checkConfirmPassword = dao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    int result = userDao.CheckUser(registerModel.UserName, registerModel.Email);
+                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
                     if (result == 1 && checkConfirmPassword)
                     {
                         var user = new User
@@ -70,7 +73,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Role = 0,
                             Status = 1
                         };
-                        dao.Insert(user);
+                        userDao.Insert(user);
                         SetAlert("Create New User Success", "success");
                         return RedirectToAction("Index", "ListUser");
                     }
@@ -104,8 +107,16 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var dao = new UserDao();
-                var temp = dao.GetById(id);
+                var temp = userDao.GetById(id);
+                bool status;
+                if(temp.Status == 1)
+                {
+                    status = true;
+                }
+                else
+                {
+                    status = false;
+                }
                 if (temp.Role == 0)
                 {
                     ViewBag.Role = "User";
@@ -122,7 +133,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Password = temp.PassWord,
                     UpdateAt = temp.UpdateAt,
                     Role = temp.Role,
-                    Status = temp.Status
+                    Status = status
                 };
                 return View(user);
             }
@@ -140,13 +151,15 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dao = new UserDao();
-                    bool checkUserName = dao.CheckUserName(model.UserName);
-                    bool checkEmail = dao.CheckEmail(model.Email);
-                    bool checkConfirmPassword = dao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
-                    var userOld = dao.GetById(model.ID);
+                    bool checkUserName = userDao.CheckUserName(model.UserName);
+                    bool checkEmail = userDao.CheckEmail(model.Email);
+                    bool checkConfirmPassword = userDao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
+                    var userOld = userDao.GetById(model.ID);
                     if(model.UserName == userOld.UserName) checkUserName = true;
                     if(model.Email == userOld.Email) checkEmail = true;
+                    int status;
+                    if (model.Status) { status = 1; }
+                    else status = 0;
                     if (checkUserName && checkEmail && checkConfirmPassword)
                     {
                         var user = new User
@@ -156,9 +169,9 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             UserName = model.UserName,
                             PassWord = model.Password,
                             Role = model.Role,
-                            Status = model.Status
+                            Status = status
                         };
-                        dao.Update(user);
+                        userDao.Update(user);
                         SetAlert("Update Success", "success");
                         return RedirectToAction("Index", "ListUser");
                     }
@@ -184,7 +197,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                new UserDao().Delete(id);
+                userDao.Delete(id);
                 SetAlert("Delete User Success", "success");
                 return RedirectToAction("Index");
             }
@@ -194,6 +207,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 throw;
             }
         }
+
+        
 
     }
 }

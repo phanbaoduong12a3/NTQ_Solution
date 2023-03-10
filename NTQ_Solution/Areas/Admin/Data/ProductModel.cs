@@ -24,7 +24,7 @@ namespace NTQ_Solution.Areas.Admin.Data
 
         public bool Trending { get; set; }
 
-        public int? Status { get; set; }
+        public bool Status { get; set; }
 
         public double? NumberViews { get; set; }
         [Required(ErrorMessage = "Enter Price,please")]

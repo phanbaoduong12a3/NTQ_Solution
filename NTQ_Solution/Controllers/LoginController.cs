@@ -12,6 +12,12 @@ namespace NTQ_Solution.Controllers
 {
     public class LoginController : Controller
     {
+
+        UserDao userDao = null;
+        public LoginController()
+        {
+            userDao = new UserDao();
+        }
         // GET: Login
         public ActionResult Index()
         {
@@ -23,11 +29,10 @@ namespace NTQ_Solution.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var dao = new UserDao();
-                    var result = dao.Login(model.Email, model.Password);
+                    var result = userDao.Login(model.Email, model.Password);
                     if (result == 1)
                     {
-                        var user = dao.GetByEmail(model.Email);
+                        var user = userDao.GetByEmail(model.Email);
                         var userSession = new UserLogin();
                         userSession.UserID = user.ID;
                         userSession.Email = user.Email;
@@ -36,7 +41,7 @@ namespace NTQ_Solution.Controllers
                         var session = (UserLogin)Session[CommonConstant.USER_SESSION];
                         if(user.Role == 0) 
                         { 
-                            return RedirectToAction("Index", "Home"); 
+                            return RedirectToAction("Profile", "Profile"); 
                         }
                         else
                         {
