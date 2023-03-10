@@ -47,7 +47,7 @@
                                             <td>@item.Title</td>
                                             <td>@item.ProductName</td>
                                             <td>
-                                                <img src="@item.Image" />
+                                                <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                             </td>
                                             <td>@item.View</td>
                                             <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
