@@ -24,13 +24,13 @@ namespace DataLayer.Dao
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public int Insert(User entity)
+        public int Insert(User user)
         {
             try
             {
-                db.Users.Add(entity);
+                db.Users.Add(user);
                 db.SaveChanges();
-                return entity.ID;
+                return user.ID;
             }
             catch (Exception ex)
             {

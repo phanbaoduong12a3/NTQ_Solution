@@ -52,11 +52,11 @@ namespace NTQ_Solution.Controllers
             }
         }
         [HttpPost]
-        public ActionResult UpdateReview(Review model)
+        public ActionResult UpdateReview(Review review)
         {
             try
             {
-                reviewDao.UpdateReview(model);
+                reviewDao.UpdateReview(review);
                 TempData["success"] = "Update Review success";
                 return RedirectToAction("Index", "Review");
             }

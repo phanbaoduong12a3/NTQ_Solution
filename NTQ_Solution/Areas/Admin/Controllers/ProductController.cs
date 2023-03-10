@@ -92,33 +92,33 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateProduct(ProductModel model)
+        public ActionResult UpdateProduct(ProductModel productModel)
         {
             try
             {
                 int status;
-                if (model.Status) status = 1;
+                if (productModel.Status) status = 1;
                 else status = 0;
                 if(ModelState.IsValid)
                 {
                     var product = new Product
                     {
-                        ID = model.ID,
-                        ProductName = model.ProductName,
-                        Slug = model.Slug,
-                        Detail = model.Detail,
+                        ID = productModel.ID,
+                        ProductName = productModel.ProductName,
+                        Slug = productModel.Slug,
+                        Detail = productModel.Detail,
                         Status = status,
-                        NumberViews = model.NumberViews,
-                        Trending = model.Trending,
-                        Price = model.Price,
-                        Image = model.Image,
+                        NumberViews = productModel.NumberViews,
+                        Trending = productModel.Trending,
+                        Price = productModel.Price,
+                        Image = productModel.Image,
                         UpdateAt = DateTime.Now
                     };
                     productDao.Update(product);
                     TempData["success"] = "Update Product success";
                     return RedirectToAction("Index", "Product");
                 }
-                return View(model);
+                return View(productModel);
             }
             catch (Exception ex)
             {

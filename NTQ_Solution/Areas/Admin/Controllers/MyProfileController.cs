@@ -28,7 +28,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                 var user = userDao.GetById(model.UserID);
-                var result = new RegisterModel
+                var registerModel = new RegisterModel
                 {
                     ID = user.ID,
                     UserName = user.UserName,
@@ -39,7 +39,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     UpdateAt = user.UpdateAt,
                     DeleteAt = user.DeleteAt,
                 };
-                return View(result);
+                return View(registerModel);
             }
             catch (Exception ex)
             {
@@ -48,28 +48,28 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Profile(RegisterModel model)
+        public ActionResult Profile(RegisterModel registerModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var result = userDao.GetByEmail(model.Email);
-                    model.ID = result.ID;
+                    var result = userDao.GetByEmail(registerModel.Email);
+                    registerModel.ID = result.ID;
                     bool checkUserName ;
-                    bool checkConfirmPassword = userDao.CheckConfirmPassword(model.ConfirmPassword, model.Password);
-                    var userOld = userDao.GetById(model.ID);
-                    if (model.UserName == userOld.UserName) checkUserName = true;
-                    else checkUserName = userDao.CheckUserName(model.UserName);
+                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    var userOld = userDao.GetById(registerModel.ID);
+                    if (registerModel.UserName == userOld.UserName) checkUserName = true;
+                    else checkUserName = userDao.CheckUserName(registerModel.UserName);
                     if (checkUserName  && checkConfirmPassword)
                     {
                         var user = new User
                         {
-                            ID = model.ID,
-                            Email = model.Email,
-                            UserName = model.UserName,
-                            PassWord = model.Password,
-                            Role = model.Role,
+                            ID = registerModel.ID,
+                            Email = registerModel.Email,
+                            UserName = registerModel.UserName,
+                            PassWord = registerModel.Password,
+                            Role = registerModel.Role,
                         };
                         userDao.Update(user);
                         TempData["success"] = "Update Profile success";
@@ -78,7 +78,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };
                     if (!checkConfirmPassword) { ModelState.AddModelError("", "ConfirmPassword is not correct"); }
                 }
-                return View(model);
+                return View(registerModel);
             }
             catch (Exception ex)
             {

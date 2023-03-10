@@ -23,16 +23,16 @@ namespace NTQ_Solution.Controllers
         {
             return View();
         }
-        public ActionResult Login(LoginModel model)
+        public ActionResult Login(LoginModel loginModel)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var result = userDao.Login(model.Email, model.Password);
+                    var result = userDao.Login(loginModel.Email, loginModel.Password);
                     if (result == 1)
                     {
-                        var user = userDao.GetByEmail(model.Email);
+                        var user = userDao.GetByEmail(loginModel.Email);
                         var userSession = new UserLogin();
                         userSession.UserID = user.ID;
                         userSession.Email = user.Email;
