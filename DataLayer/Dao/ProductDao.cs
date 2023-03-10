@@ -108,10 +108,6 @@ namespace DataLayer.Dao
                     {
                         model = model.Where(x => x.Trending == true);
                     }
-                    if (model == null)
-                    {
-                        return null;
-                    }
                     return model.OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
                 }
                 return model.OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
@@ -142,10 +138,6 @@ namespace DataLayer.Dao
                     if (trending != null)
                     {
                         model = model.Where(x => x.Trending == true);
-                    }
-                    if (model == null)
-                    {
-                        return null;
                     }
                     return model.OrderByDescending(x => x.NumberViews).Where(x => x.Status == 1).ToPagedList(page, pageSize);
                 }

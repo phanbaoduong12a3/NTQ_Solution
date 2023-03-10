@@ -278,10 +278,6 @@ namespace DataLayer.Dao
                     {
                         model = model.Where(x => x.Role == 0);
                     }
-                    if (model == null)
-                    {
-                        return null;
-                    }
                     return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
                 }
                 return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
