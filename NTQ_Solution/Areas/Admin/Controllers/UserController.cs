@@ -31,7 +31,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public ActionResult Index(string active,string inActive,string admin,string user,string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string active,string inActive,string admin,string user,string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
@@ -74,7 +74,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Status = 1
                         };
                         userDao.Insert(user);
-                        SetAlert("Create New User Success", "success");
+                        TempData["success"] = "Create New User success";
                         return RedirectToAction("Index", "ListUser");
                     }
                     if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
@@ -172,7 +172,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Status = status
                         };
                         userDao.Update(user);
-                        SetAlert("Update Success", "success");
+                        TempData["success"] = "Update User success";
                         return RedirectToAction("Index", "ListUser");
                     }
                     if(!checkEmail) { ModelState.AddModelError("", "Email is invalid"); }
@@ -198,7 +198,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 userDao.Delete(id);
-                SetAlert("Delete User Success", "success");
+                TempData["success"] = "Delete User success";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

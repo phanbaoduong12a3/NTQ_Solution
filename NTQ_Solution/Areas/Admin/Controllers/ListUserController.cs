@@ -18,7 +18,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             userDao = new UserDao();
         }
         // GET: Admin/ListUser
-        public ActionResult Index(string active, string inActive, string admin, string user, string searchString, int page = 1, int pageSize = 10)
+        public ActionResult Index(string active, string inActive, string admin, string user, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {

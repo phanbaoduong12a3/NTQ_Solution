@@ -61,17 +61,22 @@
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NumberViews, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.NumberViews, new { @class = "form-control form-control-user" })
+            @Html.ValidationMessageFor(model => model.NumberViews, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
+       
             @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
+                @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control form-control-user" }, id = "txtImage" })
                 <a id="btnSelectImage" href="#">Chọn ảnh </a>
                 @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
             </div>
-        </div>
     </div>
 
     <div class="form-group">
@@ -97,10 +102,4 @@
     </div>
 </div>
 }
-<script>
-    var loadFile = function (event) {
-        var image = document.getElementById('output');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
-</script>
 

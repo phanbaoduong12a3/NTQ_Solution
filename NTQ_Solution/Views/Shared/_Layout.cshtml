@@ -201,8 +201,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript">
         $(document).ready(function () {
             $().UItoTop({ easingType: 'easeOutQuart' });
-
+            var message = '@TempData["success"]';
+            if (message) {
+                alert(message);
+            }
         });</script>
+        
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
     @RenderSection("jsFooter", required: false)
 </body>

@@ -22,7 +22,7 @@ namespace DataLayer.EF
 
         public int? Status { get; set; }
 
-        public double? NumberViews { get; set; }
+        public int? NumberViews { get; set; }
 
         public double? Price { get; set; }
 

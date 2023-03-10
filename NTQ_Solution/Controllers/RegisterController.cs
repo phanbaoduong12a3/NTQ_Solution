@@ -41,6 +41,7 @@ namespace NTQ_Solution.Controllers
                             Status = 1
                         };
                         userDao.Insert(user);
+                        TempData["success"] = "Create New Account succsee";
                         return RedirectToAction("Index", "Login");
                     }
                     if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }

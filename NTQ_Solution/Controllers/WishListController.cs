@@ -18,7 +18,7 @@ namespace NTQ_Solution.Controllers
         }
         // GET: WishList
        
-        public ActionResult Index(int page = 1, int pageSize = 10)
+        public ActionResult Index(int page = 1, int pageSize = 5)
         {
             try
             {
@@ -46,6 +46,7 @@ namespace NTQ_Solution.Controllers
             try
             {
                 wishListDao.Delete(id);
+                TempData["success"] = "Delete Product From Wishlist succsee";
                 return RedirectToAction("Index","WishList");
             }
             catch (Exception ex)

@@ -72,7 +72,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Role = model.Role,
                         };
                         userDao.Update(user);
-                        SetAlert("Update Seccess", "success");
+                        TempData["success"] = "Update Profile success";
                         return RedirectToAction("Profile", "MyProfile");
                     }
                     if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };

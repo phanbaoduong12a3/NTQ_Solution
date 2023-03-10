@@ -31,10 +31,7 @@ namespace NTQ_Solution.Controllers
                 }
                 else
                 {
-                    bool status;
                     var user = userDao.GetById(model.UserID);
-                    if(user.Status == 1) { status = true; }
-                    else { status = false; }
                     var result = new RegisterModel
                     {
                         ID = user.ID,
@@ -42,7 +39,6 @@ namespace NTQ_Solution.Controllers
                         Email = user.Email,
                         Password = user.PassWord,
                         Role = user.Role,
-                        Status = status,
                         CreateAt = user.CreateAt,
                         UpdateAt = user.UpdateAt,
                         DeleteAt = user.DeleteAt,
@@ -70,9 +66,7 @@ namespace NTQ_Solution.Controllers
                     var userOld = userDao.GetById(model.ID);
                     if (model.UserName == userOld.UserName) checkUserName = true;
                     else checkUserName = userDao.CheckUserName(model.UserName);
-                    int status;
-                    if(model.Status) { status = 1; }
-                    else { status = 0; }
+                    
                     if (checkUserName && checkConfirmPassword)
                     {
                         var user = new User
@@ -81,10 +75,10 @@ namespace NTQ_Solution.Controllers
                             Email = model.Email,
                             UserName = model.UserName,
                             PassWord = model.Password,
-                            Role = model.Role,
-                            Status = status
+                            Role = model.Role
                         };
                         userDao.Update(user);
+                        TempData["success"] = "Update Profile success";
                         return RedirectToAction("Profile", "Profile");
                     }
                     if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };

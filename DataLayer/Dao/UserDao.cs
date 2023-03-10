@@ -307,7 +307,6 @@ namespace DataLayer.Dao
                 {
                     user.UserName = entity.UserName;
                     user.PassWord = entity.PassWord;
-                    user.Status = entity.Status;
                     user.UpdateAt = DateTime.Now;
                     db.SaveChanges();
                 }

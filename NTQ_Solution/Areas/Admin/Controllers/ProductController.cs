@@ -16,7 +16,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
         // GET: Admin/Product
         
-        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 15)
+        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         CreateAt = DateTime.Now
                     };
                     productDao.Insert(product);
-                    SetAlert("Create New Product Success", "success");
+                    TempData["success"] = "Create New Product success";
                     return RedirectToAction("Index", "Product");
                 }
                 return View(productModel);
@@ -115,7 +115,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         UpdateAt = DateTime.Now
                     };
                     productDao.Update(product);
-                    SetAlert("Update Product Success", "success");
+                    TempData["success"] = "Update Product success";
                     return RedirectToAction("Index", "Product");
                 }
                 return View(model);
@@ -132,7 +132,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 productDao.Delete(id);
-                SetAlert("Delete Product Success", "success");
+                TempData["success"] = "Delete Product success";
                 return RedirectToAction("Index");
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }

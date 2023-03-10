@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="card-body p-0">
     <div class="row">
         <div class="col-lg-6" style="text-align:center;">
@@ -22,6 +23,7 @@
                         <div class="card-header py-3">
                             <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">My profile</h2>
                         </div>
+
                         @using (Html.BeginForm("Profile", "Profile", FormMethod.Post))
                         {
                             @Html.AntiForgeryToken()
@@ -75,9 +77,11 @@
 
             </div>
         </div>
+        </div>
+    </div>
 
 
-        <script>
+<script>
             function show() {
                 var p = document.getElementById('password');
                 p.setAttribute('type', 'text');
@@ -103,4 +107,10 @@
                     hide();
                 }
             }, false);
-        </script>
+    @*$(document).ready(function () {
+        var message = '@TempData["success"]';
+        if (message) {
+            alert(message);
+        }
+    });*@
+</script>

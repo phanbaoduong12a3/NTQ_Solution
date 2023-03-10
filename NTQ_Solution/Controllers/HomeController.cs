@@ -114,6 +114,7 @@ namespace NTQ_Solution.Controllers
                         Status = 1
                     };
                     wishListDao.AddNewWishList(wishList);
+                    TempData["success"] = "Insert Product to Wishlist success";
                     return RedirectToAction("Index", "WishList");
                 }
             }

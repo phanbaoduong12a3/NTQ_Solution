@@ -17,7 +17,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             reviewDao = new ReviewDao();
         }
         // GET: Admin/ListReview
-        public ActionResult Index(string searchString, int parentID=0,int page=1, int pageSize = 10)
+        public ActionResult Index(string searchString, int parentID=0,int page=1, int pageSize = 5)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 reviewDao.UpdateReview(model);
-                SetAlert("Update Success", "success");
+                TempData["success"] = "Update Review success";
                 return RedirectToAction("Index", "ListReview");
             }
             catch (Exception ex)
@@ -66,7 +66,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 reviewDao.Delete(id);
-                SetAlert("Delete success", "success");
+                TempData["success"] = "Delete Review success";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
