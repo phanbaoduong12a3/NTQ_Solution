@@ -11,7 +11,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ListReviewController : BaseController
     {
-        ReviewDao reviewDao = null;
+        ReviewDao reviewDao ;
         public ListReviewController()
         {
             reviewDao = new ReviewDao();

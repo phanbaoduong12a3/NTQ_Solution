@@ -11,7 +11,7 @@ namespace NTQ_Solution.Controllers
 {
     public class RegisterController : Controller
     {
-        UserDao userDao = null;
+        UserDao userDao ;
         public RegisterController()
         {
             userDao= new UserDao();

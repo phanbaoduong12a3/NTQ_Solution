@@ -13,7 +13,7 @@ namespace NTQ_Solution.Controllers
     public class LoginController : Controller
     {
 
-        UserDao userDao = null;
+        UserDao userDao ;
         public LoginController()
         {
             userDao = new UserDao();

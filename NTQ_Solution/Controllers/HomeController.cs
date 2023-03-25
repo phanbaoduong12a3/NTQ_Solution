@@ -12,9 +12,9 @@ namespace NTQ_Solution.Controllers
 {
     public class HomeController : Controller
     {
-        ProductDao productDao = null;
-        ReviewDao reviewDao = null;
-        WishListDao wishListDao = null;
+        ProductDao productDao ;
+        ReviewDao reviewDao ;
+        WishListDao wishListDao ;
         public HomeController()
         {
             productDao = new ProductDao();

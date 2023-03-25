@@ -9,7 +9,7 @@ namespace NTQ_Solution.Controllers
 {
     public class ProductController : Controller
     {
-        ProductDao productDao = null;
+        ProductDao productDao ;
         public ProductController()
         {
             productDao= new ProductDao();

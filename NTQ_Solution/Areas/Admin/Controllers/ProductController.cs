@@ -9,7 +9,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ProductController : BaseController
     {
-        ProductDao productDao = null;
+        ProductDao productDao ;
         public ProductController()
         {
             productDao = new ProductDao();

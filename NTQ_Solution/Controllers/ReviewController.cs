@@ -11,7 +11,7 @@ namespace NTQ_Solution.Controllers
 {
     public class ReviewController : Controller
     {
-        ReviewDao reviewDao = null;
+        ReviewDao reviewDao ;
         public ReviewController()
         {
             reviewDao = new ReviewDao();

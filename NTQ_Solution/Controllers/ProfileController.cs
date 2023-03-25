@@ -13,7 +13,7 @@ namespace NTQ_Solution.Controllers
 {
     public class ProfileController : Controller
     {
-        UserDao userDao = null;
+        UserDao userDao ;
         public ProfileController()
         {
             userDao = new UserDao();

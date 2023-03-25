@@ -12,7 +12,7 @@ namespace DataLayer.Dao
 {
     public class ReviewDao
     {
-        NTQDBContext db = null;
+        NTQDBContext db ;
         public ReviewDao()
         {
             db = new NTQDBContext();

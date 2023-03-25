@@ -12,7 +12,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ListUserController : BaseController 
     {
-        UserDao userDao = null;
+        UserDao userDao ;
         public ListUserController()
         {
             userDao = new UserDao();

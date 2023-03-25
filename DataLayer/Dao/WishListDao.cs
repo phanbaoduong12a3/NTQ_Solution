@@ -11,7 +11,7 @@ namespace DataLayer.Dao
 {
     public class WishListDao
     {
-		NTQDBContext db = null;
+		NTQDBContext db ;
 		public WishListDao()
 		{
 			db = new NTQDBContext();

@@ -14,7 +14,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class UserController : BaseController
     {
-        UserDao userDao = null;
+        UserDao userDao ;
         public UserController() 
         {
             userDao = new UserDao();

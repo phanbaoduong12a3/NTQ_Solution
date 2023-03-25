@@ -10,7 +10,7 @@ namespace DataLayer.Dao
 {
     public class ProductDao
     {
-        NTQDBContext db = null;
+        NTQDBContext db ;
         public ProductDao()
         {
             db = new NTQDBContext();

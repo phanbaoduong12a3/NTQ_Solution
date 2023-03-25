@@ -11,7 +11,7 @@ namespace NTQ_Solution.Controllers
 {
     public class WishListController : Controller
     {
-        WishListDao wishListDao = null;
+        WishListDao wishListDao ;
         public WishListController() 
         {
             wishListDao= new WishListDao();
