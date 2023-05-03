@@ -96,17 +96,30 @@ namespace DataLayer.Dao
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Product> ListAllPagingProduct(string trending, string searchString, int page, int pageSize)
+        public IEnumerable<Product> ListAllPagingProduct(string size, string color, string supplier, string trending, string searchString, int page, int pageSize)
         {
             try
             {
                 IQueryable<Product> model = db.Products;
-                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(trending))
+                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(trending) || !string.IsNullOrEmpty(color) || !string.IsNullOrEmpty(size) || !string.IsNullOrEmpty(supplier))
                 {
                     model = model.Where(x => x.ProductName.Contains(searchString));
                     if (trending != null)
                     {
                         model = model.Where(x => x.Trending == true);
+                    }
+                    if(!string.IsNullOrEmpty(color))
+                    {
+                        model = model.Where(x => x.Color == color);
+                    }
+                    if (!string.IsNullOrEmpty(size))
+                    {
+                        model = model.Where(x => x.Size == size);
+                    }
+                    if (!string.IsNullOrEmpty(supplier))
+                    {
+                        int supplierModel = int.Parse(supplier);
+                        model = model.Where(x => x.SupplierID == supplierModel);
                     }
                     return model.OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
                 }

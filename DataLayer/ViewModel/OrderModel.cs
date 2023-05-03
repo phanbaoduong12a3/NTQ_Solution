@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataLayer.ViewModel
 {
-    public class WishListModel
+    public class OrderModel
     {
         public int ID { get; set; }
         public int? ProductID { get; set; }
@@ -20,8 +20,12 @@ namespace DataLayer.ViewModel
         public DateTime? CreateAt { get; set; }
         public DateTime? UpdateAt { get; set;}
         public DateTime? DeleteAt { get; set; }
-
-
+        public int? Count { get; set; }
+        public DateTime? EndAt { get; set; }
+        public int? ShippingID { get; set; }
+        public string Payment { get; set; }
+        public string Address { get; set; }
+        public int? Phone { get; set; }
 
     }
 }

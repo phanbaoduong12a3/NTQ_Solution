@@ -14,12 +14,12 @@ namespace NTQ_Solution.Controllers
     {
         ProductDao productDao ;
         ReviewDao reviewDao ;
-        WishListDao wishListDao ;
+        OrderDao OrderDao ;
         public HomeController()
         {
             productDao = new ProductDao();
             reviewDao = new ReviewDao();
-            wishListDao = new WishListDao();
+            OrderDao = new OrderDao();
         }
         // GET: Home
         public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 8)
@@ -94,7 +94,7 @@ namespace NTQ_Solution.Controllers
                 throw;
             }
         }
-        public ActionResult WishList(int productID)
+        public ActionResult Order(int productID)
         {
             try
             {
@@ -105,17 +105,26 @@ namespace NTQ_Solution.Controllers
                 }
                 else
                 {
-                    var userID = sessionUser.UserID;
-                    var wishList = new WishList
+                    bool checkProductID = OrderDao.checkProductID(productID);
+                    if(!checkProductID) 
                     {
-                        ProductsID = productID,
-                        UserID = userID,
-                        CreateAt = DateTime.Now,
-                        Status = 1
-                    };
-                    wishListDao.AddNewWishList(wishList);
-                    TempData["success"] = "Insert Product to Wishlist success";
-                    return RedirectToAction("Index", "WishList");
+                        var userID = sessionUser.UserID;
+                        var Order = new Order
+                        {
+                            ProductsID = productID,
+                            UserID = userID,
+                            CreateAt = DateTime.Now,
+                            Status = 1,
+                            Count = 1
+                        };
+                        OrderDao.AddNewOrder(Order);
+                    }
+                    else
+                    {
+                        OrderDao.UpdateOrder(productID);
+                    }
+                    TempData["success"] = "Insert Product to Order success";
+                    return RedirectToAction("Index", "Order");
                 }
             }
             catch (Exception ex)

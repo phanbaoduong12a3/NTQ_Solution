@@ -29,9 +29,15 @@ namespace NTQ_Solution
 
             routes.MapRoute(
               name: "Add Cart",
-              url: "add-wishlist",
-              defaults: new { controller = "Home", action = "WishList", id = UrlParameter.Optional },
+              url: "add-Order",
+              defaults: new { controller = "Home", action = "Order", id = UrlParameter.Optional },
              namespaces: new[] { "OnlineShop.Controllers" }
+             );
+            routes.MapRoute(
+              name: "Get Product Of Supplier",
+              url: "GetProductOfSupplier",
+              defaults: new { controller = "Supplier", action = "Index", id = UrlParameter.Optional },
+             namespaces: new[] { "NTQ_Solution.Areas.Admin.Controllers" }
              );
 
             routes.MapRoute(

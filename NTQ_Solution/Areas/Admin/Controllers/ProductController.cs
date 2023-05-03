@@ -16,11 +16,11 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
         // GET: Admin/Product
         
-        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(string size, string color, string supplier, string trending, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
-                var model = productDao.ListAllPagingProduct(trending, searchString, page, pageSize);
+                var model = productDao.ListAllPagingProduct(size, color, supplier,trending, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }

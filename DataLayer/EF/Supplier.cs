@@ -6,12 +6,17 @@ namespace DataLayer.EF
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Category")]
-    public partial class Category
+    [Table("Supplier")]
+    public partial class Supplier
     {
         public int ID { get; set; }
 
-        [StringLength(50)]
-        public string CategoryName { get; set; }
+        [StringLength(150)]
+        public string SupplierName { get; set; }
+
+        public int? Phone { get; set; }
+
+        [StringLength(150)]
+        public string Address { get; set; }
     }
 }

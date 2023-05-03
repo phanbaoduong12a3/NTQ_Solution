@@ -15,7 +15,7 @@ namespace NTQ_Solution.Controllers
             productDao= new ProductDao();
         }
         // GET: Product
-        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 8)
+        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {

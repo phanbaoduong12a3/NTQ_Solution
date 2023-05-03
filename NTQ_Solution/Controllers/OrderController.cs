@@ -9,14 +9,14 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Controllers
 {
-    public class WishListController : Controller
+    public class OrderController : Controller
     {
-        WishListDao wishListDao ;
-        public WishListController() 
+        OrderDao OrderDao ;
+        public OrderController() 
         {
-            wishListDao= new WishListDao();
+            OrderDao= new OrderDao();
         }
-        // GET: WishList
+        // GET: Order
        
         public ActionResult Index(int page = 1, int pageSize = 5)
         {
@@ -26,7 +26,7 @@ namespace NTQ_Solution.Controllers
                 if(session != null)
                 {
                     var userID = session.UserID;
-                    var model = wishListDao.WishListShow(userID, page, pageSize);
+                    var model = OrderDao.OrderShow(userID, page, pageSize);
                     return View(model);
                 }
                 else
@@ -45,15 +45,21 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                wishListDao.Delete(id);
-                TempData["success"] = "Delete Product From Wishlist succsee";
-                return RedirectToAction("Index","WishList");
+                OrderDao.Delete(id);
+                TempData["success"] = "Delete Product From Order succsee";
+                return RedirectToAction("Index","Order");
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+
+        public ActionResult Order(int OrderId)
+        {
+            var model = OrderDao.getOrderModel(OrderId);
+            return View(model);
         }
     }
 }

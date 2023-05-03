@@ -15,7 +15,7 @@ namespace DataLayer.EF
         [StringLength(50)]
         public string Slug { get; set; }
 
-        [StringLength(50)]
+        [Column(TypeName = "ntext")]
         public string Detail { get; set; }
 
         public bool? Trending { get; set; }
@@ -26,7 +26,7 @@ namespace DataLayer.EF
 
         public double? Price { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string Image { get; set; }
 
         public DateTime? CreateAt { get; set; }
@@ -37,5 +37,19 @@ namespace DataLayer.EF
 
         [StringLength(50)]
         public string ProductName { get; set; }
+
+        public double? ImportPrice { get; set; }
+
+        [StringLength(50)]
+        public string Color { get; set; }
+
+        [StringLength(50)]
+        public string Size { get; set; }
+
+        public bool? Sale { get; set; }
+
+        public int? Count { get; set; }
+
+        public int? SupplierID { get; set; }
     }
 }

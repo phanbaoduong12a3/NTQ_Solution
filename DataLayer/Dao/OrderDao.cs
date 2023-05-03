@@ -9,18 +9,18 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class WishListDao
+    public class OrderDao
     {
 		NTQDBContext db ;
-		public WishListDao()
+		public OrderDao()
 		{
 			db = new NTQDBContext();
 		}
-        public void AddNewWishList(WishList wishList)
+        public void AddNewOrder(Order Order)
         {
 			try
 			{
-				db.WishLists.Add(wishList);
+				db.Orders.Add(Order);
 				db.SaveChanges();
 			}
 			catch (Exception ex)
@@ -29,23 +29,24 @@ namespace DataLayer.Dao
 				throw;
 			}
         }
-		public IEnumerable<WishListModel> ListAllWishList(int userID, int page,int pageSize)
+		public IEnumerable<OrderModel> ListAllOrder(int userID, int page,int pageSize)
 		{
 			try
 			{
-                var model = (from a in db.WishLists
+                var model = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
                              on a.ProductsID equals c.ID
                              where a.UserID == userID
-                             select new WishListModel
+                             select new OrderModel
                              {
                                  ID = a.ID,
                                  UserName = b.UserName,
                                  ProductName = c.ProductName,
                                  Image = c.Image,
                                  Price = c.Price,
+                                 Count = a.Count,
                                  CreateAt = a.CreateAt,
                                  UpdateAt = a.UpdateAt,
                                  DeleteAt = a.DeleteAt,
@@ -60,23 +61,63 @@ namespace DataLayer.Dao
 			}
 		}
 
-        public IEnumerable<WishListModel> WishListShow(int userID, int page, int pageSize)
+        public bool checkProductID(int productID)
+        {
+            var result = db.Orders.FirstOrDefault(x=>x.ProductsID == productID && x.Status == 1);
+            if (result == null) return false;
+            return true;
+        }
+
+        public void UpdateOrder(int productID)
+        {
+            var result = db.Orders.FirstOrDefault(x => x.ProductsID == productID && x.Status == 1);
+            result.Count += 1;
+            db.SaveChanges();
+        }
+
+        public IEnumerable<OrderModel> getOrderModel(int OrderId)
+        {
+            var model = (from a in db.Orders
+                         join b in db.Users
+                         on a.UserID equals b.ID
+                         join c in db.Products
+                         on a.ProductsID equals c.ID
+                         where a.ID == OrderId
+                         select new OrderModel
+                         {
+                             ID = a.ID,
+                             UserName = b.UserName,
+                             ProductName = c.ProductName,
+                             Image = c.Image,
+                             Price = c.Price,
+                             Count = a.Count,
+                             CreateAt = a.CreateAt,
+                             UpdateAt = a.UpdateAt,
+                             DeleteAt = a.DeleteAt,
+                             Status = a.Status,
+                             Payment = "Thanh toán khi nhận hàng"
+                         });
+            return model;
+        }
+
+        public IEnumerable<OrderModel> OrderShow(int userID, int page, int pageSize)
         {
             try
             {
-                var model = (from a in db.WishLists
+                var model = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
                              on a.ProductsID equals c.ID
                              where a.UserID == userID
-                             select new WishListModel
+                             select new OrderModel
                              {
                                  ID = a.ID,
                                  UserName = b.UserName,
                                  ProductName = c.ProductName,
                                  Image = c.Image,
                                  Price = c.Price,
+                                 Count = a.Count,
                                  CreateAt = a.CreateAt,
                                  UpdateAt = a.UpdateAt,
                                  DeleteAt = a.DeleteAt,
@@ -96,7 +137,7 @@ namespace DataLayer.Dao
 		{
 			try
 			{
-                var model = db.WishLists.Find(id);
+                var model = db.Orders.Find(id);
                 model.Status = 0;
                 db.SaveChanges();
             }

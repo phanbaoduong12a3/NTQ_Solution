@@ -26,7 +26,7 @@ namespace DataLayer.ViewModel
 
         public string ProductName { get; set; }
         public int? Status { get; set; }
-        public int ParentID { get; set; }
+        public int? ParentID { get; set; }
 
         public DateTime? CreateAt { get; set; }
 

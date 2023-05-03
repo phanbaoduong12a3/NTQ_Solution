@@ -1,0 +1,77 @@
+﻿@model IEnumerable<DataLayer.ViewModel.OrderModel>
+@{
+    ViewBag.Title = "Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@foreach (var item in Model)
+{
+    <div class="card-body p-0">
+        <div class="row">
+            <div class="col-lg-6" style="text-align:center;">
+                <img class="img-profile rounded-circle"
+                     src="@item.Image" width="400px" height="400px">
+                <div style="margin-top:20px">
+                    <h2 class="m-0 font-weight-bold text-primary" style="text-align:center;">@item.ProductName</h2>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="panel panel-default">
+                    <div class="card shadow mb-4">
+                        <div class="p-5">
+                            @using (Html.BeginForm("Profile", "Profile", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div class="form-horizontal">
+                                    <hr />
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => item.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => item.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })
+                                            @Html.ValidationMessageFor(model => item.UserName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => item.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => item.Price, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })
+                                            @Html.ValidationMessageFor(model => item.Price, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => item.Count, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => item.Count, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })
+                                            @Html.ValidationMessageFor(model => item.Count, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => item.Payment, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        <div class="col-md-10">
+                                            @Html.TextBoxFor(model => item.Payment, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })
+                                            @Html.ValidationMessageFor(model => item.Payment, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            @Html.ActionLink("Back", "Index", "Order")
+                                            <input type="submit" value="Buy" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

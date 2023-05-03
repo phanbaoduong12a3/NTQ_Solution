@@ -1,7 +1,7 @@
-﻿@model PagedList.IPagedList<DataLayer.ViewModel.WishListModel>
+﻿@model PagedList.IPagedList<DataLayer.ViewModel.OrderModel>
 @using PagedList.Mvc
 @{
-    ViewBag.Title = "WishList";
+    ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
@@ -19,11 +19,9 @@
                                     <th>ProductName</th>
                                     <th>Image</th>
                                     <th>Price</th>
-                                    <th>CreateAt</th>
-                                    <th>UpdateAt</th>
-                                    <th>DeleteAt</th>
+                                    <th>Count</th>
+                                    <th>Total Money</th>
                                     <th>Status</th>
-                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -39,20 +37,36 @@
                                     {
                                         
                                             <tr id="row_@item.ID">
-
-
                                                 <td>@item.UserName</td>
                                                 <td>@item.ProductName</td>
                                                 <td>
                                                     <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                                 </td>
                                                 <td>@item.Price</td>
-                                                <td>@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@(item.UpdateAt == null ? "" : item.UpdateAt.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td>@(item.DeleteAt == null ? "" : item.DeleteAt.Value.ToString("dd/MM/yyyy"))</td>
-                                                <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Status == 1 ? "Active" : "InActive")</a></td>
+                                                <td>@item.Count</td>
+                                                <td>@(item.Price * item.Count)</td> 
                                                 <td>
-                                                    <a class="btn btn-danger" style="text-decoration:none" href="/WishList/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+                                                    @if (item.Status == 1)
+                                                    {
+                                                        <a class="btn btn-success" style="text-decoration:none" href="/Order/Order?OrderId=@item.ID"><i class="fa fa-edit">Order</i></a>
+                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+
+                                                    }
+                                                    @if (item.Status == 2)
+                                                    {
+                                                        <a class="btn btn-success" style="text-decoration:none">Wait For Confirmation</a>
+                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+
+                                                    }
+                                                    @if (item.Status == 3)
+                                                    {
+                                                        <a class="btn btn-success" style="text-decoration:none">Shipping</a>
+                                                    }
+                                                    @if (item.Status == 4)
+                                                    {
+                                                        <a class="btn btn-success" style="text-decoration:none">Success</a>
+                                                    }
+
                                                 </td>
 
                                             </tr>
@@ -64,10 +78,6 @@
                         </table>
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
                     </div>
-                    @*<div class="input-group-append">
-                            <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Create Product</a>
-                        </div>*@
-
                 </div>
             </div>
 

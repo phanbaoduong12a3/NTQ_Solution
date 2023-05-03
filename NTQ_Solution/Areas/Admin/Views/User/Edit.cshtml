@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
-<h2>Update @ViewBag.Role</h2>
+<h2>Sửa @ViewBag.Role</h2>
 
 @using (Html.BeginForm("Edit","User",FormMethod.Post))
 {
@@ -56,8 +56,8 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <a class="btn btn-primary" href="/Admin/ListUser/Index">Back</a>
-            <input type="submit" value="Update" class="btn btn-primary" />
+            <a class="btn btn-primary" href="/Admin/ListUser/Index">Quay lại</a>
+            <input type="submit" value="Sửa" class="btn btn-primary" />
         </div>
     </div>
 </div>

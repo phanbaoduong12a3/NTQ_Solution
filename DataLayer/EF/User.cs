@@ -28,5 +28,13 @@ namespace DataLayer.EF
         public DateTime? UpdateAt { get; set; }
 
         public DateTime? DeleteAt { get; set; }
+
+        public int? Phone { get; set; }
+
+        [StringLength(150)]
+        public string Address { get; set; }
+
+        [StringLength(50)]
+        public string AccountName { get; set; }
     }
 }

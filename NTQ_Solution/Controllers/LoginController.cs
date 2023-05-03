@@ -37,6 +37,8 @@ namespace NTQ_Solution.Controllers
                         userSession.UserID = user.ID;
                         userSession.Email = user.Email;
                         userSession.UserName = user.UserName;
+                        userSession.Role = user.Role;
+                        userSession.AccountName = user.AccountName;
                         Session.Add(CommonConstant.USER_SESSION, userSession);
                         var session = (UserLogin)Session[CommonConstant.USER_SESSION];
                         if(user.Role == 0) 
