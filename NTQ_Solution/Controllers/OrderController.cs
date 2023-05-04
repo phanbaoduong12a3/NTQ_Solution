@@ -99,6 +99,29 @@ namespace NTQ_Solution.Controllers
             }
             
         }
+        public ActionResult OrderDemo(int page=1, int pageSize = 4)
+        {
+            try
+            {
+                var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
+                if (session != null)
+                {
+                    var userID = session.UserID;
+                    var model = OrderDao.OrderDemo(userID, page, pageSize);
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Login");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
         
     }
 }

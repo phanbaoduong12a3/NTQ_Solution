@@ -38,20 +38,22 @@ namespace NTQ_Solution.Controllers
                             Email = registerModel.Email,
                             CreateAt = DateTime.Now,
                             Role = 0,
-                            Status = 1
+                            Status = 1,
+                            Address = registerModel.Address,
+                            Phone = registerModel.Phone
                         };
                         userDao.Insert(user);
-                        TempData["success"] = "Create New Account succsee";
+                        TempData["success"] = "Dang ki thanh cong";
                         return RedirectToAction("Index", "Login");
                     }
-                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Nhập lại confirmpassword"); }
                     else if (result == -1)
                     {
-                        ModelState.AddModelError("", "Email is invalid");
+                        ModelState.AddModelError("", "Email đã tồn tại");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "UserName is invalid");
+                        ModelState.AddModelError("", "UserName đã tồn tại");
                     }
                 }
                 return View("Index");

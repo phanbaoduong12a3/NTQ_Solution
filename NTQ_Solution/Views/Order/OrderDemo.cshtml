@@ -63,6 +63,7 @@
                                                         @item.Count
                                                     }
                                                 </td>
+                                                <td>@item.ShipMode</td>
                                                 <td>
                                                     @if (item.Status == 1)
                                                     {
@@ -71,16 +72,17 @@
                                                         <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
 
                                                     }
+
                                                 </td>
                                             </tr>
-                                            </form>
+                                           </form>
                                         }
                                     }
                                 }
 
                             </tbody>
                         </table>
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+                        @Html.PagedListPager(Model, page => Url.Action("OrderDemo", new { page, @searchString = ViewBag.SearchString }))
                     </div>
                 </div>
             </div>

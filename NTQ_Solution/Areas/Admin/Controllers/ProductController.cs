@@ -49,10 +49,16 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         Detail = productModel.Detail,
                         Status = 1,
                         NumberViews = 0,
+                        Count=30,
                         Trending = trending,
                         Price = productModel.Price,
                         Image = productModel.Image,
-                        CreateAt = DateTime.Now
+                        CreateAt = DateTime.Now,
+                        ImportPrice = productModel.ImportPrice,
+                        Color = productModel.Color,
+                        Size = productModel.Size,
+                        CategoryID = productModel.CategoryID,
+                        SupplierID = productModel.SupplierID
                     };
                     productDao.Insert(product);
                     TempData["success"] = "Create New Product success";

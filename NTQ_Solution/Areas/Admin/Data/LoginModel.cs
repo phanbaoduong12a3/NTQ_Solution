@@ -17,7 +17,7 @@ namespace NTQ_Solution.Areas.Admin.Data
 
         [Required(ErrorMessage = "Password không được để trống")]
        // [RegularExpression(@"^(?=.*[0-9])(?=.*[A-Z])(?=.*[!@#$%^&*])(?=.{8,20})", ErrorMessage = "{0} chỉ từ 8 đến 20 ký tự, bao gồm ..")]
-        [DisplayName("Password")]
+        [DisplayName("Mật khẩu")]
         public string Password { get; set; }
 
         public bool RememberMe { get; set; }

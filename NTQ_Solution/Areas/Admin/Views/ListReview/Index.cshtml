@@ -7,7 +7,7 @@
 @section header{
     Danh sách bình luận
 }
-
+@{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -17,7 +17,7 @@
                     {
 
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            
+
                             <div class="input-group" style="margin-top:20px;margin-bottom:20px">
 
                                 <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="search" name="searchString"
@@ -74,9 +74,12 @@
                                             <td>@(item.DeleteAt == null ? "" : item.DeleteAt.Value.ToString("dd/MM/yyyy"))</td>
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Status == 1 ? "Hide" : "Display")</a></td>
                                             <td>
-                                                <a class="btn btn-success" style="text-decoration:none" href="/Admin/ListReview/UpdateReview/@item.ID"><i class="fa fa-edit">Sửa</i></a>
-                                                <a class="btn btn-danger" style="text-decoration:none" href="/Admin/ListReview/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
+                                                @if (session.Role == 1)
+                                                {
+                                                    <a class="btn btn-success" style="text-decoration:none" href="/Admin/ListReview/UpdateReview/@item.ID"><i class="fa fa-edit">Sửa</i></a>
+                                                    <a class="btn btn-danger" style="text-decoration:none" href="/Admin/ListReview/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
 
+                                                }
                                             </td>
 
                                         </tr>
@@ -88,8 +91,8 @@
                         @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
                     </div>
                     @*<div class="input-group-append">
-            <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Create Product</a>
-        </div>*@
+                            <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Create Product</a>
+                        </div>*@
 
                 </div>
             </div>

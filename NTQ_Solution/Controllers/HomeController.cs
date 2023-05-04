@@ -129,7 +129,7 @@ namespace NTQ_Solution.Controllers
                     {
                         OrderDao.UpdateOrder(productID);
                     }
-                    TempData["success"] = "Insert Product to Order success";
+                    TempData["success"] = "Them san pham vao gio hang thanh cong";
                     return RedirectToAction("Index", "Order");
                 }
             }
@@ -138,6 +138,13 @@ namespace NTQ_Solution.Controllers
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+        [ChildActionOnly]
+        public PartialViewResult HeaderCart()
+        {
+            int count = productDao.CartCount();
+            ViewBag.count = count;
+            return PartialView();
         }
     }
 }

@@ -294,6 +294,10 @@ namespace DataLayer.Dao
             var model = db.Products.Where(x => x.ProductName == productName).ToList();
             return model;
         }
+        public int CartCount()
+        {
+            return db.Orders.Where(x => x.Status == 1).Count();
+        }
 
     }
 }

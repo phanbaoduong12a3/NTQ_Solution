@@ -75,19 +75,22 @@
                                                     @item.Count
                                                 </td>
                                                 <td>
-                                                    @if (item.Status == 2)
+                                                    @if (session.Role == 1)
                                                     {
-                                                        <input type="submit" class="btn btn-success" style="text-decoration:none" @*href="/Order/Order?OrderId=@item.ID"*@ value="Xác nhận" />
-                                                    }
-                                                    @if (item.Status == 3)
-                                                    {
-                                                        <a class="btn btn-success" style="text-decoration:none">Đang giao hàng</a>
-                                                    }
-                                                    @if (item.Status == 4)
-                                                    {
-                                                        <a class="btn btn-success" style="text-decoration:none">Đã nhận hàng</a>
-                                                    }
+                                                        if (item.Status == 2)
+                                                        {
+                                                            <input type="submit" class="btn btn-success" style="text-decoration:none" @*href="/Order/Order?OrderId=@item.ID"*@ value="Xác nhận" />
+                                                        }
+                                                        if (item.Status == 3)
+                                                        {
+                                                            <a class="btn btn-success" style="text-decoration:none">Đang giao hàng</a>
+                                                        }
+                                                        if (item.Status == 4)
+                                                        {
+                                                            <a class="btn btn-success" style="text-decoration:none">Đã nhận hàng</a>
+                                                        }
 
+                                                    }
                                                 </td>
                                             </tr>
                                             </form>

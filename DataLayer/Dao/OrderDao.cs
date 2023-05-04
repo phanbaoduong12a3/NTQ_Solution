@@ -260,5 +260,42 @@ namespace DataLayer.Dao
             db.Shippings.Add(ship);
             db.SaveChanges();
         }
-     }
+        public IEnumerable<OrderModel> OrderDemo(int userID, int page, int pageSize)
+        {
+            try
+            {
+                var model = (from a in db.Orders
+                             join b in db.Users
+                             on a.UserID equals b.ID
+                             join c in db.Products
+                             on a.ProductsID equals c.ID
+                             where a.UserID == userID
+                             select new OrderModel
+                             {
+                                 ID = a.ID,
+                                 UserName = b.UserName,
+                                 ProductName = c.ProductName,
+                                 Color = c.Color,
+                                 CreateAt = a.CreateAt,
+                                 UpdateAt = a.UpdateAt,
+                                 DeleteAt = a.DeleteAt,
+                                 Size = c.Size,
+                                 Image = c.Image,
+                                 Price = c.Price,
+                                 Count = a.Count,
+                                 Status = a.Status,
+                                 Address = b.Address,
+                                 Phone = b.Phone,
+                                 Email = b.Email,
+                             });
+
+                return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 1).ToPagedList(page, pageSize);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+    }
 }

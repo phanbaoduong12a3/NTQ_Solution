@@ -7,6 +7,7 @@
 @section header{
     Danh sách sản phẩm
 }
+@{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
@@ -113,9 +114,12 @@
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Count > 0 ? "Còn hàng" : "Hết hàng")</a></td>
                                             <td>
 
-                                                <a class="btn btn-success" style="text-decoration:none" href="/Admin/Product/UpdateProduct/@item.ID"><i class="fa fa-edit">Sửa</i></a>
-                                                <a class="btn btn-danger" style="text-decoration:none" href="/Admin/Product/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
+                                                @if (session.Role == 1)
+                                                {
+                                                    <a class="btn btn-success" style="text-decoration:none" href="/Admin/Product/UpdateProduct/@item.ID"><i class="fa fa-edit">Sửa</i></a>
+                                                    <a class="btn btn-danger" style="text-decoration:none" href="/Admin/Product/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
 
+                                                }
                                             </td>
 
                                         </tr>
@@ -128,7 +132,10 @@
                     </div>
                     <div class="input-group-append">
 
-                        <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Tạo mới sản phẩm</a>
+                        @if (session.Role == 1)
+                        {
+                            <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Tạo mới sản phẩm</a>
+                        }
 
                     </div>
 

@@ -26,8 +26,7 @@
                             <div id="products">
                                 <div class="slides_container" style="overflow: hidden; position: relative; display: block;">
                                     <div class="slides_control" style="position: relative; width: 1048px; height: 274px; left: -366px;">
-                                        <a href="#"><img src="@Model.Image" alt=" "></a>
-
+                                        <a href="#"><img src="@Model.Image" alt=" " style="width:380px;height:310px"></a>
                                     </div>
 
                                 </div>
@@ -47,6 +46,32 @@
                     <h2>@Model.ProductName </h2>
                     <div class="price">
                         <p>Giá: <span>@(Model.Price.HasValue ? Model.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                    </div>
+                    <div class="price">
+                        <p>Số lượng: <span>@Model.Count</span></p>
+                    </div>
+                    <div class="price">
+                        <p>
+                            Nhà cung cấp:
+
+                            @if (Model.SupplierID == 1)
+                            {
+                                <span>
+                                    Teelab
+                                </span>
+                            }
+                            else if (Model.SupplierID == 2)
+                            {
+                                <span>
+                                    Bad Habits
+                                </span>
+                            }
+                            else
+                            {
+                                <span> ClownZ</span>
+                            }
+
+                        </p>
                     </div>
                     @using (Html.BeginForm("Order", "Home", FormMethod.Get))
                     {
@@ -69,7 +94,7 @@
                                                 }
                                                 for (int j = 0; j < i; j++)
                                                 {
-                                                    if (listColor[i].Color != listColor[j].Color)
+                                                    if (listColor[i].Color != listColor[j].Color && listColor[i].Color != null)
                                                     {
                                                         <option value="@listColor[i].Color">@listColor[i].Color</option>
                                                     }
@@ -81,9 +106,20 @@
                                     <li>
                                         Size:
                                         <select name="size">
-                                            @foreach (var item in listSize)
+                                            @for (int i = 0; i < listSize.Count; i++)
                                             {
-                                                <option @item.Size>@item.Size</option>
+                                                if (i == 0)
+                                                {
+                                                    <option value="@listSize[0].Size">@listSize[0].Size</option>
+                                                    continue;
+                                                }
+                                                for (int j = 0; j < i; j++)
+                                                {
+                                                    if (listSize[i].Size != listSize[j].Size && listSize[i].Size != null)
+                                                    {
+                                                        <option value="@listSize[i].Size">@listSize[i].Size</option>
+                                                    }
+                                                }
                                             }
                                         </select>
                                     </li>

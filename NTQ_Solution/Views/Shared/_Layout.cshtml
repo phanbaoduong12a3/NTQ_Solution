@@ -18,7 +18,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     @*<link href="~/Content/PagedList.css" rel="stylesheet" />*@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
           rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,600">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.6/css/all.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/media-queries.css">
 
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
     <!-- Custom styles for this template-->
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link href="~/assests/admin/css/sb-admin-2.min.css" rel="stylesheet">
@@ -79,16 +91,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="logo">
                     <a href="index.html"><img src="~/assests/client/images/logo.png" alt="" /></a>
                 </div>
-                <div class="cart">
-                    <p>
-                        Chào mừng đến với Xuu Shop! <span>Giỏ hàng:</span><div id="dd" class="wrapper-dropdown-2">
-                            0 item(s) - $0.00
-                            <ul class="dropdown">
-                                <li>you have no items in your Shopping cart</li>
-                            </ul>
-                        </div>
-                    </p>
-                </div>
+               
+                    @{ Html.RenderAction("HeaderCart", "Home");}
+                
                 <script type="text/javascript">
                     function DropDown(el) {
                         this.dd = el;
@@ -165,63 +170,130 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
         </div>
     </div>
-    <div class="footer">
-        <div class="wrap">
-            <div class="section group">
-                <div class="col_1_of_4 span_1_of_4">
-                    <h4>Information</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Customer Service</a></li>
-                        <li><a href="#">Advanced Search</a></li>
-                        <li><a href="delivery.html">Orders and Returns</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="col_1_of_4 span_1_of_4">
-                    <h4>Why buy from us</h4>
-                    <ul>
-                        <li><a href="about.html">About Us</a></li>
-                        <li><a href="contact.html">Customer Service</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="contact.html">Site Map</a></li>
-                        <li><a href="#">Search Terms</a></li>
-                    </ul>
-                </div>
-                <div class="col_1_of_4 span_1_of_4">
-                    <h4>My account</h4>
-                    <ul>
-                        <li><a href="contact.html">Sign In</a></li>
-                        <li><a href="index.html">View Cart</a></li>
-                        <li><a href="#">My Order</a></li>
-                        <li><a href="#">Track My Order</a></li>
-                        <li><a href="contact.html">Help</a></li>
-                    </ul>
-                </div>
-                <div class="col_1_of_4 span_1_of_4">
-                    <h4>Contact</h4>
-                    <ul>
-                        <li><span>+91-123-456789</span></li>
-                        <li><span>+00-123-000000</span></li>
-                    </ul>
-                    <div class="social-icons">
-                        <h4>Follow Us</h4>
-                        <ul>
-                            <li><a href="#" target="_blank"><img src="images/facebook.png" alt="" /></a></li>
-                            <li><a href="#" target="_blank"><img src="images/twitter.png" alt="" /></a></li>
-                            <li><a href="#" target="_blank"><img src="images/skype.png" alt="" /> </a></li>
-                            <li><a href="#" target="_blank"> <img src="images/dribbble.png" alt="" /></a></li>
-                            <li><a href="#" target="_blank"> <img src="images/linkedin.png" alt="" /></a></li>
-                            <div class="clear"></div>
-                        </ul>
+
+    <footer>
+        <div class="footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-lg-3 footer-about wow fadeInUp">
+                        <img class="logo-footer" src="assets/img/logo.png" alt="logo-footer" data-at2x="assets/img/logo.png">
+                        <p>
+                            We are a young company always looking for new and creative ideas to help you with our products in your everyday work.
+                        </p>
+                        <p><a href="#">Our Team</a></p>
+                    </div>
+                    <div class="col-md-4 col-lg-4 offset-lg-1 footer-contact wow fadeInDown">
+                        <h3>Contact</h3>
+                        <p><i class="fas fa-map-marker-alt"></i> Via Rossini 10, 10136 Turin Italy</p>
+                        <p><i class="fas fa-phone"></i> Phone: (0039) 333 12 68 347</p>
+                        <p><i class="fas fa-envelope"></i> Email: <a href="mailto:hello@domain.com">hello@domain.com</a></p>
+                        <p><i class="fab fa-skype"></i> Skype: you_online</p>
+                    </div>
+                    <div class="col-md-4 col-lg-4 footer-links wow fadeInUp">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Links</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><a class="scroll-link" href="#top-content">Top</a></p>
+                                <p><a class="scroll-link" href="#section-1">Section 1</a></p>
+                                <p><a class="scroll-link" href="#section-2">Section 2</a></p>
+                                <p><a class="scroll-link" href="#section-3">Section 3</a></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><a class="scroll-link" href="#section-4">Section 4</a></p>
+                                <p><a href="#">Affiliates</a></p>
+                                <p><a href="#">Terms</a></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="copy_right">
-            <p>&copy; 2013 home_shoppe. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 footer-copyright">
+                        &copy; Bootstrap Footer Template by <a href="https://azmind.com">AZMIND</a>
+                    </div>
+                    <div class="col-md-6 footer-social">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </footer>
+    <script src="assets/js/jquery-3.2.1.min.js"></script>
+    <script src="assets/js/jquery-migrate-3.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="assets/js/jquery.backstretch.min.js"></script>
+    <script src="assets/js/wow.min.js"></script>
+    <script src="assets/js/retina-1.1.0.min.js"></script>
+    <script src="assets/js/scripts.js"></script>
+    @* <div class="footer">
+            <div class="wrap">
+                <div class="section group">
+                    <div class="col_1_of_4 span_1_of_4">
+                        <h4>Information</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="contact.html">Customer Service</a></li>
+                            <li><a href="#">Advanced Search</a></li>
+                            <li><a href="delivery.html">Orders and Returns</a></li>
+                            <li><a href="contact.html">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col_1_of_4 span_1_of_4">
+                        <h4>Why buy from us</h4>
+                        <ul>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="contact.html">Customer Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="contact.html">Site Map</a></li>
+                            <li><a href="#">Search Terms</a></li>
+                        </ul>
+                    </div>
+                    <div class="col_1_of_4 span_1_of_4">
+                        <h4>My account</h4>
+                        <ul>
+                            <li><a href="contact.html">Sign In</a></li>
+                            <li><a href="index.html">View Cart</a></li>
+                            <li><a href="#">My Order</a></li>
+                            <li><a href="#">Track My Order</a></li>
+                            <li><a href="contact.html">Help</a></li>
+                        </ul>
+                    </div>
+                    <div class="col_1_of_4 span_1_of_4">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><span>+91-123-456789</span></li>
+                            <li><span>+00-123-000000</span></li>
+                        </ul>
+                        <div class="social-icons">
+                            <h4>Follow Us</h4>
+                            <ul>
+                                <li><a href="#" target="_blank"><img src="images/facebook.png" alt="" /></a></li>
+                                <li><a href="#" target="_blank"><img src="images/twitter.png" alt="" /></a></li>
+                                <li><a href="#" target="_blank"><img src="images/skype.png" alt="" /> </a></li>
+                                <li><a href="#" target="_blank"> <img src="images/dribbble.png" alt="" /></a></li>
+                                <li><a href="#" target="_blank"> <img src="images/linkedin.png" alt="" /></a></li>
+                                <div class="clear"></div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copy_right">
+                <p>&copy; 2013 home_shoppe. All rights reserved | Design by <a href="http://w3layouts.com/">W3layouts</a></p>
+            </div>
+        </div>*@
     <script type="text/javascript">
         $(document).ready(function () {
             $().UItoTop({ easingType: 'easeOutQuart' });

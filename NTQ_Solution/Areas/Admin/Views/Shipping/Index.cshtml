@@ -50,9 +50,12 @@
                                                 <td>@item.ShipMode</td>
                                                 <td>@item.ShipMoney</td>
                                                 <td>
-                                                    @if (!item.Status)
+                                                    @if (session.Role == 1)
                                                     {
-                                                        <a class="btn btn-success" style="text-decoration:none" href="/Admin/Shipping/ConfirmShip/@item.ID"><i class="fa fa-check">Xác nhận hoàn thành</i></a>
+                                                        @if (!item.Status)
+                                                        {
+                                                            <a class="btn btn-success" style="text-decoration:none" href="/Admin/Shipping/ConfirmShip/@item.ID"><i class="fa fa-check">Xác nhận hoàn thành</i></a>
+                                                        }
                                                     }
                                                     @if (item.Status)
                                                     {

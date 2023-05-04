@@ -57,7 +57,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ImportCount, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ImportCount, new { @class = "form-control form-control-user" })
+            @Html.TextBoxFor(model => model.ImportCount, new { @class = "form-control form-control-user", Type="number" })
             @Html.ValidationMessageFor(model => model.ImportCount, "", new { @class = "text-danger" })
         </div>
     </div>

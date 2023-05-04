@@ -15,17 +15,17 @@ namespace NTQ_Solution.Areas.Admin.Data
         [DisplayName("Email")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password không được để trống")]
+        [Required(ErrorMessage = "Mật khẩu không được để trống")]
         [RegularExpression(@"^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,20}$", ErrorMessage = "{0} từ 8 đến 20 kí tự gồm chữ hoa, chũ thường, kí tự đặc biệt and số")]
-        [DisplayName("Password")]
+        [DisplayName("Mật khẩu")]
         public string Password { get; set; }
 
-        [DisplayName("ConfirmPassword")]
-        [Required(ErrorMessage = "Confirm password không được để trống")]
+        [DisplayName("Xác nhận mật khẩu")]
+        [Required(ErrorMessage = "Xác nhận mật khẩu không được để trống")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "UserName không được để trống")]
-        [DisplayName("UserName")]
+        [Required(ErrorMessage = "Tên đăng nhập không được để trống")]
+        [DisplayName("Tên đăng nhập")]
         public string UserName { get; set; }
 
         public int ID { get; set; }
@@ -34,5 +34,7 @@ namespace NTQ_Solution.Areas.Admin.Data
         public DateTime? CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }
         public DateTime? DeleteAt { get; set; }
+        public string Address { get; set; }
+        public int? Phone { get; set; }
     }
 }

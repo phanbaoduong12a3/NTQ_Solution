@@ -78,11 +78,11 @@ namespace NTQ_Solution.Controllers
                             Role = registerModel.Role
                         };
                         userDao.Update(user);
-                        TempData["success"] = "Update Profile success";
+                        TempData["success"] = "Sua thanh cong";
                         return RedirectToAction("Profile", "Profile");
                     }
-                    if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };
-                    if (!checkConfirmPassword) { ModelState.AddModelError("", "ConfirmPassword is not correct"); }
+                    if (!checkUserName) { ModelState.AddModelError("", "UserName không chính xác"); };
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "ConfirmPassword không đúng"); }
                 }
                 return View(registerModel);
             }
