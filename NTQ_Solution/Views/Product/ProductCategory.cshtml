@@ -1,0 +1,10 @@
+﻿@model List<DataLayer.EF.Category>
+    <ul>
+        <h3>Danh mục sản phẩm</h3>
+        @foreach(var item in Model)
+            {
+                <li class="dropdown">
+                    <a href="/danh-muc?categoryID=@item.ID" style="color: black">@item.CategoryName</a>
+                </li>
+            }
+    </ul>

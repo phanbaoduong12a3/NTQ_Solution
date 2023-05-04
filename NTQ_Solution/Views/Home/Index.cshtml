@@ -6,6 +6,11 @@
 }
 @section slide{
     <div class="header_slide">
+        <div class="header_bottom_left">
+            <div class="categories">
+                @{ Html.RenderAction("ProductCategory", "Product");}
+            </div>
+        </div>
         <div class="header_bottom_right">
             <div class="slider">
                 <div id="slider">
@@ -97,7 +102,7 @@
                         <p><span class="rupees">$@(item.Price.HasValue?item.Price.Value.ToString("N0"):"Connect with shop")</span></p>
                     </div>
                     <div class="add-cart">
-                        <h4><a href="/add-Order?productID=@item.ID">Add to Order</a></h4>
+                        <h4><a href="/add-Order?productID=@item.ID&&productName=@item.ProductName">Add to Order</a></h4>
                     </div>
                     <div class="clear"></div>
                 </div>

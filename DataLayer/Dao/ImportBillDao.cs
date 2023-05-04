@@ -37,7 +37,9 @@ namespace DataLayer.Dao
                                  ProductName = d.ProductName,
                                  SupplierName = b.SupplierName,
                                  UserName = c.UserName,
-                                 Image = d.Image
+                                 Image = d.Image,
+                                 Color = d.Color,
+                                 Size = d.Size
                              });
                 if (!string.IsNullOrEmpty(searchString))
                 {

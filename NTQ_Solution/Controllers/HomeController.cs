@@ -44,6 +44,8 @@ namespace NTQ_Solution.Controllers
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
                 if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
                 ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
+                ViewBag.ListColor = new ProductDao().ListColor(product.ProductName);
+                ViewBag.ListSize = new ProductDao().ListSize(product.ProductName);
                 productDao.UpdateView(product.ID);
                 return View(product);
             }
@@ -94,7 +96,7 @@ namespace NTQ_Solution.Controllers
                 throw;
             }
         }
-        public ActionResult Order(int productID)
+        public ActionResult Order(string productName, string color, string size)
         {
             try
             {
@@ -105,6 +107,8 @@ namespace NTQ_Solution.Controllers
                 }
                 else
                 {
+                    var product = OrderDao.findProductOrder(productName, size, color);
+                    int productID = product.ID;
                     bool checkProductID = OrderDao.checkProductID(productID);
                     if(!checkProductID) 
                     {
@@ -115,7 +119,9 @@ namespace NTQ_Solution.Controllers
                             UserID = userID,
                             CreateAt = DateTime.Now,
                             Status = 1,
-                            Count = 1
+                            Count = 1,
+                            Color = product.Color,
+                            Size = size
                         };
                         OrderDao.AddNewOrder(Order);
                     }

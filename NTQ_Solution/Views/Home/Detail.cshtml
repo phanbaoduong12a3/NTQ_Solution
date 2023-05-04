@@ -3,6 +3,8 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var listReview = (List<DataLayer.ViewModel.ReviewModel>)ViewBag.ListReview;
+    var listColor = (List<DataLayer.EF.Product>)ViewBag.ListColor;
+    var listSize = (List<DataLayer.EF.Product>)ViewBag.ListSize;
 }
 @section jsFooter{
     <script src="/assests/client/js/controller/productController.js"></script>
@@ -30,67 +32,76 @@
 
                                 </div>
 
-                                @* <ul class="pagination" style="display:inline-flex;margin:10px 0 10px 0">
-                                        <li style="margin-right:10px" class=""><a href="#0"><img src="/assests/client/images/thumbnailslide-1.jpg" alt=" "></a></li>
-                                        <li style="margin-right:10px" class=""><a href="#1"><img src="/assests/client/images/thumbnailslide-2.jpg" alt=" "></a></li>
-                                        <li style="margin-right:10px" class=""><a href="#2"><img src="/assests/client/images/thumbnailslide-3.jpg" alt=" "></a></li>
-                                        <li style="margin-right:10px" class=""><a href="#3"><img src="/assests/client/images/thumbnailslide-4.jpg" alt=" "></a></li>
-                                        <li style="margin-right:10px" class=""><a href="#4"><img src="/assests/client/images/thumbnailslide-5.jpg" alt=" "></a></li>
+                                <ul class="pagination" style="display:inline-flex;margin:10px 0 10px 0">
+                                    <li style="margin-right:10px" class=""><a href="#0"><img src="@Model.Image" alt=" "></a></li>
+                                    <li style="margin-right:10px" class=""><a href="#0"><img src="@Model.Image" alt=" "></a></li>
+                                    <li style="margin-right:10px" class=""><a href="#0"><img src="@Model.Image" alt=" "></a></li>
+                                    <li style="margin-right:10px" class=""><a href="#0"><img src="@Model.Image" alt=" "></a></li>
 
-                                    </ul>*@
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="desc span_3_of_2">
                     <h2>@Model.ProductName </h2>
-                    <p>@Model.Detail</p>
                     <div class="price">
-                        <p>Price: <span>@(Model.Price.HasValue ? Model.Price.Value.ToString("N0") : "Liên hệ")</span></p>
+                        <p>Giá: <span>@(Model.Price.HasValue ? Model.Price.Value.ToString("N0") : "Liên hệ")</span></p>
                     </div>
-                    <div class="available">
-                        <p>Available Options :</p>
-                        <ul>
-                            <li>
-                                Color:
-                                <select>
-                                    <option>Silver</option>
-                                    <option>Black</option>
-                                    <option>Dark Black</option>
-                                    <option>Red</option>
-                                </select>
-                            </li>
-                            <li>
-                                Size:<select>
-                                    <option>Large</option>
-                                    <option>Medium</option>
-                                    <option>small</option>
-                                    <option>Large</option>
-                                    <option>small</option>
-                                </select>
-                            </li>
-                            <li>
-                                Quality:<select>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="share-desc">
-                        <div class="share">
-                            <p>Chia sẻ:</p>
-                            <ul>
-                                <li><a href="#"><img src="/assests/client/images/facebook.png" alt="" /></a></li>
-                                <li><a href="#"><img src="/assests/client/images/twitter.png" alt="" /></a></li>
-                            </ul>
-                        </div>
-                        <div class="add-cart"><span><a class="button " href="/add-Order?productId=@Model.ID" style="text-decoration:none">Add to Order</a></span></div>
-                        <div class="clear"></div>
-                    </div>
+                    @using (Html.BeginForm("Order", "Home", FormMethod.Get))
+                    {
+                        <form>
+                            <input name="productID" value="@Model.ID" hidden />
+                            <input name="productName" value="@Model.ProductName" hidden />
+                            <div class="available">
+                                <p>Lựa chọn :</p>
+                                <ul>
+                                    <li>
+                                        Color:
+                                        <select name="color">
+
+                                            @for (int i = 0; i < listColor.Count; i++)
+                                            {
+                                                if (i == 0)
+                                                {
+                                                    <option value="@listColor[0].Color">@listColor[0].Color</option>
+                                                    continue;
+                                                }
+                                                for (int j = 0; j < i; j++)
+                                                {
+                                                    if (listColor[i].Color != listColor[j].Color)
+                                                    {
+                                                        <option value="@listColor[i].Color">@listColor[i].Color</option>
+                                                    }
+                                                }
+                                            }
+
+                                        </select>
+                                    </li>
+                                    <li>
+                                        Size:
+                                        <select name="size">
+                                            @foreach (var item in listSize)
+                                            {
+                                                <option @item.Size>@item.Size</option>
+                                            }
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="share-desc">
+                                <div class="share">
+                                    <p>Chia sẻ:</p>
+                                    <ul>
+                                        <li><a href="#"><img src="/assests/client/images/facebook.png" alt="" /></a></li>
+                                        <li><a href="#"><img src="/assests/client/images/twitter.png" alt="" /></a></li>
+                                    </ul>
+                                </div>
+                                <div class="add-cart"><span><input type="submit" class="button" style="text-decoration:none" value="Thêm vào giỏ hàng"></span></div>
+                                <div class="clear"></div>
+                            </div>
+                        </form>
+                    }
                     <div class="wish-list">
                         <ul>
                             <li class="wish"><a href="/add-Order?productId=@Model.ID" style="text-decoration:none;color:red">Thêm vào yêu thích</a></li>
@@ -100,10 +111,12 @@
                 </div>
                 <div class="clear"></div>
             </div>
+            <h2>Mô tả chi tiết</h2>
+            @Html.Raw(Model.Detail)
             <div class="product_desc">
                 <div id="horizontalTab">
                     <ul class="resp-tabs-list">
-                        <li style="color:red">All Review</li>
+                        <li style="color:red">Bình luận</li>
 
                         <div class="clear"></div>
                     </ul>
@@ -119,7 +132,7 @@
                                                 <div class="media">
                                                     <p class="pull-right"><small>@(itemcomment.CreateAt == null ? "" : itemcomment.CreateAt.Value.ToString("dd/MM/yyyy"))</small></p>
                                                     <a class="nav-link dropdown-toggle" role="button"
-                                                        aria-haspopup="true" aria-expanded="false">
+                                                       aria-haspopup="true" aria-expanded="false">
                                                         <img class="img-profile rounded-circle"
                                                              src="~/assests/admin/img/undraw_profile.svg" height="30px" width="30px">
                                                     </a>
@@ -136,30 +149,9 @@
                             }
                         </div>
                         <div class="review">
-                            <ul>
-                                <li>Price :<a href="#"><img src="/assests/client/images/price-rating.png" alt="" /></a></li>
-                                <li>Value :<a href="#"><img src="/assests/client/images/value-rating.png" alt="" /></a></li>
-                                <li>Quality :<a href="#"><img src="/assests/client/images/quality-rating.png" alt="" /></a></li>
-                            </ul>
                             <div class="your-review">
-                                <h3>How Do You Rate This Product?</h3>
-                                <p>Write Your Own Review?</p>
                                 <form>
-                                    <div>
-                                        <span><label>Nickname<span class="red">*</span></label></span>
-                                        <span><input id="txtnickname" type="text" value=""></span>
-                                    </div>
-                                    <div>
-                                        <span><label>Summary of Your Review<span class="red">*</span></label></span>
-                                        <span><input type="text" value=""></span>
-                                    </div>
-                                    <select id="ddlRate" class="form-selectd">
-                                        <option value="5">★★★★★</option>
-                                        <option value="4">★★★★☆</option>
-                                        <option value="3">★★★☆☆</option>
-                                        <option value="2">★★☆☆☆</option>
-                                        <option value="1">★☆☆☆☆</option>
-                                    </select>
+
                                     <div>
                                         <span><label>Review<span class="red">*</span></label></span>
                                         <span><input type="text" id="txtReviewNew"> </input></span>
@@ -178,4 +170,5 @@
 
     </div>
 </div>
+
 

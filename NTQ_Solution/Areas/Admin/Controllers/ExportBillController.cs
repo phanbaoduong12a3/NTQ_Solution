@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer.Dao;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,25 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ExportBillController : Controller
     {
-        // GET: Admin/ExportBill
-        public ActionResult Index()
+        ExportBillDao exportBillDao;
+        public ExportBillController()
         {
-            return View();
+            exportBillDao = new ExportBillDao();
+        }
+        // GET: Admin/ExportBill
+        public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
+        {
+            try
+            {
+                var model = exportBillDao.ListAllExportBill(searchString, page, pageSize);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
         }
     }
 }

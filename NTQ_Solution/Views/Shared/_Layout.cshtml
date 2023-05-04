@@ -7,7 +7,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Free Home Shoppe Website Template | Home :: w3layouts</title>
+    <title>Xuu Shop</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="~/assests/client/css/style.css" rel="stylesheet" />
@@ -41,36 +41,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     @if (session == null)
                     {
                         <ul>
-                            <li><a class="btn btn-primary" href="/Register/Index" style="color:white"> Register</a></li>
-                            <li><a class="btn btn-primary" href="/Login/Index" style="color:white">Login</a></li>
+                            <li><a class="btn btn-primary" href="/Register/Index" style="color:white"> Đăng kí</a></li>
+                            <li><a class="btn btn-primary" href="/Login/Index" style="color:white">Đăng nhập</a></li>
                         </ul>
                     }
                     else
                     {
-                <ul>
-                    <li class="nav-item dropdown no-arrow">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
-                            <img class="img-profile rounded-circle"
-                                 src="~/assests/admin/img/undraw_profile.svg">
-                        </a>
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Html.ActionLink("Logout","Logout","Login")</span>
-                        <!-- Dropdown - User Information -->
-                        @*<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                             aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="/Admin/Profile/Index">
-                                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                My Profile
-                            </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                Logout
-                            </a>
-                        </div>*@
-                    </li>
-                </ul>
+                        <ul>
+                            <li class="nav-item dropdown no-arrow">
+                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
+                                    <img class="img-profile rounded-circle"
+                                         src="~/assests/admin/img/undraw_profile.svg">
+                                </a>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Html.ActionLink("Logout", "Logout", "Login")</span>
+                                <!-- Dropdown - User Information -->
+                                @*<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                         aria-labelledby="userDropdown">
+                                        <a class="dropdown-item" href="/Admin/Profile/Index">
+                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            My Profile
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                            Logout
+                                        </a>
+                                    </div>*@
+                            </li>
+                        </ul>
                     }
                 </div>
                 <div class="clear"></div>
@@ -81,7 +81,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 </div>
                 <div class="cart">
                     <p>
-                        Welcome to our Online Store! <span>Cart:</span><div id="dd" class="wrapper-dropdown-2">
+                        Chào mừng đến với Xuu Shop! <span>Giỏ hàng:</span><div id="dd" class="wrapper-dropdown-2">
                             0 item(s) - $0.00
                             <ul class="dropdown">
                                 <li>you have no items in your Shopping cart</li>
@@ -120,18 +120,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="header_bottom">
                 <div class="menu">
                     <ul>
-                        <li><a href="/Home/Index">Home</a></li>
-                        <li>@Html.ActionLink("Product", "Index", "Product")</li>
-                        <li ><a href="/Review/Index">My Review</a></li>
-                        <li>@Html.ActionLink("My Order", "Index", "Order")</li>
-                        <li>@Html.ActionLink("My Profile", "Profile", "Profile")</li>
+                        <li><a href="/Home/Index">Trang chủ</a></li>
+                        <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
+                        <li><a href="/Review/Index">Bình luận </a></li>
+                        <li>@Html.ActionLink("Đơn hàng", "Index", "Order")</li>
+                        <li>@Html.ActionLink("Thông tin tài khoản", "Profile", "Profile")</li>
                         <div class="clear"></div>
                     </ul>
-                </div>
-                <div class="search_box">
-                    <form>
-                        <input type="text" value="Search" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
-                    </form>
                 </div>
                 <div class="clear"></div>
             </div>
@@ -139,6 +134,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <div class="main">
             @RenderBody()
+        </div>
+    </div>
+    <div class="steps-block steps-block-red">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 steps-block-col">
+                    <i class="fa fa-truck"></i>
+                    <div>
+                        <h2>Free shipping</h2>
+                        <em>Express delivery withing 3 days</em>
+                    </div>
+                    <span>&nbsp;</span>
+                </div>
+                <div class="col-md-4 steps-block-col">
+                    <i class="fa fa-gift"></i>
+                    <div>
+                        <h2>Daily Gifts</h2>
+                        <em>3 Gifts daily for lucky customers</em>
+                    </div>
+                    <span>&nbsp;</span>
+                </div>
+                <div class="col-md-4 steps-block-col">
+                    <i class="fa fa-phone"></i>
+                    <div>
+                        <h2>477 505 8877</h2>
+                        <em>24/7 customer care available</em>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="footer">
@@ -206,7 +230,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 alert(message);
             }
         });</script>
-        
+
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
     @RenderSection("jsFooter", required: false)
 </body>

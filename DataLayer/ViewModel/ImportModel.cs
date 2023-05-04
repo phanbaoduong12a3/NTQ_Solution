@@ -25,5 +25,7 @@ namespace DataLayer.ViewModel
         public string SupplierName { get; set; }
         public string UserName { get; set; }
         public string Image { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
     }
 }

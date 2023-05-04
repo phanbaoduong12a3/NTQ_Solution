@@ -46,6 +46,12 @@ namespace NTQ_Solution
                 defaults: new {controller = "Home",action = "Detail", id = UrlParameter.Optional},
                 namespaces: new[] { "NTQ_Solution.Controllers" }
                 ) ;
+            routes.MapRoute(
+               name: "Product Category",
+               url: "danh-muc",
+               defaults: new { controller = "Product", action = "Category", id = UrlParameter.Optional },
+               namespaces: new[] { "NTQ_Solution.Controllers" }
+               );
 
             routes.MapRoute(
                 name: "Default",

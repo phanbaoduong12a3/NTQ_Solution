@@ -1,5 +1,6 @@
 ﻿using DataLayer.Dao;
 using DataLayer.EF;
+using DataLayer.ViewModel;
 using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace NTQ_Solution.Controllers
         }
         // GET: Order
        
-        public ActionResult Index(int page = 1, int pageSize = 5)
+        public ActionResult Index(int page = 1, int pageSize = 4)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace NTQ_Solution.Controllers
             try
             {
                 OrderDao.Delete(id);
-                TempData["success"] = "Delete Product From Order succsee";
+                TempData["success"] = "Xóa sản phẩm khỏi giỏ hàng thành công";
                 return RedirectToAction("Index","Order");
             }
             catch (Exception ex)
@@ -56,10 +57,48 @@ namespace NTQ_Solution.Controllers
             }
         }
 
-        public ActionResult Order(int OrderId)
+        public ActionResult Order(int OrderId,string productCount,string color, string size)
         {
-            var model = OrderDao.getOrderModel(OrderId);
-            return View(model);
+            try
+            {
+                int count = int.Parse(productCount);
+                var model = OrderDao.getOrderModel(OrderId, count, color, size);
+                return View(model);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
         }
+        public ActionResult Payment(OrderModel orderModel,string payment,string ship)
+        {
+            try
+            {
+                if(payment == "1")
+                {
+                    int shipMoney;
+                    if (ship == "1")
+                    {
+                        ship = "Giao hàng tiết kiệm";
+                        shipMoney = 20000;
+                    }
+                    else
+                    {
+                        ship = "Giao hàng hỏa tốc";
+                        shipMoney = 25000;
+                    }
+                    OrderDao.PaymentSuccess(orderModel,ship,shipMoney);
+                }
+                return RedirectToAction("Index","Order");
+            }
+            catch(Exception ex )
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+            
+        }
+        
     }
 }

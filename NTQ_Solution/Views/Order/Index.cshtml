@@ -15,62 +15,83 @@
                         <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
                             <thead>
                                 <tr>
-                                    <th>UserName</th>
-                                    <th>ProductName</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Count</th>
-                                    <th>Total Money</th>
-                                    <th>Status</th>
+                                    <th>Khách hàng</th>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Ảnh sản phẩm</th>
+                                    <th>Màu sắc</th>
+                                    <th>Size</th>
+                                    <th>Giá bán</th>
+                                    <th>Số lượng</th>
+                                    <th>Hình thức vận chuyển</th>
+                                    <th>Trạng thái</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (Model.Count == 0)
                                 {
                                     <tr>
-                                        <td colspan="9" class="text-center">No data</td>
+                                        <td colspan="10" class="text-center">No data</td>
                                     </tr>
                                 }
                                 @if (Model.Count != 0)
                                 {
                                     foreach (var item in Model)
                                     {
-                                        
+
+
+                                        using (Html.BeginForm("Order", "Order", FormMethod.Post))
+                                        {
+                                            <form>
+                                                <input name="OrderId" value="@item.ID" hidden />
+                                                <input name="color" value="@item.Color" hidden />
+                                                <input name="size" value="@item.Size" hidden />
                                             <tr id="row_@item.ID">
                                                 <td>@item.UserName</td>
                                                 <td>@item.ProductName</td>
                                                 <td>
                                                     <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                                 </td>
+                                                <td>@item.Color</td>
+                                                <td>@item.Size</td>
                                                 <td>@item.Price</td>
-                                                <td>@item.Count</td>
-                                                <td>@(item.Price * item.Count)</td> 
+                                                <td>
+                                                    @if (item.Status < 2)
+                                                    {
+                                                        <input type="number" name="productCount" value="@item.Count" />
+                                                    }
+                                                    else
+                                                    {
+                                                        @item.Count
+                                                    }
+                                                </td>
+                                                <td>@item.ShipMode</td>
                                                 <td>
                                                     @if (item.Status == 1)
                                                     {
-                                                        <a class="btn btn-success" style="text-decoration:none" href="/Order/Order?OrderId=@item.ID"><i class="fa fa-edit">Order</i></a>
-                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+                                                        <input type="submit" class="btn btn-success" style="text-decoration:none" @*href="/Order/Order?OrderId=@item.ID"*@ value="Đặt hàng" />
+                                                        @*<i class="fa fa-edit">Đặt hàng</i></input>*@
+                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
 
                                                     }
                                                     @if (item.Status == 2)
                                                     {
-                                                        <a class="btn btn-success" style="text-decoration:none">Wait For Confirmation</a>
-                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Do you want to delete?')"><i class="fa fa-trash">Delete</i></a>
+                                                        <a class="btn btn-success" style="text-decoration:none">Chờ xác nhận</a>
+                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
 
                                                     }
                                                     @if (item.Status == 3)
                                                     {
-                                                        <a class="btn btn-success" style="text-decoration:none">Shipping</a>
+                                                        <a class="btn btn-success" style="text-decoration:none">Đang giao hàng</a>
                                                     }
                                                     @if (item.Status == 4)
                                                     {
-                                                        <a class="btn btn-success" style="text-decoration:none">Success</a>
+                                                        <a class="btn btn-success" style="text-decoration:none">Đã nhận hàng</a>
                                                     }
 
                                                 </td>
-
                                             </tr>
-                                        
+                                            </form>
+                                        }
                                     }
                                 }
 
@@ -84,4 +105,3 @@
         </div>
     </div>
 </div>
-

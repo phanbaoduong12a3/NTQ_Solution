@@ -59,9 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dao\ExportBillDao.cs" />
     <Compile Include="Dao\ImportBillDao.cs" />
     <Compile Include="Dao\ProductDao.cs" />
     <Compile Include="Dao\ReviewDao.cs" />
+    <Compile Include="Dao\ShipDao.cs" />
     <Compile Include="Dao\SupplierDao.cs" />
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dao\OrderDao.cs" />
@@ -79,10 +81,12 @@
     <Compile Include="EF\Supplier.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\ExportModel.cs" />
     <Compile Include="ViewModel\ImportModel.cs" />
     <Compile Include="ViewModel\ProductModel.cs" />
     <Compile Include="ViewModel\ReviewModel.cs" />
     <Compile Include="ViewModel\OrderModel.cs" />
+    <Compile Include="ViewModel\ShippingModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

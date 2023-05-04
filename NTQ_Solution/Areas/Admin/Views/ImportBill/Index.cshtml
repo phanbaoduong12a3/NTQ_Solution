@@ -33,6 +33,8 @@
                                 <tr>
                                     <th>Tên sản phẩm</th>
                                     <th>Ảnh sản phẩm</th>
+                                    <th>Màu sắc</th>
+                                    <th>Size</th>
                                     <th>Số lượng nhập</th>
                                     <th>Tổng tiền nhập</th>
                                     <th>Ngày nhập hàng</th>
@@ -44,7 +46,7 @@
                                 @if (Model.Count == 0)
                                 {
                                     <tr>
-                                        <td colspan="7" class="text-center">No data</td>
+                                        <td colspan="10" class="text-center">No data</td>
                                     </tr>
                                 }
                                 @if (Model.Count != 0)
@@ -56,6 +58,8 @@
                                             <td>
                                                 <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                             </td>
+                                            <td style="text-align:center">@item.Color</td>
+                                            <td style="text-align:center">@item.Size</td>
                                             <td style="text-align:center">@item.Count</td>
                                             <td style="text-align:center">@item.Price</td>
                                             <td style="text-align:center">@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>

@@ -15,7 +15,7 @@ namespace NTQ_Solution.Controllers
             productDao= new ProductDao();
         }
         // GET: Product
-        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 4)
         {
             try
             {
@@ -27,6 +27,17 @@ namespace NTQ_Solution.Controllers
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+        [ChildActionOnly]
+        public PartialViewResult ProductCategory()
+        {
+            var model = productDao.ListCategory();
+            return PartialView(model);
+        }
+        public ActionResult Category(int categoryID,int page=1, int pageSize = 4)
+        {
+            var model = productDao.Category(categoryID, page, pageSize);
+            return View(model);
         }
     }
 }
