@@ -138,6 +138,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ExportBillController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImportBillController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReviewController.cs" />
@@ -2909,6 +2910,10 @@
     <Content Include="assests\dist\icons\material-design-icons\fonts\materialdesignicons-webfont.ttf" />
     <Content Include="assests\dist\icons\material-design-icons\fonts\materialdesignicons-webfont.woff" />
     <Content Include="assests\dist\icons\material-design-icons\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Areas\Admin\Views\Category\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\CreateCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\OrderSuccess.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

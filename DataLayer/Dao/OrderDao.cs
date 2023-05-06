@@ -152,7 +152,7 @@ namespace DataLayer.Dao
                                  ShipMode = a.ShipMode,
                              });
 
-                return model.OrderByDescending(x => x.CreateAt).Where(x=>x.Status != 0).ToPagedList(page, pageSize);
+                return model.OrderBy(x => x.Status).Where(x=>x.Status != 0).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -217,9 +217,46 @@ namespace DataLayer.Dao
                 if(!string.IsNullOrEmpty(searchString) )
                 {
                     model = model.Where(x=>x.ProductName.Contains(searchString));
-                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status>1).ToPagedList(page, pageSize);
+                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status==2).ToPagedList(page, pageSize);
                 }
-                return model.OrderByDescending(x => x.CreateAt).Where(x=>x.Status>1).ToPagedList(page, pageSize);
+                return model.OrderByDescending(x => x.CreateAt).Where(x=>x.Status == 2).ToPagedList(page, pageSize);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public IEnumerable<OrderModel> ListOrderSuccess(string searchString, int page, int pageSize)
+        {
+            try
+            {
+                var model = (from a in db.Orders
+                             join b in db.Users
+                             on a.UserID equals b.ID
+                             join c in db.Products
+                             on a.ProductsID equals c.ID
+                             select new OrderModel
+                             {
+                                 ID = a.ID,
+                                 UserName = b.UserName,
+                                 ProductName = c.ProductName,
+                                 Image = c.Image,
+                                 Price = c.Price,
+                                 Count = a.Count,
+                                 CreateAt = a.CreateAt,
+                                 UpdateAt = a.UpdateAt,
+                                 DeleteAt = a.DeleteAt,
+                                 Status = a.Status,
+                                 Color = a.Color,
+                                 Size = a.Size
+                             });
+                if (!string.IsNullOrEmpty(searchString))
+                {
+                    model = model.Where(x => x.ProductName.Contains(searchString));
+                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 4).ToPagedList(page, pageSize);
+                }
+                return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 4).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {

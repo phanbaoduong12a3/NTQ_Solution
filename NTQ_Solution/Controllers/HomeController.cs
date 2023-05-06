@@ -67,6 +67,7 @@ namespace NTQ_Solution.Controllers
                 review.Title = title;
                 review.Status = 0;
                 review.CreateAt = DateTime.Now;
+                review.ParentID = 0;
                 bool addReview = reviewDao.InsertReview(review);
                 if(addReview)
                 {
@@ -142,7 +143,12 @@ namespace NTQ_Solution.Controllers
         [ChildActionOnly]
         public PartialViewResult HeaderCart()
         {
-            int count = productDao.CartCount();
+            var session = (UserLogin)Session[CommonConstant.USER_SESSION];
+            int count = 0;
+            if(session != null)
+            {
+                count = productDao.CartCount(session.UserID);
+            }
             ViewBag.count = count;
             return PartialView();
         }

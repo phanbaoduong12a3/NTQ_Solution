@@ -74,17 +74,17 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Status = 1
                         };
                         userDao.Insert(user);
-                        TempData["success"] = "Create New User success";
+                        TempData["success"] = "Tao moi thanh cong";
                         return RedirectToAction("Index", "ListUser");
                     }
-                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Nhập lại ConfirmPassword"); }
                     else if (result == -1)
                     {
-                        ModelState.AddModelError("", "Email is invalid");
+                        ModelState.AddModelError("", "Email đã tồn tại");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "UserName is invalid");
+                        ModelState.AddModelError("", "UserName đã tồn tại");
                     }
                 }
                 return View("CreateUser");
@@ -172,12 +172,12 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Status = status
                         };
                         userDao.Update(user);
-                        TempData["success"] = "Update User success";
+                        TempData["success"] = "Sua thanh cong";
                         return RedirectToAction("Index", "ListUser");
                     }
-                    if(!checkEmail) { ModelState.AddModelError("", "Email is invalid"); }
-                    if (!checkUserName) { ModelState.AddModelError("", "UserName is invalid"); };
-                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Enter ConfirmPassword again"); }
+                    if(!checkEmail) { ModelState.AddModelError("", "Email đã tồn tại"); }
+                    if (!checkUserName) { ModelState.AddModelError("", "UserName đã tồn tại"); };
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Nhập lại ConfirmPassword"); }
                 }
                 return View(registerModel);
             }
@@ -198,7 +198,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 userDao.Delete(id);
-                TempData["success"] = "Delete User success";
+                TempData["success"] = "Xoa thanh cong";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

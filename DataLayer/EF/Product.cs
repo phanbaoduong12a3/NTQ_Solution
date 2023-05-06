@@ -35,7 +35,7 @@ namespace DataLayer.EF
 
         public DateTime? DeleteAt { get; set; }
 
-        [StringLength(50)]
+        [StringLength(150)]
         public string ProductName { get; set; }
 
         public double? ImportPrice { get; set; }

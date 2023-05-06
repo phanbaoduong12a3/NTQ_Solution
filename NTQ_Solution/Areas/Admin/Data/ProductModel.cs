@@ -11,7 +11,7 @@ namespace NTQ_Solution.Areas.Admin.Data
     {
         public int ID { get; set; }
 
-        [RegularExpression(@"^.{2,50}$", ErrorMessage = "{0} từ 2 đến 50 kí tự")]
+        [RegularExpression(@"^.{2,150}$", ErrorMessage = "{0} từ 2 đến 150 kí tự")]
         [Required(ErrorMessage = "Tên sản phẩm không được để trống")]
         public string ProductName { get; set; }
         public int? CategoryID { get; set; }

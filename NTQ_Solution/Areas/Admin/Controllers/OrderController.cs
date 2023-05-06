@@ -41,5 +41,18 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 throw;
             }
         }
+        public ActionResult OrderSuccess(string searchString, int page = 1, int pageSize = 4)
+        {
+            try
+            {
+                var model = orderDao.ListOrderSuccess(searchString, page, pageSize);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
     }
 }

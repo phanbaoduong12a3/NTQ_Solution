@@ -101,11 +101,14 @@
                         });
                     </script>
 
-                    <div class="input-group-append">
+                    @if (session.Role == 2)
+                    {
+                        <div class="input-group-append">
 
-                        <a class="btn btn-primary" href="/Admin/User/CreateUser">Tạo mới tài khoản</a>
+                            <a class="btn btn-primary" href="/Admin/User/CreateUser">Tạo mới tài khoản</a>
 
-                    </div>
+                        </div>
+                    }
 
                 </div>
             </div>

@@ -97,23 +97,30 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/Admin/Product/Index">
                     <i class="fas fa-fw fa-folder"></i>
-                    <span>Kho hàng</span>
+                    <span>Quản lý sản phẩm</span>
                 </a>
             </li>
-            <hr class="sidebar-divider  my-0">
-            <!-- Nav Item - Pages Collapse Menu -->
+            <!-- Đơn hàng -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/Order/Index">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#order"
+                   aria-expanded="true" aria-controls="order">
                     <i class="fas fa-fw fa-cart-plus"></i>
                     <span>Đơn hàng</span>
                 </a>
+                <div id="order" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="/Admin/Order/Index">Chờ xác nhận</a>
+                        <a class="collapse-item" href="/Admin/Shipping/Index">Đang giao hàng</a>
+                        <a class="collapse-item" href="/Admin/Order/OrderSuccess">Đã nhận hàng</a>
+                    </div>
+                </div>
             </li>
             <hr class="sidebar-divider  my-0">
-            <!-- Vận chuyển -->
+            <!-- Danh mục -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/Shipping/Index">
-                    <i class="fas fa-fw fa-car"></i>
-                    <span>Vận chuyển</span>
+                <a class="nav-link" href="/Admin/Category/Index">
+                    <i class="fas fa-fw fa-file"></i>
+                    <span>Quản lý danh mục</span>
                 </a>
             </li>
             <!-- Phiếu xuất-->

@@ -37,6 +37,7 @@ namespace NTQ_Solution.Controllers
         public ActionResult Category(int categoryID,int page=1, int pageSize = 4)
         {
             var model = productDao.Category(categoryID, page, pageSize);
+            ViewBag.categoryID = categoryID;
             return View(model);
         }
     }

@@ -24,7 +24,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 ViewBag.supplierID = supplierID;
-                var model = supplierDao.GetProductOfTeelab(size, color, supplierID, searchString, page, pageSize);
+                var model = supplierDao.GetProductOfSupplier(size, color, supplierID, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)

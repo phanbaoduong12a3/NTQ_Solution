@@ -22,5 +22,15 @@ namespace DataLayer.ViewModel
         public string Address { get; set; }
         public int? ShipMoney { get; set; }
         public string ShipMode { get; set; }
+        public string UserName { get; set; }
+        public string ProductName { get; set; }
+        public string Image { get; set; }
+        public double? Price { get; set; }
+        public int? Count { get; set; }
+        public string Payment { get; set; }
+        public int? Phone { get; set; }
+        public string Email { get; set; }
+        public string Color { get; set; }
+        public string Size { get; set; }
     }
 }

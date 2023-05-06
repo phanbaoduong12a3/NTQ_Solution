@@ -16,7 +16,7 @@ namespace DataLayer.Dao
         {
             db = new NTQDBContext();
         }
-        public IEnumerable<ProductModel> GetProductOfTeelab(string size, string color, int supplierID, string searchString, int page, int pageSize)
+        public IEnumerable<ProductModel> GetProductOfSupplier(string size, string color, int supplierID, string searchString, int page, int pageSize)
         {
             try
             {
@@ -52,7 +52,7 @@ namespace DataLayer.Dao
                 {
                     model = model.Where(x => x.Color == color);
                 }
-                return model.OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
+                return model.Where(x=>x.Color != null && x.Size != null).OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
