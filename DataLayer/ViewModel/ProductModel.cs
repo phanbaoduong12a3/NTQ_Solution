@@ -63,5 +63,11 @@ namespace DataLayer.ViewModel
         public int ImportCount { get; set; }
         [DisplayName("Số lượng xuất")]
         public int ExportCount { get; set; }
+        [DisplayName("Danh mục")]
+        public string CategoryName { get; set; }
+        [DisplayName("Nhà cung cấp")]
+        public string SupplierName { get; set; }
+
+
     }
 }

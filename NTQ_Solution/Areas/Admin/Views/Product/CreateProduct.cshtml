@@ -1,4 +1,4 @@
-﻿@model NTQ_Solution.Areas.Admin.Data.ProductModel
+﻿@model DataLayer.ViewModel.ProductModel
 
 @{
     ViewBag.Title = "CreateProduct";
@@ -83,17 +83,18 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.SupplierID, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.SupplierID, new { @class = "form-control form-control-user", Type = "number" })
-            @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+            @Html.DropDownList("category", (IEnumerable<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control form-control-user" })
+            @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
         </div>
     </div>
+
     <div class="form-group">
-        @Html.LabelFor(model => model.CategoryID, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.CategoryID, new { @class = "form-control form-control-user", Type = "number" })
-            @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+            @Html.DropDownList("supplier", (IEnumerable<SelectListItem>)ViewBag.SupplierList, new { @class = "form-control form-control-user" })
+            @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">

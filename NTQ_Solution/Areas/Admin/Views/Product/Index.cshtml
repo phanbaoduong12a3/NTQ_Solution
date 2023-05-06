@@ -40,9 +40,7 @@
                         </select>
 
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group">
-                                <span style="margin-right:20px">Trending:</span><input type="checkbox" name="trending" />
-                            </div>
+                           
                             <div class="input-group" style="margin-top:20px;margin-bottom:20px">
 
                                 <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="search" name="searchString"
@@ -129,7 +127,7 @@
 
                             </tbody>
                         </table>
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString , @color = ViewBag.Color, @size = ViewBag.Size , @supplier = ViewBag.Supplier }))
                     </div>
                     <div class="input-group-append">
 

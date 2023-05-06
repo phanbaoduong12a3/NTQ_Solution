@@ -29,12 +29,16 @@ namespace NTQ_Solution.Areas.Admin.Data
         public string UserName { get; set; }
 
         public int ID { get; set; }
-        public int? Role { get; set; }
+        [DisplayName("Quyền")]
+        public int Role { get; set; }
+        [DisplayName("Trạng thái")]
         public bool Status { get; set; }
         public DateTime? CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }
         public DateTime? DeleteAt { get; set; }
+        [DisplayName("Địa chỉ")]
         public string Address { get; set; }
+        [DisplayName("Số điện thoại")]
         public int? Phone { get; set; }
     }
 }

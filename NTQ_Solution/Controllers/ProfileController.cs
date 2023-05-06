@@ -81,8 +81,8 @@ namespace NTQ_Solution.Controllers
                         TempData["success"] = "Sua thanh cong";
                         return RedirectToAction("Profile", "Profile");
                     }
-                    if (!checkUserName) { ModelState.AddModelError("", "UserName không chính xác"); };
-                    if (!checkConfirmPassword) { ModelState.AddModelError("", "ConfirmPassword không đúng"); }
+                    if (!checkUserName) { ModelState.AddModelError("", "Tên đăng nhập không chính xác"); };
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Xác nhận mật khẩu không đúng"); }
                 }
                 return View(registerModel);
             }

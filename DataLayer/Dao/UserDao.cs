@@ -13,10 +13,10 @@ namespace DataLayer.Dao
 {
     public class UserDao
     {
-        NTQDBContext db ;
+        NTQDBContext db;
         public UserDao()
         {
-            db=new NTQDBContext();
+            db = new NTQDBContext();
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace DataLayer.Dao
                 throw;
             }
         }
-        
+
         /// <summary>
         /// Check UserName
         /// </summary>
@@ -180,7 +180,7 @@ namespace DataLayer.Dao
         /// <param name="userName"></param>
         /// <param name="email"></param>
         /// <returns></returns>
-        public int CheckUser(string userName,string email)
+        public int CheckUser(string userName, string email)
         {
             try
             {
@@ -213,7 +213,7 @@ namespace DataLayer.Dao
         /// <param name="email"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public int Login(string email,string password)
+        public int Login(string email, string password)
         {
             try
             {
@@ -254,31 +254,25 @@ namespace DataLayer.Dao
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<User> ListAllPaging(string active,string inActive,string admin,string user, string searchString,int page, int pageSize)
+        public IEnumerable<User> ListAllPaging(string status, string role, string searchString, int page, int pageSize)
         {
             try
             {
                 IQueryable<User> model = db.Users;
-                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(active) || !string.IsNullOrEmpty(inActive) || !string.IsNullOrEmpty(admin) || !string.IsNullOrEmpty(user))
+                if (!string.IsNullOrEmpty(searchString))
                 {
+
                     model = model.Where(x => x.UserName.Contains(searchString));
-                    if (active != null)
-                    {
-                        model = model.Where(x => x.Status == 1);
-                    }
-                    if (inActive != null)
-                    {
-                        model = model.Where(x => x.Status == 0);
-                    }
-                    if (admin != null)
-                    {
-                        model = model.Where(x => x.Role == 1);
-                    }
-                    if (user != null)
-                    {
-                        model = model.Where(x => x.Role == 0);
-                    }
-                    return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+                }
+                if (!string.IsNullOrEmpty(status))
+                {
+                    int Status = int.Parse(status);
+                    model = model.Where(x => x.Status == Status);
+                }
+                if (!string.IsNullOrEmpty(role))
+                {
+                    int Role = int.Parse(role); 
+                    model = model.Where(x => x.Role == Role);
                 }
                 return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
@@ -307,7 +301,7 @@ namespace DataLayer.Dao
                     db.SaveChanges();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
                 throw;
@@ -325,7 +319,7 @@ namespace DataLayer.Dao
             {
                 var user = db.Users.Find(id);
                 user.Status = 0;
-                user.DeleteAt= DateTime.Now;
+                user.DeleteAt = DateTime.Now;
                 db.SaveChanges();
             }
             catch (Exception ex)

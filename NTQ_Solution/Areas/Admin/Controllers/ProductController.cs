@@ -1,5 +1,6 @@
 ﻿using DataLayer.Dao;
 using DataLayer.EF;
+using DataLayer.ViewModel;
 using Microsoft.Ajax.Utilities;
 using NTQ_Solution.Areas.Admin.Data;
 using System;
@@ -16,11 +17,15 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
         // GET: Admin/Product
         
-        public ActionResult Index(string size, string color, string supplier, string trending, string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(string size, string color, string supplier, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
-                var model = productDao.ListAllPagingProduct(size, color, supplier,trending, searchString, page, pageSize);
+                ViewBag.SearchString = searchString;
+                ViewBag.Size = size;
+                ViewBag.Color = color;
+                ViewBag.Supplier = supplier;
+                var model = productDao.ListAllPagingProduct(size, color, supplier, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
@@ -29,16 +34,24 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult CreateProduct()
         {
+            var listCategory = productDao.ListCategory();
+            var listSupplier = new SupplierDao().ListSupplier();
+            SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
+            ViewBag.CategoryList = cateList;
+            SelectList supList = new SelectList(listSupplier, "ID", "CategoryName");
+            ViewBag.SupplierList = supList;
             return View();
         }
 
         [HttpPost]
-        public ActionResult CreateProduct(ProductModel productModel)
+        public ActionResult CreateProduct(ProductModel productModel,string category,string supplier)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    int Category = int.Parse(category);
+                    int Supplier = int.Parse(supplier);
                     bool trending;
                     if (productModel.Trending == true) trending = true;
                     else trending = false;
@@ -57,8 +70,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         ImportPrice = productModel.ImportPrice,
                         Color = productModel.Color,
                         Size = productModel.Size,
-                        CategoryID = productModel.CategoryID,
-                        SupplierID = productModel.SupplierID
+                        CategoryID = Category,
+                        SupplierID = Supplier
                     };
                     productDao.Insert(product);
                     TempData["success"] = "Create New Product success";
@@ -90,7 +103,12 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Trending = checkTrending,
                     Price = temp.Price,
                     Image = temp.Image,
-                    UpdateAt = DateTime.Now
+                    UpdateAt = DateTime.Now,
+                    ImportPrice = temp.ImportPrice,
+                    Color = temp.Color,
+                    Size = temp.Size,
+                    CategoryID = temp.CategoryID,
+                    SupplierID = temp.SupplierID
                 };
                 return View(product);
             }
@@ -118,7 +136,12 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         Trending = productModel.Trending,
                         Price = productModel.Price,
                         Image = productModel.Image,
-                        UpdateAt = DateTime.Now
+                        UpdateAt = DateTime.Now,
+                        ImportPrice = productModel.ImportPrice,
+                        Color = productModel.Color,
+                        Size = productModel.Size,
+                        CategoryID = productModel.CategoryID,
+                        SupplierID = productModel.SupplierID
                     };
                     productDao.Update(product);
                     TempData["success"] = "Update Product success";

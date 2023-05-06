@@ -61,8 +61,6 @@ namespace DataLayer.Dao
             ship.Status = true;
             var order = db.Orders.Find(ship.OrderID);
             order.Status = 4;
-            var product = db.Products.Find(order.ProductsID);
-            product.Count -= order.Count;
             db.SaveChanges();
         }
     }

@@ -23,6 +23,9 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.SearchString = searchString;
+                ViewBag.Size = size;
+                ViewBag.Color = color;
                 ViewBag.supplierID = supplierID;
                 var model = supplierDao.GetProductOfSupplier(size, color, supplierID, searchString, page, pageSize);
                 return View(model);

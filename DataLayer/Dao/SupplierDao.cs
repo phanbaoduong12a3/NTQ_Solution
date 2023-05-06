@@ -79,5 +79,9 @@ namespace DataLayer.Dao
             db.Imports.Add(import);
             db.SaveChanges();
         }
+        public List<Supplier> ListSupplier()
+        {
+            return db.Suppliers.OrderBy(x => x.ID).ToList();
+        }
     }
 }

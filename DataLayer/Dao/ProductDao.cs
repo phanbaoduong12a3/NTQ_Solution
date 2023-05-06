@@ -1,4 +1,5 @@
 ﻿using DataLayer.EF;
+using DataLayer.ViewModel;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,11 @@ namespace DataLayer.Dao
                     entity.Price = product.Price;
                     entity.Trending = product.Trending;
                     entity.UpdateAt = DateTime.Now;
+                    entity.ImportPrice = product.ImportPrice;
+                    entity.Color = product.Color;
+                    entity.Size = product.Size;
+                    entity.CategoryID = product.CategoryID;
+                    entity.SupplierID = product.SupplierID;
                     db.SaveChanges();
                 }
             }
@@ -97,34 +103,30 @@ namespace DataLayer.Dao
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Product> ListAllPagingProduct(string size, string color, string supplier, string trending, string searchString, int page, int pageSize)
+        public IEnumerable<Product> ListAllPagingProduct(string size, string color, string supplier, string searchString, int page, int pageSize)
         {
             try
             {
                 IQueryable<Product> model = db.Products;
-                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(trending) || !string.IsNullOrEmpty(color) || !string.IsNullOrEmpty(size) || !string.IsNullOrEmpty(supplier))
+                if (!string.IsNullOrEmpty(searchString))
                 {
                     model = model.Where(x => x.ProductName.Contains(searchString));
-                    if (trending != null)
-                    {
-                        model = model.Where(x => x.Trending == true);
-                    }
-                    if (!string.IsNullOrEmpty(color))
-                    {
-                        model = model.Where(x => x.Color == color);
-                    }
-                    if (!string.IsNullOrEmpty(size))
-                    {
-                        model = model.Where(x => x.Size == size);
-                    }
-                    if (!string.IsNullOrEmpty(supplier))
-                    {
-                        int supplierModel = int.Parse(supplier);
-                        model = model.Where(x => x.SupplierID == supplierModel);
-                    }
-                    return model.Where(x => x.Color != null && x.Size != null).OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
                 }
-                return model.Where(x => x.Color != null && x.Size != null).OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
+                if (!string.IsNullOrEmpty(color))
+                {
+                    model = model.Where(x => x.Color == color);
+                }
+                if (!string.IsNullOrEmpty(size))
+                {
+                    model = model.Where(x => x.Size == size);
+                }
+                if (!string.IsNullOrEmpty(supplier))
+                {
+                    int supplierModel = int.Parse(supplier);
+                    model = model.Where(x => x.SupplierID == supplierModel);
+                }
+                return model.Where(x => x.Color != null && x.Size != null).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
+
             }
             catch (Exception ex)
             {
@@ -153,9 +155,9 @@ namespace DataLayer.Dao
                     {
                         model = model.Where(x => x.Trending == true);
                     }
-                    return model.OrderByDescending(x => x.NumberViews).Where(x => x.Status == 1 && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
+                    return model.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
                 }
-                return model.OrderByDescending(x => x.NumberViews).Where(x => x.Status == 1 && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
+                return model.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -277,7 +279,7 @@ namespace DataLayer.Dao
             try
             {
                 IQueryable<Product> model = db.Products.Where(x => x.Count > 0);
-                return model.OrderByDescending(x => x.NumberViews).Where(x => x.CategoryID == categoryID && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
+                return model.OrderByDescending(x => x.Price).Where(x => x.CategoryID == categoryID && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {

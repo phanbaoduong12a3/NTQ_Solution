@@ -19,6 +19,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.SearchString = searchString;
                 var model = exportBillDao.ListAllExportBill(searchString, page, pageSize);
                 return View(model);
             }

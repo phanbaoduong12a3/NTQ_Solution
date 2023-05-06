@@ -142,7 +142,6 @@
     <Compile Include="Areas\Admin\Controllers\ExportBillController.cs" />
     <Compile Include="Areas\Admin\Controllers\ImportBillController.cs" />
     <Compile Include="Areas\Admin\Controllers\ListReviewController.cs" />
-    <Compile Include="Areas\Admin\Controllers\ListUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\MyProfileController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
@@ -151,7 +150,6 @@
     <Compile Include="Areas\Admin\Controllers\SupplierController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Areas\Admin\Data\LoginModel.cs" />
-    <Compile Include="Areas\Admin\Data\ProductModel.cs" />
     <Compile Include="Areas\Admin\Data\RegisterModel.cs" />
     <Compile Include="Common\CommonConstant.cs" />
     <Compile Include="Common\Encryptor.cs" />
@@ -2439,6 +2437,7 @@
     <Content Include="assests\admin\vendor\jquery\jquery.min.js" />
     <Content Include="assests\admin\vendor\jquery\jquery.slim.js" />
     <Content Include="assests\admin\vendor\jquery\jquery.slim.min.js" />
+    <Content Include="assests\client\css\animate.css" />
     <Content Include="assests\client\css\bootrap-icon.css" />
     <Content Include="assests\client\css\bootstrap-social.css" />
     <Content Include="assests\client\css\bootstrap-theme.css" />
@@ -2450,11 +2449,17 @@
     <Content Include="assests\client\css\fontawesome.min.css" />
     <Content Include="assests\client\css\global.css" />
     <Content Include="assests\client\css\jquery-ui.css" />
+    <Content Include="assests\client\css\media-queries.css" />
     <Content Include="assests\client\css\sb-admin-2.css" />
     <Content Include="assests\client\css\sb-admin-2.min.css" />
     <Content Include="assests\client\css\slider.css" />
     <Content Include="assests\client\css\style.css" />
     <Content Include="assests\client\font\glyphicons-halflings-regular.svg" />
+    <Content Include="assests\client\ico\apple-touch-icon-114-precomposed.png" />
+    <Content Include="assests\client\ico\apple-touch-icon-144-precomposed.png" />
+    <Content Include="assests\client\ico\apple-touch-icon-57-precomposed.png" />
+    <Content Include="assests\client\ico\apple-touch-icon-72-precomposed.png" />
+    <Content Include="assests\client\ico\favicon.png" />
     <Content Include="assests\client\images\010-1.png" />
     <Content Include="assests\client\images\010.png" />
     <Content Include="assests\client\images\013.png" />
@@ -2593,6 +2598,9 @@
     <Content Include="assests\client\images\ui-bg_glass_75_dadada_1x400.png" />
     <Content Include="assests\client\images\value-rating.png" />
     <Content Include="assests\client\images\wishlist.png" />
+    <Content Include="assests\client\img\backgrounds\1%402x.jpg" />
+    <Content Include="assests\client\img\backgrounds\1.jpg" />
+    <Content Include="assests\client\img\logo.png" />
     <Content Include="assests\client\js\bootstrap.bundle.js" />
     <Content Include="assests\client\js\bootstrap.bundle.min.js" />
     <Content Include="assests\client\js\bootstrap.js" />
@@ -2603,7 +2611,11 @@
     <Content Include="assests\client\js\easyResponsiveTabs.js" />
     <Content Include="assests\client\js\jquery-1.7.2.min.js" />
     <Content Include="assests\client\js\jquery-3.0.0.min.js" />
+    <Content Include="assests\client\js\jquery-3.2.1.min.js" />
+    <Content Include="assests\client\js\jquery-migrate-3.0.0.min.js" />
     <Content Include="assests\client\js\jquery.accordion.js" />
+    <Content Include="assests\client\js\jquery.backstretch.js" />
+    <Content Include="assests\client\js\jquery.backstretch.min.js" />
     <Content Include="assests\client\js\jquery.easing.js" />
     <Content Include="assests\client\js\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="assests\client\js\jquery.min.js" />
@@ -2612,10 +2624,15 @@
     <Content Include="assests\client\js\move-top.js" />
     <Content Include="assests\client\js\plugin.js" />
     <Content Include="assests\client\js\popper.min.js" />
+    <Content Include="assests\client\js\retina-1.1.0.js" />
+    <Content Include="assests\client\js\retina-1.1.0.min.js" />
     <Content Include="assests\client\js\script.js" />
+    <Content Include="assests\client\js\scripts.js" />
     <Content Include="assests\client\js\slider-setting.js" />
     <Content Include="assests\client\js\slides.min.jquery.js" />
     <Content Include="assests\client\js\startstop-slider.js" />
+    <Content Include="assests\client\js\wow.js" />
+    <Content Include="assests\client\js\wow.min.js" />
     <Content Include="assests\dist\css\latform-style-1.css" />
     <Content Include="assests\dist\css\latform-style-1.min.css" />
     <Content Include="assests\dist\css\latform-style-10.css" />
@@ -2867,7 +2884,6 @@
     <Content Include="Areas\Admin\Views\User\Index.cshtml" />
     <Content Include="Areas\Admin\Views\User\CreateUser.cshtml" />
     <Content Include="Areas\Admin\Views\User\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\ListUser\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MyProfile\Profile.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Product\CreateProduct.cshtml" />

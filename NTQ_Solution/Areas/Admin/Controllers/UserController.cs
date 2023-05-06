@@ -31,11 +31,15 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public ActionResult Index(string active,string inActive,string admin,string user,string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(string status,string role, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
-                var model = userDao.ListAllPaging(active, inActive, admin, user, searchString, page, pageSize);
+                ViewBag.SearchString = searchString;
+                ViewBag.Status = status;
+                ViewBag.Role = role;
+                var model = userDao.ListAllPaging(status, role, searchString, page, pageSize);
+                
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
@@ -70,7 +74,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             PassWord = registerModel.Password,
                             Email = registerModel.Email,
                             CreateAt = DateTime.Now,
-                            Role = 0,
+                            Role = 1,
                             Status = 1
                         };
                         userDao.Insert(user);
@@ -119,11 +123,11 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 if (temp.Role == 0)
                 {
-                    ViewBag.Role = "User";
+                    ViewBag.Role = "Khách hàng";
                 }
-                else
+                if (temp.Role == 1)
                 {
-                    ViewBag.Role = "Admin";
+                    ViewBag.Role = "Nhân viên";
                 }
                 var registerModel = new RegisterModel
                 {
@@ -145,12 +149,14 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
         
         [HttpPost]
-        public ActionResult Edit(RegisterModel registerModel)
+        public ActionResult Edit(RegisterModel registerModel,string role)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
+                    int Role = registerModel.Role;
+                    if (role != "") Role = int.Parse(role);
                     bool checkUserName = userDao.CheckUserName(registerModel.UserName);
                     bool checkEmail = userDao.CheckEmail(registerModel.Email);
                     bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
@@ -168,7 +174,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Email = registerModel.Email,
                             UserName = registerModel.UserName,
                             PassWord = registerModel.Password,
-                            Role = registerModel.Role,
+                            Role = Role,
                             Status = status
                         };
                         userDao.Update(user);

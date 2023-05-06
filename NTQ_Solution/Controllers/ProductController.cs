@@ -19,6 +19,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
+                ViewBag.SearchString = searchString;
                 var model = productDao.ListProductOnSale(trending, searchString, page, pageSize);
                 return View(model);
             }

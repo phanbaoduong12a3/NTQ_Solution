@@ -106,7 +106,7 @@
 
                             </tbody>
                         </table>
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }) + "&supplierID=" + ViewBag.supplierID);
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString , @color = ViewBag.Color, @size = ViewBag.Size, @supplierID = ViewBag.supplierID }));
                     </div>
 
                 </div>

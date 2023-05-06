@@ -16,7 +16,7 @@ namespace DataLayer.EF
         [StringLength(50)]
         public string PassWord { get; set; }
 
-        public int? Role { get; set; }
+        public int Role { get; set; }
 
         [StringLength(50)]
         public string Email { get; set; }
