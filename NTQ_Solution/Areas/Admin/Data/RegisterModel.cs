@@ -11,7 +11,7 @@ namespace NTQ_Solution.Areas.Admin.Data
     {
         [Required(ErrorMessage = "Email không được để trống")]
         [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
-        [RegularExpression(@"^.{10,30}$", ErrorMessage = "{0} from 10 to 30 characters")]
+        [RegularExpression(@"^.{10,30}$", ErrorMessage = "{0} từ 10 đến 30 kí tự")]
         [DisplayName("Email")]
         public string Email { get; set; }
 

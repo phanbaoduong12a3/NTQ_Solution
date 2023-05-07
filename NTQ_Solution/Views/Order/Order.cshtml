@@ -74,8 +74,8 @@
                         </div>
                         <div class="col-md-12">
                             <label for="kh_dienthoai">Điện thoại</label>
-                            <input type="text" class="form-control" name="phone" id="kh_dienthoai"
-                                   value="@item.Phone">
+                            <input type="number" class="form-control" name="phone" id="kh_dienthoai"
+                                   value="@item.Phone" />
                         </div>
                         <div class="col-md-12">
                             <label for="kh_email">Email</label>
@@ -92,11 +92,11 @@
                                    value="1">
                             <label class="custom-control-label" for="1">Tiền mặt</label>
                         </div>
-                        <div class="custom-control custom-radio">
+                       @* <div class="custom-control custom-radio">
                             <input id="2" name="payment" type="radio" class="custom-control-input" required=""
                                    value="2">
                             <label class="custom-control-label" for="2">Chuyển khoản</label>
-                        </div>
+                        </div>*@
                     </div>
                     <hr class="mb-4">
                     <h4 class="mb-3">Hình thức vận chuyển</h4>
@@ -107,11 +107,11 @@
                                    value="1">
                             <label class="custom-control-label" for="ship1">Giao hàng tiết kiệm(20000)</label>
                         </div>
-                        <div class="custom-control custom-radio">
+                       @* <div class="custom-control custom-radio">
                             <input id="ship2" name="ship" type="radio" class="custom-control-input" required=""
                                    value="2">
                             <label class="custom-control-label" for="ship2">Giao hàng hỏa tốc(25000)</label>
-                        </div>
+                        </div>*@
                     </div>
                     <hr class="mb-4">
                     <button class="btn btn-primary btn-lg btn-block" type="submit" name="btnDatHang">
