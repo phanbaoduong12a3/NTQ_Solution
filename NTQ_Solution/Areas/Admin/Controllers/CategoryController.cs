@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         CategoryDao categoryDao;
         public CategoryController()

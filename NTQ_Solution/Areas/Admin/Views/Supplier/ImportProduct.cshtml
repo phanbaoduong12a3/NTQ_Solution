@@ -49,7 +49,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ImportPrice, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ImportPrice, new { @class = "form-control form-control-user", @readonly = "true" })
+            @Html.TextBoxFor(model => model.ImportPrice, new { @class = "form-control form-control-user" , Type = "number", @min = "0", @max = "10000000" })
             @Html.ValidationMessageFor(model => model.NumberViews, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -57,7 +57,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ImportCount, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ImportCount, new { @class = "form-control form-control-user", Type="number" })
+            @Html.TextBoxFor(model => model.ImportCount, new { @class = "form-control form-control-user", Type="number" , @min = "1" })
             @Html.ValidationMessageFor(model => model.ImportCount, "", new { @class = "text-danger" })
         </div>
     </div>

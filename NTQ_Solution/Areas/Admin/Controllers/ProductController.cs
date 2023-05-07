@@ -38,7 +38,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             var listSupplier = new SupplierDao().ListSupplier();
             SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
             ViewBag.CategoryList = cateList;
-            SelectList supList = new SelectList(listSupplier, "ID", "CategoryName");
+            SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
             ViewBag.SupplierList = supList;
             return View();
         }
@@ -48,6 +48,12 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
+                var listCategory = productDao.ListCategory();
+                var listSupplier = new SupplierDao().ListSupplier();
+                SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
+                ViewBag.CategoryList = cateList;
+                SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
+                ViewBag.SupplierList = supList;
                 if (ModelState.IsValid)
                 {
                     int Category = int.Parse(category);
@@ -73,8 +79,9 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         CategoryID = Category,
                         SupplierID = Supplier
                     };
+
                     productDao.Insert(product);
-                    TempData["success"] = "Create New Product success";
+                    TempData["success"] = "Them san pham thanh cong";
                     return RedirectToAction("Index", "Product");
                 }
                 return View(productModel);
@@ -110,17 +117,31 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     CategoryID = temp.CategoryID,
                     SupplierID = temp.SupplierID
                 };
+                var listCategory = productDao.ListCategory();
+                var listSupplier = new SupplierDao().ListSupplier();
+                SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
+                ViewBag.CategoryList = cateList;
+                SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
+                ViewBag.SupplierList = supList;
                 return View(product);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
 
         [HttpPost]
-        public ActionResult UpdateProduct(ProductModel productModel)
+        public ActionResult UpdateProduct(ProductModel productModel, string category, string supplier)
         {
             try
             {
+                var listCategory = productDao.ListCategory();
+                var listSupplier = new SupplierDao().ListSupplier();
+                SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
+                ViewBag.CategoryList = cateList;
+                SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
+                ViewBag.SupplierList = supList;
                 int status;
+                int Category = int.Parse(category);
+                int Supplier = int.Parse(supplier);
                 if (productModel.Status) status = 1;
                 else status = 0;
                 if(ModelState.IsValid)
@@ -140,11 +161,11 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         ImportPrice = productModel.ImportPrice,
                         Color = productModel.Color,
                         Size = productModel.Size,
-                        CategoryID = productModel.CategoryID,
-                        SupplierID = productModel.SupplierID
+                        CategoryID = Category,
+                        SupplierID = Supplier
                     };
                     productDao.Update(product);
-                    TempData["success"] = "Update Product success";
+                    TempData["success"] = "Sua san pham thanh cong";
                     return RedirectToAction("Index", "Product");
                 }
                 return View(productModel);
@@ -161,7 +182,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 productDao.Delete(id);
-                TempData["success"] = "Delete Product success";
+                TempData["success"] = "Xoa san pham thanh cong";
                 return RedirectToAction("Index");
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }

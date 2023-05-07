@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class ExportBillController : Controller
+    public class ExportBillController : BaseController
     {
         ExportBillDao exportBillDao;
         public ExportBillController()

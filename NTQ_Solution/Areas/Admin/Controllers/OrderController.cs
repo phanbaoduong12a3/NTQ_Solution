@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
         OrderDao orderDao;
         public OrderController()

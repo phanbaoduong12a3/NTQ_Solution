@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class ImportBillController : Controller
+    public class ImportBillController : BaseController
     {
         ImportBillDao importBillDao;
         public ImportBillController()

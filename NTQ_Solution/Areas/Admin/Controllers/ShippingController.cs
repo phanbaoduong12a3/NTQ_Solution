@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class ShippingController : Controller
+    public class ShippingController : BaseController
     {
         ShipDao shipDao;
         public ShippingController()

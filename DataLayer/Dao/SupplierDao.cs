@@ -65,6 +65,7 @@ namespace DataLayer.Dao
             var product = db.Products.Find(productModel.ID);
             if(product != null) 
             {
+                product.ImportPrice = productModel.ImportPrice;
                 product.Count += productModel.ImportCount;
             }
             var import = new Import

@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace NTQ_Solution.Areas.Admin.Controllers
 {
-    public class SupplierController : Controller
+    public class SupplierController : BaseController
     {
         SupplierDao supplierDao;
         ProductDao productDao;

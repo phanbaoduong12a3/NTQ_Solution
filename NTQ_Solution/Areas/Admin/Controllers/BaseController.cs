@@ -20,7 +20,16 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     filterContext.Result = new RedirectToRouteResult(new
                         RouteValueDictionary(new { controller = "ShowWarning", action = "Index", Area = "Admin" }));
             }
-            base.OnActionExecuting(filterContext);
+            else if(session.Role == 0)
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                        RouteValueDictionary(new { controller = "ShowWarning", action = "Index", Area = "Admin" }));
+            }
+            else
+            {
+                base.OnActionExecuting(filterContext);
+            }
+            
         }
         protected void SetAlert(string message, string type)
         {
