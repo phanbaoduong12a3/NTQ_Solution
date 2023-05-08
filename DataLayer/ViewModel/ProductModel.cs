@@ -48,13 +48,10 @@ namespace DataLayer.ViewModel
         [DisplayName("Giá nhập sản phẩm")]
         public double? ImportPrice { get; set; }
         public int? SupplierID { get; set; }
-        [StringLength(50)]
         [DisplayName("Màu sắc sản phẩm")]
-        public string Color { get; set; }
-
-        [StringLength(50)]
+        public int? Color { get; set; }
         [DisplayName("Kích thước sản phẩm")]
-        public string Size { get; set; }
+        public int? Size{get;set;}
 
         public bool? Sale { get; set; }
         [DisplayName("Số lượng sản phẩm")]

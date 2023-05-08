@@ -36,8 +36,8 @@ namespace DataLayer.EF
 
         [StringLength(150)]
         public string Address { get; set; }
-        public string Color { get; set; }
-        public string Size { get; set; }
+        public int? Color {get;set;}
+        public int? Size{get;set;}
         public string ShipMode { get; set; }
     }
 }

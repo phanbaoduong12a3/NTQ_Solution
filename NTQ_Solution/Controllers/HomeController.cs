@@ -3,10 +3,13 @@ using DataLayer.EF;
 using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Security.Authentication;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace NTQ_Solution.Controllers
 {
@@ -28,6 +31,9 @@ namespace NTQ_Solution.Controllers
             {
                 ViewBag.SearchString = searchString;
                 var model = productDao.ListProductOnSale(trending, searchString, page, pageSize);
+                ViewBag.NewProduct = productDao.ListNewProduct(5);
+                ViewBag.HotProduct = productDao.ListHotProduct(3);
+                ViewBag.PopularProduct = productDao.ListNewProduct(2);
                 return View(model);
             }
             catch (Exception ex)
@@ -45,9 +51,10 @@ namespace NTQ_Solution.Controllers
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
                 if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
                 ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
-                ViewBag.ListColor = new ProductDao().ListColor(product.ProductName);
-                ViewBag.ListSize = new ProductDao().ListSize(product.ProductName);
+                ViewBag.listColor = productDao.listcolor();
+                ViewBag.listSize = productDao.listsize();
                 productDao.UpdateView(product.ID);
+                ViewBag.HotProduct = productDao.ListNewProduct(4);
                 return View(product);
             }
             catch (Exception ex)
@@ -98,54 +105,13 @@ namespace NTQ_Solution.Controllers
                 throw;
             }
         }
-        public ActionResult Order(string productName, string color, string size)
-        {
-            try
-            {
-                var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-                if (sessionUser == null)
-                {
-                    return RedirectToAction("Index", "Login");
-                }
-                else
-                {
-                    var product = OrderDao.findProductOrder(productName, size, color);
-                    int productID = product.ID;
-                    bool checkProductID = OrderDao.checkProductID(productID);
-                    if(!checkProductID) 
-                    {
-                        var userID = sessionUser.UserID;
-                        var Order = new Order
-                        {
-                            ProductsID = productID,
-                            UserID = userID,
-                            CreateAt = DateTime.Now,
-                            Status = 1,
-                            Count = 1,
-                            Color = product.Color,
-                            Size = size
-                        };
-                        OrderDao.AddNewOrder(Order);
-                    }
-                    else
-                    {
-                        OrderDao.UpdateOrder(productID);
-                    }
-                    TempData["success"] = "Them san pham vao gio hang thanh cong";
-                    return RedirectToAction("Index", "Order");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
+        
         [ChildActionOnly]
         public PartialViewResult HeaderCart()
         {
             var session = (UserLogin)Session[CommonConstant.USER_SESSION];
             int count = 0;
+
             if(session != null)
             {
                 count = productDao.CartCount(session.UserID);

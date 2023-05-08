@@ -3,111 +3,188 @@
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var newProduct = (List<DataLayer.EF.Product>)ViewBag.NewProduct;
+    var hotProduct = (List<DataLayer.EF.Product>)ViewBag.HotProduct;
+    var popularProduct = (List<DataLayer.EF.Product>)ViewBag.PopularProduct;
 }
 @section slide{
-    <div class="header_slide">
-        <div class="header_bottom_left">
-            <div class="categories">
-                @{ Html.RenderAction("ProductCategory", "Product");}
-            </div>
-        </div>
-        <div class="header_bottom_right">
-            <div class="slider">
-                <div id="slider">
-                    <div id="mover">
-                        <div id="slide-1" class="slide">
-                            <div class="slider-img">
-                                <a href="preview.html"><img src="~/assests/client/images/ao_thun/2_4.jpg" alt="learn more" /></a>
-                            </div>
-                            <div class="slider-text">
-                                <h1>Clearance<br><span>SALE</span></h1>
-                                <h2>UPTo 20% OFF</h2>
-                                <div class="features_list">
-                                    <h4>Get to Know More About Our Memorable Services Lorem Ipsum is simply dummy text</h4>
-                                </div>
-                                <a href="preview.html" class="button">Shop Now</a>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="slide">
-                            <div class="slider-text">
-                                <h1>Clearance<br><span>SALE</span></h1>
-                                <h2>UPTo 40% OFF</h2>
-                                <div class="features_list">
-                                    <h4>Get to Know More About Our Memorable Services</h4>
-                                </div>
-                                <a href="preview.html" class="button">Shop Now</a>
-                            </div>
-                            <div class="slider-img">
-                                <a href="preview.html"><img src="~//assests/client/images/ao_thun/3_1.jpg" alt="learn more" /></a>
-                            </div>
-                            <div class="clear"></div>
-                        </div>
-                        <div class="slide">
-                            <div class="slider-img">
-                                <a href="preview.html"><img src="~//assests/client/images/ao_thun/3_3.jpg" alt="learn more" /></a>
-                            </div>
-                            <div class="slider-text">
-                                <h1>Clearance<br><span>SALE</span></h1>
-                                <h2>UPTo 10% OFF</h2>
-                                <div class="features_list">
-                                    <h4>Get to Know More About Our Memorable Services Lorem Ipsum is simply dummy text</h4>
-                                </div>
-                                <a href="preview.html" class="button">Shop Now</a>
-                            </div>
-                            <div class="clear"></div>
+    <div class="page-slider margin-bottom-35">
+        <div id="carousel-example-generic" class="carousel slide carousel-slider">
+            <!-- Indicators -->
+            <ol class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+            </ol>
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner" role="listbox">
+                <!-- First slide -->
+                <div class="item carousel-item-four active">
+                    <div class="container">
+                        <div class="carousel-position-four text-center">
+                            <h2 class="margin-bottom-20 animate-delay carousel-title-v3 border-bottom-title text-uppercase" data-animation="animated fadeInDown">
+                                Cung cấp bởi <br /><span class="color-red-v2">Xuu Shop</span><br /> 
+                            </h2>
+                            <p class="carousel-subtitle-v2" data-animation="animated fadeInUp">
+                                Sản phẩm chính hãng, uy tín <br />
+                                Chất liệu cao cấp
+                            </p>
                         </div>
                     </div>
                 </div>
-                <div class="clear"></div>
-            </div>
+
+                <!-- Second slide -->
+                <div class="item carousel-item-five">
+                    <div class="container">
+                        <div class="carousel-position-four text-center">
+                            <h2 class="animate-delay carousel-title-v4" data-animation="animated fadeInDown">
+                                Uy tín
+                            </h2>
+                            <p class="carousel-subtitle-v2" data-animation="animated fadeInDown">
+                                Chất lượng
+                            </p>
+                            <p class="carousel-subtitle-v3 margin-bottom-30" data-animation="animated fadeInUp">
+                                Giá cả phù hợp
+                            </p>
+                            <a class="carousel-btn" href="/Product/Index" data-animation="animated fadeInUp">Xem sản phẩm ngay</a>
+                        </div>
+                        <img class="carousel-position-five animate-delay hidden-sm hidden-xs" src="assets/pages/img/shop-slider/slide2/price.png" alt="Price" data-animation="animated zoomIn">
+                    </div>
+                </div>
+
+                
+
+            <!-- Controls -->
+            <a class="left carousel-control carousel-control-shop" href="#carousel-example-generic" role="button" data-slide="prev">
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </a>
+            <a class="right carousel-control carousel-control-shop" href="#carousel-example-generic" role="button" data-slide="next">
+                <i class="fa fa-angle-right" aria-hidden="true"></i>
+            </a>
         </div>
-        <div class="clear"></div>
     </div>
 }
-<div class="content">
-    @using (Html.BeginForm("Index", "Product", FormMethod.Get))
-    {
+<div class="container">
+    <!-- BEGIN SALE PRODUCT & NEW ARRIVALS -->
+    <div class="row margin-bottom-40">
+        <!-- BEGIN SALE PRODUCT -->
+        <div class="col-md-12 sale-product">
+            <h2>Sản phẩm mới</h2>
+            <div class="owl-carousel owl-carousel5">
 
-        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            
-            <div class="input-group" style="margin-top:20px;margin-bottom:20px">
-
-                <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="search" name="searchString"
-                       aria-label="Search" aria-describedby="basic-addon2" style="margin-right:5px">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
-
-                </div>
-            </div>
-
-        </form>
-    }
-    <div class="section group">
-        @foreach (var item in Model)
-        {
-            /* if (item.Status == 1)
-             {*/
-            var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
-            <div class="grid_1_of_4 images_1_of_4" style="height: 380px;max-height: 400px;">
-                <a href="@url"><img src="@item.Image" alt="@item" style="width:193px;height:193px" /></a>
-                <h2 style="height:50px;padding-top:10px">@item.ProductName </h2>
-                <i class="fa fa-eye " id="eye">@item.NumberViews</i>
-                <div class="price-details">
-                    <div class="price-number">
-                        <p><span class="rupees">@(item.Price.HasValue?item.Price.Value.ToString("N0"):"Liên hệ shop")đ</span></p>
+                @foreach (var item in newProduct)
+                {
+                    var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                                <div>
+                                    <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
+                                    <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
+                                </div>
+                            </div>
+                            <h3><a href="@url">@item.ProductName</a></h3>
+                            <div class="pi-price">@item.Price<span>đ</span></div>
+                            <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                        </div>
                     </div>
-                    <div class="add-cart">
-                        <h4><a href="@url">Thêm vào giỏ hàng</a></h4>
-                    </div>
-                    <div class="clear"></div>
-                </div>
-
+                }
             </div>
-            @*}*@
-        }
+        </div>
+        <!-- END SALE PRODUCT -->
     </div>
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
+    <!-- END SALE PRODUCT & NEW ARRIVALS -->
+    <!-- BEGIN SIDEBAR & CONTENT -->
+    <div class="row margin-bottom-40 ">
+        <!-- BEGIN SIDEBAR -->
+        <div class="sidebar col-md-3 col-sm-4">
+            <ul class="list-group margin-bottom-25 sidebar-menu">
+                @{ Html.RenderAction("ProductCategory", "Product");}
+            </ul>
+        </div>
+        <!-- END SIDEBAR -->
+        <!-- BEGIN CONTENT -->
+        <div class="col-md-9 col-sm-8">
+            <h2>Sản phẩm bán chạy</h2>
+            <div class="owl-carousel owl-carousel3">
+                @foreach (var item in hotProduct)
+                {
+                    var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                                <div>
+                                    <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
+                                    <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
+                                </div>
+                            </div>
+                            <h3><a href="@url">@item.ProductName</a></h3>
+                            <div class="pi-price">@item.Price<span>đ</span></div>
+                            <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- END CONTENT -->
+    </div>
+    <!-- END SIDEBAR & CONTENT -->
+    <!-- BEGIN TWO PRODUCTS & PROMO -->
+    <div class="row margin-bottom-35 ">
+        <!-- BEGIN TWO PRODUCTS -->
+        <div class="col-md-6 two-items-bottom-items">
+            <h2>Sản phẩm ưa chuộng</h2>
+            <div class="owl-carousel owl-carousel2">
+                @foreach (var item in popularProduct)
+                {
+                    var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                    <div>
+                        <div class="product-item">
+                            <div class="pi-img-wrapper">
+                                <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                                <div>
+                                    <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
+                                    <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
+                                </div>
+                            </div>
+                            <h3><a href="@url">@item.ProductName</a></h3>
+                            <div class="pi-price">@item.Price<span>đ</span></div>
+                            <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <!-- END TWO PRODUCTS -->
+        <!-- BEGIN PROMO -->
+        <div class="col-md-6 shop-index-carousel">
+            <div class="content-slider">
+                <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                    <!-- Indicators -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img src="~/assets/pages/img/1_5.jpg" alt="áo"/>
+                        </div>
+                        @foreach (var item in hotProduct)
+                        {
+                            <div class="item">
+                                <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PROMO -->
+    </div>
+    <!-- END TWO PRODUCTS & PROMO -->
 </div>

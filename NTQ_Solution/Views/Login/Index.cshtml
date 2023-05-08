@@ -23,62 +23,48 @@
                         <img src="/assests/dist/images/logo-colorful.png" alt="logo">
                     </div>
                     <div class="my-5 text-center">
-                        <h3 class="font-weight-bold mb-3">Sign In</h3>
-                        <p class="text-muted">Sign in to Xuu Shop to continue</p>
+                        <h3 class="font-weight-bold mb-3">Đăng nhập</h3>
                     </div>
                     @using (Html.BeginForm("Login", "Login", FormMethod.Post))
                     {
                         @Html.ValidationSummary(false, "", new { @class = "text-danger" });
-                        <form>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <div class="form-icon-wrapper">
-                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus" })
-                                    <i class="form-icon-left mdi mdi-email"></i>
-                                </div>
+                <form>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <div class="form-icon-wrapper">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @autofocus = "autofocus" })
+                            <i class="form-icon-left mdi mdi-email"></i>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="form-icon-wrapper">
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                            <i class="form-icon-left mdi mdi-lock"></i>
+                            <a href="#" class="form-icon-right password-show-hide" title="Hide or show password">
+                                <i class="mdi mdi-eye"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="d-md-flex justify-content-between">
+                            <div class="custom-control custom-checkbox mb-2 mb-md-0">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
+                                <label class="custom-control-label" for="customCheck1">Remember me</label>
                             </div>
-                            <div class="form-group">
-                                <label for="password">Password</label>
-                                <div class="form-icon-wrapper">
-                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
-                                    <i class="form-icon-left mdi mdi-lock"></i>
-                                    <a href="#" class="form-icon-right password-show-hide" title="Hide or show password">
-                                        <i class="mdi mdi-eye"></i>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="d-md-flex justify-content-between">
-                                    <div class="custom-control custom-checkbox mb-2 mb-md-0">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked>
-                                        <label class="custom-control-label" for="customCheck1">Remember me</label>
-                                    </div>
-                                    <a href="password-reset.html">I forgot my password!</a>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
-                            </div>
-                            <p class="text-center">
-                                Don't have an account?
-                                <a href="/Register/Index">Create a free account</a>.
-                            </p>
-                            <div class="text-divider">or</div>
-                            <div class="social-links justify-content-center">
-                                <a href="#" class="bg-google">
-                                    <i class="mdi mdi-google"></i>
-                                </a>
-                                <a href="#" class="bg-facebook">
-                                    <i class="mdi mdi-facebook"></i>
-                                </a>
-                                <a href="#" class="bg-twitter">
-                                    <i class="mdi mdi-twitter"></i>
-                                </a>
-                                <a href="#" class="bg-github">
-                                    <i class="mdi mdi-github"></i>
-                                </a>
-                            </div>
-                        </form>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+                    </div>
+                    <p class="text-center">
+                        @Html.ActionLink("Quay lại", "Index", "Home")
+                    </p>
+                    <p class="text-center">
+                        <a href="/Register/Index">Đăng ký</a>.
+                    </p>
+                    
+                </form>
                     }
 
                 </div>

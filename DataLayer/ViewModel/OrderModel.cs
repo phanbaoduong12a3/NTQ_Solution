@@ -30,10 +30,11 @@ namespace DataLayer.ViewModel
         [DisplayName("Số điện thoại")]
         public int? Phone { get; set; }
         public string Email { get; set; }
-        public string Color { get; set; }
-        public string Size { get; set; }
+        public int? Color {get;set;}
+        public int? Size{get;set;}
         public int ShipMoney { get; set; }
         public string ShipMode { get; set; }
+        public int? ProductCount { get; set; }
 
     }
 }

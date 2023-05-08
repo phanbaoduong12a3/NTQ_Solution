@@ -9,7 +9,7 @@ namespace NTQ_Solution.Areas.Admin.Data
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Hãy nhập Email")]
+        [Required(ErrorMessage = "Email không được để trống")]
         [EmailAddress(ErrorMessage = "Email không đúng định dạng")]
         [RegularExpression(@"^.{10,30}$", ErrorMessage = "{0} từ 10 đến 30 kí tự")]
         [DisplayName("Email")]

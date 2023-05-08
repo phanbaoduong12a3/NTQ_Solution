@@ -27,7 +27,7 @@
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
-    <h4>Sản phẩm</h4>
+    <h4>Thông tin sản phẩm</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
@@ -71,14 +71,14 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Color, new { @class = "form-control form-control-user" })
+            @Html.DropDownList("color", (IEnumerable<SelectListItem>)ViewBag.ColorList, new { @class = "form-control form-control-user" })
             @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Size, new { @class = "form-control form-control-user" })
+            @Html.DropDownList("size", (IEnumerable<SelectListItem>)ViewBag.SizeList, new { @class = "form-control form-control-user" })
             @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
         </div>
     </div>

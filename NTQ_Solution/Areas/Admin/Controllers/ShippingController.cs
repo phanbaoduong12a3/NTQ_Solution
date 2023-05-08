@@ -10,15 +10,19 @@ namespace NTQ_Solution.Areas.Admin.Controllers
     public class ShippingController : BaseController
     {
         ShipDao shipDao;
+        ProductDao productDao;
         public ShippingController()
         {
             shipDao = new ShipDao();
+            productDao = new ProductDao();
         }
         // GET: Admin/Order
         public ActionResult Index(int page = 1, int pageSize = 4)
         {
             try
             {
+                ViewBag.listColor = productDao.listcolor();
+                ViewBag.listSize = productDao.listsize();
                 var model = shipDao.ListShip(page, pageSize);
                 return View(model);
             }

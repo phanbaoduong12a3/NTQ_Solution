@@ -3,9 +3,11 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+    var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
+    var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
 }
 @section header{
-    Danh sách đơn hàng
+    Đơn hàng chờ xác nhận
 }
 @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
 <div class="row">
@@ -35,8 +37,8 @@
                                     <th>Khách hàng</th>
                                     <th>Tên sản phẩm</th>
                                     <th>Ảnh sản phẩm</th>
-                                    <th>Màu sắc</th>
                                     <th>Size</th>
+                                    <th>Màu sắc</th>
                                     <th>Giá bán</th>
                                     <th>Số lượng</th>
                                     <th>Trạng thái</th>
@@ -46,7 +48,7 @@
                                 @if (Model.Count == 0)
                                 {
                                     <tr>
-                                        <td colspan="10" class="text-center">No data</td>
+                                        <td colspan="10" class="text-center">Không có dữ liệu</td>
                                     </tr>
                                 }
                                 @if (Model.Count != 0)
@@ -68,8 +70,26 @@
                                                 <td>
                                                     <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                                 </td>
-                                                <td>@item.Color</td>
-                                                <td>@item.Size</td>
+                                                @foreach (var size in listSize)
+                                                {
+                                                    if(item.Size == size.ID)
+                                                    {
+                                                        <td>
+                                                            @size.SizeName
+                                                        </td>
+                                                    }
+                                                }
+
+                                                @foreach (var color in listColor)
+                                                {
+                                                    
+                                                    if(item.Color == color.ID)
+                                                    {
+                                                        <td>
+                                                            @color.ColorName
+                                                        </td>
+                                                    }
+                                                }
                                                 <td>@item.Price</td>
                                                 <td>
                                                     @item.Count

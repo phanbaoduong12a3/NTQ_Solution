@@ -10,15 +10,19 @@ namespace NTQ_Solution.Areas.Admin.Controllers
     public class OrderController : BaseController
     {
         OrderDao orderDao;
+        ProductDao productDao;
         public OrderController()
         {
             orderDao = new OrderDao();
+            productDao = new ProductDao();
         }
         // GET: Admin/Order
         public ActionResult Index(string searchString, int page = 1, int pageSize = 4)
         {
             try
             {
+                ViewBag.listColor = productDao.listcolor();
+                ViewBag.listSize = productDao.listsize();
                 ViewBag.SearchString = searchString;
                 var model = orderDao.ListOrderBE(searchString, page, pageSize);
                 return View(model);
@@ -46,6 +50,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.listColor = productDao.listcolor();
+                ViewBag.listSize = productDao.listsize();
                 var model = orderDao.ListOrderSuccess(searchString, page, pageSize);
                 return View(model);
             }

@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Order";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
+    var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
 }
 <div class="row">
     <div class="col-lg-12">
@@ -18,19 +20,20 @@
                                     <th>Khách hàng</th>
                                     <th>Tên sản phẩm</th>
                                     <th>Ảnh sản phẩm</th>
-                                    <th>Màu sắc</th>
                                     <th>Size</th>
+                                    <th>Màu sắc</th>
                                     <th>Giá bán</th>
                                     <th>Số lượng</th>
                                     <th>Hình thức vận chuyển</th>
                                     <th>Trạng thái</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if (Model.Count == 0)
                                 {
                                     <tr>
-                                        <td colspan="10" class="text-center">No data</td>
+                                        <td colspan="10" class="text-center">Không có dữ liệu</td>
                                     </tr>
                                 }
                                 @if (Model.Count != 0)
@@ -51,8 +54,27 @@
                                                 <td>
                                                     <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                                 </td>
-                                                <td>@item.Color</td>
-                                                <td>@item.Size</td>
+                                                @foreach (var size in listSize)
+                                                {
+                                                    
+                                                    if(item.Size == size.ID)
+                                                    {
+                                                        <td>
+                                                            @size.SizeName
+                                                        </td>
+                                                    }
+                                                }
+
+                                                @foreach (var color in listColor)
+                                                {
+                                                    
+                                                    if(item.Color == color.ID)
+                                                    {
+                                                        <td>
+                                                            @color.ColorName
+                                                        </td>
+                                                    }
+                                                }
                                                 <td>@item.Price</td>
                                                 <td>
                                                     @if (item.Status < 2)
@@ -70,13 +92,11 @@
                                                     {
                                                         <input type="submit" class="btn btn-success" style="text-decoration:none" @*href="/Order/Order?OrderId=@item.ID"*@ value="Đặt hàng" />
                                                         @*<i class="fa fa-edit">Đặt hàng</i></input>*@
-                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
 
                                                     }
                                                     @if (item.Status == 2)
                                                     {
                                                         <a class="btn btn-success" style="text-decoration:none">Chờ xác nhận</a>
-                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
 
                                                     }
                                                     @if (item.Status == 3)
@@ -88,6 +108,18 @@
                                                         <a class="btn btn-success" style="text-decoration:none">Đã nhận hàng</a>
                                                     }
 
+                                                </td>
+                                                <td>
+                                                    @if (item.Status == 2)
+                                                    {
+                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Hủy</i></a>
+
+                                                    }
+                                                    @if (item.Status == 1)
+                                                    {
+
+                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
+                                                    }
                                                 </td>
                                             </tr>
                                             </form>

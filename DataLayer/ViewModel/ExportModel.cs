@@ -22,7 +22,8 @@ namespace DataLayer.ViewModel
         public string ProductName { get; set; }
         public string UserName { get; set; }
         public string Image { get; set; }
-        public string Color { get; set; }
-        public string Size { get; set; }
+        public int? Color {get;set;}
+        public int? Size{get;set;}
+        public double? ImportPrice { get; set; }
     }
 }

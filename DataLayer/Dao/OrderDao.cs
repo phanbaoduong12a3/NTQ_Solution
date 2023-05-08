@@ -65,7 +65,10 @@ namespace DataLayer.Dao
 				throw;
 			}
 		}
-
+        public Order GetOrderByProductID(int productID)
+        {
+            return db.Orders.Where(x => x.ProductsID == productID).FirstOrDefault();
+        }
         public bool checkProductID(int productID)
         {
             var result = db.Orders.FirstOrDefault(x=>x.ProductsID == productID && x.Status == 1);
@@ -76,7 +79,9 @@ namespace DataLayer.Dao
         {
             try
             {
-                var product = db.Products.Where(x => x.ProductName == productName && x.Size == size && x.Color == color).FirstOrDefault();
+                int Size = int.Parse(size);
+                int Color = int.Parse(color);
+                var product = db.Products.Where(x => x.ProductName == productName && x.Size == Size && x.Color == Color).FirstOrDefault();
                 return product;
             }
             catch(Exception ex)
@@ -94,6 +99,8 @@ namespace DataLayer.Dao
 
         public IEnumerable<OrderModel> getOrderModel(int OrderId,int count,string color, string size)
         {
+            int Color = int.Parse(color);
+            int Size = int.Parse(size);
             var model = (from a in db.Orders
                          join b in db.Users
                          on a.UserID equals b.ID
@@ -106,8 +113,8 @@ namespace DataLayer.Dao
                              Address= b.Address,
                              Phone = b.Phone,
                              Email = b.Email,
-                             Color = color,
-                             Size = size,
+                             Color = Color,
+                             Size = Size,
                              UserName = b.UserName,
                              ProductName = c.ProductName,
                              Image = c.Image,
@@ -120,6 +127,37 @@ namespace DataLayer.Dao
                              Payment = ""
                          });
             return model;
+        }
+        public OrderModel convertOrderModel(Order Order, string color, string size)
+        {
+            int Color = int.Parse(color);
+            int Size = int.Parse(size);
+            var model = (from a in db.Orders
+                         join b in db.Users
+                         on a.UserID equals b.ID
+                         join c in db.Products
+                         on a.ProductsID equals c.ID
+                         where a.ID == Order.ID
+                         select new OrderModel
+                         {
+                             ID = a.ID,
+                             Address = b.Address,
+                             Phone = b.Phone,
+                             Email = b.Email,
+                             Color = Color,
+                             Size = Size,
+                             UserName = b.UserName,
+                             ProductName = c.ProductName,
+                             Image = c.Image,
+                             Price = c.Price,
+                             Count = Order.ID,
+                             CreateAt = a.CreateAt,
+                             UpdateAt = a.UpdateAt,
+                             DeleteAt = a.DeleteAt,
+                             Status = a.Status,
+                             Payment = ""
+                         });
+            return model.FirstOrDefault(x=>x.ID == Order.ID);
         }
 
         public IEnumerable<OrderModel> OrderShow(int userID, int page, int pageSize)
@@ -152,7 +190,7 @@ namespace DataLayer.Dao
                                  ShipMode = a.ShipMode,
                              });
 
-                return model.OrderBy(x => x.Status).Where(x=>x.Status != 0).ToPagedList(page, pageSize);
+                return model.OrderBy(x => x.Status).Where(x=>x.Status >1).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -297,6 +335,12 @@ namespace DataLayer.Dao
             db.Shippings.Add(ship);
             db.SaveChanges();
         }
+        public void UpdateOrderCount(int orderId, string productCount)
+        {
+            var order = db.Orders.Where(x=>x.ID==orderId).FirstOrDefault();
+            order.Count = int.Parse(productCount);
+            db.SaveChanges();
+        }
         public IEnumerable<OrderModel> OrderDemo(int userID, int page, int pageSize)
         {
             try
@@ -324,6 +368,7 @@ namespace DataLayer.Dao
                                  Address = b.Address,
                                  Phone = b.Phone,
                                  Email = b.Email,
+                                 ProductCount = c.Count
                              });
 
                 return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 1).ToPagedList(page, pageSize);

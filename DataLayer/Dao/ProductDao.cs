@@ -4,6 +4,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,12 +31,21 @@ namespace DataLayer.Dao
                 db.Products.Add(product);
                 db.SaveChanges();
                 return product.ID;
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+        public List<Product> ListNewProduct(int top)
+        {
+            return db.Products.OrderByDescending(x => x.Price).Take(top).ToList();
+        }
+        public List<Product> ListHotProduct(int top)
+        {
+            return db.Products.OrderByDescending(x => x.NumberViews).Take(top).ToList();
         }
 
         /// <summary>
@@ -114,18 +124,18 @@ namespace DataLayer.Dao
                 }
                 if (!string.IsNullOrEmpty(color))
                 {
-                    model = model.Where(x => x.Color == color);
+                    model = model.Where(x => x.Color == int.Parse(color));
                 }
                 if (!string.IsNullOrEmpty(size))
                 {
-                    model = model.Where(x => x.Size == size);
+                    model = model.Where(x => x.Size == int.Parse(size));
                 }
                 if (!string.IsNullOrEmpty(supplier))
                 {
                     int supplierModel = int.Parse(supplier);
                     model = model.Where(x => x.SupplierID == supplierModel);
                 }
-                return model.Where(x => x.Color != null && x.Size != null).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
+                return model.Where(x => x.Color != 0 && x.Size != 0).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
 
             }
             catch (Exception ex)
@@ -155,9 +165,9 @@ namespace DataLayer.Dao
                     {
                         model = model.Where(x => x.Trending == true);
                     }
-                    return model.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
+                    return model.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == 0 && x.Size == 0).ToPagedList(page, pageSize);
                 }
-                return model.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
+                return model.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == 0 && x.Size == 0).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -279,7 +289,7 @@ namespace DataLayer.Dao
             try
             {
                 IQueryable<Product> model = db.Products.Where(x => x.Count > 0);
-                return model.OrderByDescending(x => x.Price).Where(x => x.CategoryID == categoryID && x.Color == null && x.Size == null).ToPagedList(page, pageSize);
+                return model.OrderByDescending(x => x.Price).Where(x => x.CategoryID == categoryID && x.Color == 0 && x.Size == 0).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -287,21 +297,19 @@ namespace DataLayer.Dao
                 throw;
             }
         }
-        public List<Product> ListColor(string productName)
-        {
-            var model = db.Products.Where(x => x.ProductName == productName).ToList();
-            return model;
-        }
-        public List<Product> ListSize(string productName)
-        {
-            var model = db.Products.Where(x => x.ProductName == productName).ToList();
-            return model;
-        }
         public int CartCount(int userID)
         {
 
             return db.Orders.Where(x => x.Status == 1 && x.UserID == userID).Count();
 
+        }
+        public List<Size> listsize()
+        {
+            return db.Sizes.OrderBy(x=>x.ID).ToList();
+        }
+        public List<Color> listcolor()
+        {
+            return db.Colors.OrderBy(x=>x.ID).ToList();
         }
 
     }

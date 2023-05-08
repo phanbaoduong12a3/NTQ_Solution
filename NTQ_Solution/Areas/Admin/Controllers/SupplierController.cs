@@ -23,11 +23,14 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
+                ViewBag.listColor = productDao.listcolor();
+                ViewBag.listSize = productDao.listsize();
                 ViewBag.SearchString = searchString;
                 ViewBag.Size = size;
                 ViewBag.Color = color;
                 ViewBag.supplierID = supplierID;
                 var model = supplierDao.GetProductOfSupplier(size, color, supplierID, searchString, page, pageSize);
+
                 return View(model);
             }
             catch (Exception ex)
@@ -41,6 +44,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
+                
                 var temp = productDao.GetProductById(id);
                 bool status, checkTrending;
                 if (temp.Status == 1) status = true;
@@ -61,6 +65,22 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Sale = temp.Sale,
                     Count = temp.Count
                 };
+                var listColor = productDao.listcolor();
+                var listSize = productDao.listsize();
+                foreach (var item in listColor)
+                {
+                    if (item.ID == temp.Color)
+                    {
+                        ViewBag.Color = item.ColorName;
+                    }
+                }
+                foreach (var item in listSize)
+                {
+                    if (item.ID == temp.Size)
+                    {
+                        ViewBag.Size = item.SizeName;
+                    }
+                }
                 return View(productModel);
             }
             catch(Exception ex)
@@ -74,7 +94,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                    var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
+                
+                var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                     int UserID = model.UserID;
                     supplierDao.UpdateImport(productModel, UserID);
                     TempData["success"] = "Nhap hang thanh cong";

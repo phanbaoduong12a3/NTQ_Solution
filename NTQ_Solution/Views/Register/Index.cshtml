@@ -24,7 +24,7 @@
                         <img src="/assests/dist/images/logo-colorful.png" alt="logo">
                     </div>
                     <div class="my-5 text-center">
-                        <h3 class="font-weight-bold mb-3">Sign Up</h3>
+                        <h3 class="font-weight-bold mb-3">Đăng ký</h3>
                     </div>
                     @using (Html.BeginForm("Register", "Register", FormMethod.Post))
                     {
@@ -80,11 +80,10 @@
                     </div>
 
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                        <button type="submit" class="btn btn-primary btn-block">Đăng ký</button>
                     </div>
                     <p class="text-center">
-
-                        <a href="/Login/Index">Back to Login</a>
+                        @Html.ActionLink("Hủy bỏ", "Index", "Home")
                     </p>
                 </form>
                     }

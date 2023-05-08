@@ -39,12 +39,9 @@ namespace DataLayer.EF
         public string ProductName { get; set; }
 
         public double? ImportPrice { get; set; }
+        public int? Color { get; set; }
 
-        [StringLength(50)]
-        public string Color { get; set; }
-
-        [StringLength(50)]
-        public string Size { get; set; }
+        public int? Size{get;set;}
 
         public bool? Sale { get; set; }
 

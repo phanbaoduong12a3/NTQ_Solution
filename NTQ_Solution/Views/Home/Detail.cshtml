@@ -3,14 +3,208 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var listReview = (List<DataLayer.ViewModel.ReviewModel>)ViewBag.ListReview;
-    var listColor = (List<DataLayer.EF.Product>)ViewBag.ListColor;
-    var listSize = (List<DataLayer.EF.Product>)ViewBag.ListSize;
+    var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
+    var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
+    var hotProduct = (List<DataLayer.EF.Product>)ViewBag.HotProduct;
 }
 @section jsFooter{
     <script src="/assests/client/js/controller/productController.js"></script>
 }
 
-<div class="content">
+<div class="main">
+    <div class="container">
+
+        <!-- BEGIN SIDEBAR & CONTENT -->
+                <ul class="breadcrumb">
+                    <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
+                </ul>
+                <!-- BEGIN SIDEBAR & CONTENT -->
+                <div class="row margin-bottom-40">
+                    <!-- BEGIN SIDEBAR -->
+                    <div class="sidebar col-md-3 col-sm-5">
+                        <ul class="list-group margin-bottom-25 sidebar-menu">
+                            @{ Html.RenderAction("ProductCategory", "Product");}
+
+                        </ul>
+                        <div class="sidebar-products clearfix">
+                            <h2>Sản phẩm hot</h2>
+                            @foreach (var item in hotProduct)
+                            {
+                                var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                                <div class="item">
+                                    <a href="@url"><img src="@item.Image" alt="@item.ProductName"></a>
+                                    <h3><a href="@url">@item.ProductName</a></h3>
+                                    <div class="price">@item.Price<span>đ</span></div>
+                                </div>
+                            }
+
+                        </div>
+                    </div>
+
+                    <!-- END SIDEBAR -->
+                    <!-- BEGIN CONTENT -->
+                    <div class="col-md-9 col-sm-7">
+                        <div class="product-page">
+                            <div class="row">
+                                @using (Html.BeginForm("AddOrder", "Order", FormMethod.Get))
+                                {
+                                    <form>
+                                        <input name="productID" value="@Model.ID" hidden />
+                                        <input name="productName" value="@Model.ProductName" hidden />
+                                        <div class="col-md-6 col-sm-6">
+                                            <div class="product-main-image">
+                                                <img src="@Model.Image" alt="@Model.ProductName" class="img-responsive" data-BigImgsrc="@Model.Image">
+                                            </div>
+                                            <div class="product-other-images">
+                                                <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
+                                                <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
+                                                <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-sm-6">
+                                            <h1>@Model.ProductName</h1>
+                                            <div class="price-availability-block clearfix">
+                                                <div class="price">
+                                                    <strong>
+                                                        <span>@Model.Price</span>đ</strong>
+                                                        <em><span>@(Model.Price+20000)đ</span></em>
+                                                </div>
+                                                <div class="availability">
+                                                    Nhà cung cấp: <strong>@(Model.SupplierID == 1? "Teelab" : Model.SupplierID == 2 ? "Bad Habits" : "ClowZ")</strong>
+                                                </div>
+                                            </div>
+                                            <div class="product-page-options">
+                                                <div class="pull-left">
+                                                    <label class="control-label">Size:</label>
+                                                    <select name="size">
+                                                        @foreach (var item in listSize)
+                                                        {
+                                                            <option value="@item.ID">@item.SizeName</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                                <div class="pull-left">
+                                                    <label class="control-label">Color:</label>
+                                                    <select name="color">
+                                                        @foreach (var item in listColor)
+                                                        {
+                                                            <option value="@item.ID">@item.ColorName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="product-page-cart">
+                                                <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+                                            </div>
+                                            <div class="review">
+                                                <input type="range" value="4" step="0.25" id="backing4">
+                                                <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false" data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
+                                                </div>
+                                            </div>
+                                            <ul class="social-icons">
+                                                <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
+                                                <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
+                                                <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
+                                                <li><a class="evernote" data-original-title="evernote" href="javascript:;"></a></li>
+                                                <li><a class="tumblr" data-original-title="tumblr" href="javascript:;"></a></li>
+                                            </ul>
+                                        </div>
+                                    </form>
+                                }
+
+                                <div class="product-page-content">
+                                    <ul id="myTab" class="nav nav-tabs">
+                                        <li><a href="#Description" data-toggle="tab">Mô tả</a></li>
+                                        <li class="active"><a href="#Reviews" data-toggle="tab">Bình luận</a></li>
+                                    </ul>
+                                    <div id="myTabContent" class="tab-content">
+                                        <div class="tab-pane fade" id="Description">
+                                            @Html.Raw(Model.Detail)
+                                        </div>
+                                        <div class="tab-pane fade in active" id="Reviews">
+                                            <!--<p>There are no reviews for this product.</p>-->
+                                            <!-- BEGIN FORM-->
+                                            <div class="review-item clearfix">
+                                                <h2>Bình luận</h2>
+                                                <div id="div_allreview">
+                                                    @foreach (var itemcomment in listReview)
+                                                    {
+                                                        if (itemcomment.ParentID == 0 && itemcomment.Status == 0)
+                                                        {
+                                                            <div class="review-item clearfix">
+                                                                <div class="review-item-submitted">
+                                                                    <strong>@itemcomment.UserName</strong>
+                                                                    <em>@itemcomment.CreateAt</em>
+                                                                    <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                                                                </div>
+                                                                <div class="review-item-content">
+                                                                    <p>@itemcomment.Title</p>
+                                                                </div>
+                                                            </div>
+
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                            <form action="#" class="reviews-form" role="form">
+                                                <h2>Thêm bình luận</h2>
+                                                <div class="form-group">
+                                                    <label for="name">Nội dung <span class="require">*</span></label>
+                                                    <input input type="text" id="txtReviewNew">
+                                                </div>
+                                                <div class="padding-top-20">
+                                                    <button id="btnReviewNew" data-productid="@Model.ID" data-userid="@ViewBag.UserID">Bình luận</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- END FORM-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sticker sticker-sale"></div>
+                    </div>
+                </div>
+            <!-- END SIDEBAR & CONTENT -->
+            <!-- BEGIN SIMILAR PRODUCTS -->
+            <div class="row margin-bottom-40">
+                <div class="col-md-12 col-sm-12">
+                    <h2>Sản phẩm bán chạy</h2>
+                    <div class="owl-carousel owl-carousel4">
+                        @foreach (var item in hotProduct)
+                        {
+                            var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                            <div>
+                                <div class="product-item">
+                                    <div class="pi-img-wrapper">
+                                        <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                                        <div>
+                                            <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
+                                            <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
+                                        </div>
+                                    </div>
+                                    <h3><a href="@url">@item.ProductName</a></h3>
+                                    <div class="pi-price">@item.Price<span>đ</span></div>
+                                    <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                                    <div class="sticker sticker-new"></div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <!-- END SIMILAR PRODUCTS -->
+        </div>
+    </div>
+
+
+
+
+
+<!--<div class="content">
     <div class="content_top">
         <div class="back-links">
             <p><a href="/">Trang chủ</a> / <a href="/san-pham/@Model.Slug-@Model.ID">@Model.ProductName</a></p>
@@ -46,101 +240,78 @@
                     <h2>@Model.ProductName </h2>
                     <div class="price">
                         <p>Giá: <span>@(Model.Price.HasValue ? Model.Price.Value.ToString("N0") : "Liên hệ")đ</span></p>
-                    </div>
-                    <div class="price">
-                        <p>Số lượng: <span>@Model.Count</span></p>
-                    </div>
-                    <div class="price">
-                        <p>
-                            Nhà cung cấp:
+                    </div>-->
+@*<div class="price">
+        <p>Số lượng: <span>@Model.Count</span></p>
+    </div>*@
+<!--<div class="price">
+    <p>
+        Nhà cung cấp:
 
-                            @if (Model.SupplierID == 1)
-                            {
-                                <span>
-                                    Teelab
-                                </span>
-                            }
-                            else if (Model.SupplierID == 2)
-                            {
-                                <span>
-                                    Bad Habits
-                                </span>
-                            }
-                            else
-                            {
-                                <span> ClownZ</span>
-                            }
+        @if (Model.SupplierID == 1)
+        {
+            <span>
+                Teelab
+            </span>
+        }
+        else if (Model.SupplierID == 2)
+        {
+            <span>
+                Bad Habits
+            </span>
+        }
+        else
+        {
+            <span> ClownZ</span>
+        }
 
-                        </p>
-                    </div>
-                    @using (Html.BeginForm("Order", "Home", FormMethod.Get))
-                    {
-                        <form>
-                            <input name="productID" value="@Model.ID" hidden />
-                            <input name="productName" value="@Model.ProductName" hidden />
-                            <div class="available">
-                                <p>Lựa chọn :</p>
-                                <ul>
-                                    <li>
-                                        Color:
-                                        <select name="color">
-
-                                            @for (int i = 0; i < listColor.Count; i++)
-                                            {
-                                                if (i == 0)
-                                                {
-                                                    <option value="@listColor[0].Color">@listColor[0].Color</option>
-                                                    continue;
-                                                }
-                                                for (int j = 0; j < i; j++)
-                                                {
-                                                    if (listColor[i].Color != listColor[j].Color && listColor[i].Color != null)
-                                                    {
-                                                        <option value="@listColor[i].Color">@listColor[i].Color</option>
-                                                    }
-                                                }
-                                            }
-
-                                        </select>
-                                    </li>
-                                    <li>
-                                        Size:
-                                        <select name="size">
-                                            @for (int i = 0; i < listSize.Count; i++)
-                                            {
-                                                if (i == 0)
-                                                {
-                                                    <option value="@listSize[0].Size">@listSize[0].Size</option>
-                                                    continue;
-                                                }
-                                                for (int j = 0; j < i; j++)
-                                                {
-                                                    if (listSize[i].Size != listSize[j].Size && listSize[i].Size != null)
-                                                    {
-                                                        <option value="@listSize[i].Size">@listSize[i].Size</option>
-                                                    }
-                                                }
-                                            }
-                                        </select>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="share-desc">
-                                <div class="share">
-                                    <p>Chia sẻ:</p>
-                                    <ul>
-                                        <li><a href="#"><img src="/assests/client/images/facebook.png" alt="" /></a></li>
-                                        <li><a href="#"><img src="/assests/client/images/twitter.png" alt="" /></a></li>
-                                    </ul>
-                                </div>
-                                <div class="add-cart"><span><input type="submit" class="button" style="text-decoration:none" value="Thêm vào giỏ hàng"></span></div>
-                                <div class="clear"></div>
-                            </div>
-                        </form>
-                    }
-                    <div class="wish-list">
-                        <ul>
-                            <li class="wish"><a href="/add-Order?productId=@Model.ID" style="text-decoration:none;color:red">Thêm vào yêu thích</a></li>
+    </p>
+</div>
+@using (Html.BeginForm("AddOrder", "Order", FormMethod.Get))
+{
+    <form>
+        <input name="productID" value="@Model.ID" hidden />
+        <input name="productName" value="@Model.ProductName" hidden />
+        <div class="available">
+            <p>Lựa chọn :</p>
+            <ul>
+                <li>
+                    Color:
+                    <select name="color">
+                        @foreach (var item in listColor)
+                        {
+                            <option value="@item.ID">@item.ColorName</option>
+                        }
+                    </select>
+                </li>
+                <li>
+                    Size:
+                    <select name="size">
+                        @foreach (var item in listSize)
+                        {
+                            <option value="@item.ID">@item.SizeName</option>
+                        }
+                    </select>
+                </li>
+            </ul>
+        </div>
+        <div class="share-desc">
+            <div class="share">
+                <p>Chia sẻ:</p>
+                <ul>
+                    <li><a href="#"><img src="/assests/client/images/facebook.png" alt="" /></a></li>
+                    <li><a href="#"><img src="/assests/client/images/twitter.png" alt="" /></a></li>
+                </ul>
+            </div>
+            <div class="add-cart"><span><input type="submit" class="button" style="text-decoration:none" value="Thêm vào giỏ hàng"></span></div>
+            <div class="clear"></div>
+        </div>
+    </form>
+}
+<div class="wish-list">
+    <ul>-->
+@*/add-Order?productId=@Model.ID*@
+<!--<li class="wish"><a href="#" style="text-decoration:none;color:red">Thêm vào yêu thích</a></li>
                             <li class="compare"><a href="#" style="text-decoration:none;color:red">So sánh</a></li>
                         </ul>
                     </div>
@@ -205,6 +376,4 @@
         </div>
 
     </div>
-</div>
-
-
+</div>-->

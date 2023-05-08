@@ -46,14 +46,14 @@ namespace NTQ_Solution.Controllers
                         TempData["success"] = "Dang ki thanh cong";
                         return RedirectToAction("Index", "Login");
                     }
-                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Nhập lại confirmpassword"); }
+                    if (!checkConfirmPassword) { ModelState.AddModelError("", "Nhập lại xác nhận mật khẩu"); }
                     else if (result == -1)
                     {
                         ModelState.AddModelError("", "Email đã tồn tại");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "UserName đã tồn tại");
+                        ModelState.AddModelError("", "Tên đăng nhập đã tồn tại");
                     }
                 }
                 return View("Index");

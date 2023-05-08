@@ -1,219 +1,473 @@
-﻿<!--A Design by W3layouts
-Author: W3layout
-Author URL: http://w3layouts.com
-License: Creative Commons Attribution 3.0 Unported
-License URL: http://creativecommons.org/licenses/by/3.0/
+﻿<!DOCTYPE html>
+<!--
+Template: Metronic Frontend Freebie - Responsive HTML Template Based On Twitter Bootstrap 3.3.4
+Version: 1.0.0
+Author: KeenThemes
+Website: http://www.keenthemes.com/
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Like: www.facebook.com/keenthemes
+Purchase Premium Metronic Admin Theme: http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes
 -->
-<!DOCTYPE HTML>
-<html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- Head BEGIN -->
 <head>
+    <meta charset="utf-8">
     <title>Xuu Shop</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link href="~/assests/client/css/style.css" rel="stylesheet" />
-    <link href="~/assests/client/css/slider.css" rel="stylesheet" />
-    <link href="/assests/admin/css/sb-admin-2.min.css" rel="stylesheet">
-    <link href="~/assests/client/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="~/assests/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    @*<link href="~/Content/PagedList.css" rel="stylesheet" />*@
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-          rel="stylesheet">
-    
-    <!-- Custom styles for this template-->
+
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+    <meta content="Metronic Shop UI description" name="description">
+    <meta content="Metronic Shop UI keywords" name="keywords">
+    <meta content="keenthemes" name="author">
+
+    <meta property="og:site_name" content="-CUSTOMER VALUE-">
+    <meta property="og:title" content="-CUSTOMER VALUE-">
+    <meta property="og:description" content="-CUSTOMER VALUE-">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="-CUSTOMER VALUE-"><!-- link to image for socio -->
+    <meta property="og:url" content="-CUSTOMER VALUE-">
+
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <!-- Fonts START -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|PT+Sans+Narrow|Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900&amp;subset=all" rel="stylesheet" type="text/css"><!--- fonts for slider on the index page -->
+    <!-- Fonts END -->
+    <!-- Global styles START -->
+    <link href="~/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Global styles END -->
+    <!-- Page level plugin styles START -->
+    <link href="~/assets/pages/css/animate.css" rel="stylesheet">
+    <link href="~/assets/plugins/fancybox/source/jquery.fancybox.css" rel="stylesheet">
+    <link href="~/assets/plugins/owl.carousel/assets/owl.carousel.css" rel="stylesheet">
+    <!-- Page level plugin styles END -->
+    <!-- Theme styles START -->
+    <link href="~/assets/pages/css/components.css" rel="stylesheet">
+    <link href="~/assets/pages/css/slider.css" rel="stylesheet">
+    <link href="~/assets/pages/css/style-shop.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/corporate/css/style.css" rel="stylesheet">
+    <link href="~/assets/corporate/css/style-responsive.css" rel="stylesheet">
+    <link href="~/assets/corporate/css/themes/red.css" rel="stylesheet" id="style-color">
+    <link href="~/assets/corporate/css/custom.css" rel="stylesheet">
     <link href="~/Content/PagedList.css" rel="stylesheet" />
-    <link href="~/assests/admin/css/sb-admin-2.min.css" rel="stylesheet">
-    <script type="text/javascript" src="~/assests/client/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="~/assests/client/js/move-top.js"></script>
-    <script type="text/javascript" src="~/assests/client/js/easing.js"></script>
-    <script type="text/javascript" src="~/assests/client/js/startstop-slider.js"></script>
+    <!-- Theme styles END -->
 </head>
-<body>
-    <div class="wrap">
-        <div class="header">
-            <div class="headertop_desc">
-                <div class="call">
-                    <p><span style="padding-right: 10px">Bạn cần hỗ trợ?</span> Liên hệ:  <span style="padding-left: 10px" class="number">037 695 2431</span></span></p>
-                </div>
-                <div class="account_desc">
-                    @{
-                        var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-                    }
-                    @if (session == null)
-                    {
-                        <ul>
-                            <li><a class="btn btn-primary" href="/Register/Index" style="color:white"> Đăng kí</a></li>
-                            <li><a class="btn btn-primary" href="/Login/Index" style="color:white">Đăng nhập</a></li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <ul>
-                            <li class="nav-item dropdown no-arrow">
-                                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
-                                    <img class="img-profile rounded-circle"
-                                         src="~/assests/admin/img/undraw_profile.svg">
-                                </a>
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Html.ActionLink("Logout", "Logout", "Login")</span>
-                                <!-- Dropdown - User Information -->
-                                @*<div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                         aria-labelledby="userDropdown">
-                                        <a class="dropdown-item" href="/Admin/Profile/Index">
-                                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            My Profile
-                                        </a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Logout
-                                        </a>
-                                    </div>*@
-                            </li>
-                        </ul>
-                    }
-                </div>
-                <div class="clear"></div>
-            </div>
-            <div class="header_top">
-                <div class="logo">
-                    <a href="index.html"><img src="~/assests/client/images/logo.png" alt="" /></a>
-                </div>
-               
-                    @{ Html.RenderAction("HeaderCart", "Home");}
-                
-                <script type="text/javascript">
-                    function DropDown(el) {
-                        this.dd = el;
-                        this.initEvents();
-                    }
-                    DropDown.prototype = {
-                        initEvents: function () {
-                            var obj = this;
-
-                            obj.dd.on('click', function (event) {
-                                $(this).toggleClass('active');
-                                event.stopPropagation();
-                            });
-                        }
-                    }
-
-                    $(function () {
-
-                        var dd = new DropDown($('#dd'));
-
-                        $(document).click(function () {
-                            // all dropdowns
-                            $('.wrapper-dropdown-2').removeClass('active');
-                        });
-
-                    });</script>
-                <div class="clear"></div>
-            </div>
-            <div class="header_bottom">
-                <div class="menu">
-                    <ul>
-                        <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
-                        <li>@Html.ActionLink("Bình luận", "Index", "Review")</li>
-                        <li>@Html.ActionLink("Đơn hàng", "Index", "Order")</li>
-                        <li>@Html.ActionLink("Thông tin tài khoản", "Profile", "Profile")</li>
-                        <div class="clear"></div>
-                    </ul>
-                </div>
-                <div class="clear"></div>
-            </div>
-            @RenderSection("slide", required: false)
-        </div>
-        <div class="main">
-            @RenderBody()
+<!-- Head END -->
+<!-- Body BEGIN -->
+<body class="ecommerce">
+    @{
+        var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
+    }
+    <!-- BEGIN STYLE CUSTOMIZER -->
+    <div class="color-panel hidden-sm">
+        <div class="color-mode-icons icon-color"></div>
+        <div class="color-mode-icons icon-color-close"></div>
+        <div class="color-mode">
+            <p>THEME COLOR</p>
+            <ul class="inline">
+                <li class="color-red current color-default" data-style="red"></li>
+                <li class="color-blue" data-style="blue"></li>
+                <li class="color-green" data-style="green"></li>
+                <li class="color-orange" data-style="orange"></li>
+                <li class="color-gray" data-style="gray"></li>
+                <li class="color-turquoise" data-style="turquoise"></li>
+            </ul>
         </div>
     </div>
+    <!-- END BEGIN STYLE CUSTOMIZER -->
+    <!-- BEGIN TOP BAR -->
+    <div class="pre-header">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN TOP BAR LEFT PART -->
+                <div class="col-md-6 col-sm-6 additional-shop-info">
+                    <ul class="list-unstyled list-inline">
+                        <li><i class="fa fa-phone"></i><span>0982 620 541</span></li>
+                        <!-- BEGIN CURRENCIES -->
+                        
+                        <!-- END CURRENCIES -->
+                        <!-- BEGIN LANGS -->
+                       
+                        <!-- END LANGS -->
+                    </ul>
+                </div>
+                <!-- END TOP BAR LEFT PART -->
+                <!-- BEGIN TOP BAR MENU -->
+                <div class="col-md-6 col-sm-6 additional-nav">
+                    <ul class="list-unstyled list-inline pull-right">
+                        @if (session == null)
+                        {
+                            <li><a class="btn btn-primary" href="/Register/Index" style="color:white"> Đăng kí</a></li>
+                            <li><a class="btn btn-primary" href="/Login/Index" style="color:white">Đăng nhập</a></li>
+
+                        }
+                        else
+                        {
+                            <ul>
+                                <li class="nav-item dropdown no-arrow">
+                                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">@session.UserName</span>
+                                        <img class="img-profile rounded-circle"
+                                             src="~/assests/admin/img/undraw_profile.svg" style="height:30px">
+                                    </a>
+                                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">@Html.ActionLink("Logout", "Logout", "Login")</span>
+                                   
+                                </li>
+                            </ul>
+                        }
+                    </ul>
+                </div>
+                <!-- END TOP BAR MENU -->
+            </div>
+        </div>
+    </div>
+    <!-- END TOP BAR -->
+    <!-- BEGIN HEADER -->
+    <div class="header">
+        <div class="container">
+            <a class="site-logo" href="/Home/Index" style="text-decoration: none"><h2>Xuu Shop</h2></a>
+
+            <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars"></i></a>
+
+            <!-- BEGIN CART -->
+            @{ Html.RenderAction("HeaderCart", "Home");}
+            <!--END CART -->
+            <!-- BEGIN NAVIGATION -->
+            <div class="header-navigation">
+                <ul>
+                    <li>
+                        @Html.ActionLink("Trang chủ", "Index", "Home")
+
+                        <!-- BEGIN DROPDOWN MENU -->
+                        <!--<ul class="dropdown-menu">
+        <li class="dropdown-submenu">
+            <a href="shop-product-list.html">Hi Tops <i class="fa fa-angle-right"></i></a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a href="shop-product-list.html">Second Level Link</a></li>
+                <li><a href="shop-product-list.html">Second Level Link</a></li>
+                <li class="dropdown-submenu">
+                    <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="javascript:;">
+                        Second Level Link
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="shop-product-list.html">Third Level Link</a></li>
+                        <li><a href="shop-product-list.html">Third Level Link</a></li>
+                        <li><a href="shop-product-list.html">Third Level Link</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="shop-product-list.html">Running Shoes</a></li>
+        <li><a href="shop-product-list.html">Jackets and Coats</a></li>
+    </ul>-->
+                        <!-- END DROPDOWN MENU -->
+                    </li>
+                    <li >
+                        @Html.ActionLink("Sản phẩm", "Index", "Product")
+                        
+                    </li>
+                    <li>@Html.ActionLink("Bình luận", "Index", "Review")</li>
+                    <li class="dropdown dropdown100 nav-catalogue">
+                        @Html.ActionLink("Đơn hàng", "Index", "Order")
+                       
+                    </li>
+                    <li>
+                        @Html.ActionLink("Thông tin tài khoản", "Profile", "Profile")
+
+                        @*<ul class="dropdown-menu">
+            <li class="active"><a href="shop-index.html">Home Default</a></li>
+            <li><a href="shop-index-header-fix.html">Home Header Fixed</a></li>
+            <li><a href="shop-index-light-footer.html">Home Light Footer</a></li>
+            <li><a href="shop-product-list.html">Product List</a></li>
+            <li><a href="shop-search-result.html">Search Result</a></li>
+            <li><a href="shop-item.html">Product Page</a></li>
+            <li><a href="shop-shopping-cart-null.html">Shopping Cart (Null Cart)</a></li>
+            <li><a href="shop-shopping-cart.html">Shopping Cart</a></li>
+            <li><a href="shop-checkout.html">Checkout</a></li>
+            <li><a href="shop-about.html">About</a></li>
+            <li><a href="shop-contacts.html">Contacts</a></li>
+            <li><a href="shop-account.html">My account</a></li>
+            <li><a href="shop-wishlist.html">My Wish List</a></li>
+            <li><a href="shop-goods-compare.html">Product Comparison</a></li>
+            <li><a href="shop-standart-forms.html">Standart Forms</a></li>
+            <li><a href="shop-faq.html">FAQ</a></li>
+            <li><a href="shop-privacy-policy.html">Privacy Policy</a></li>
+            <li><a href="shop-terms-conditions-page.html">Terms &amp; Conditions</a></li>
+        </ul>*@
+                    </li>
+
+
+                    <!-- BEGIN TOP SEARCH -->
+                    <li class="menu-search">
+                        <span class="sep"></span>
+                        <i class="fa fa-search search-btn"></i>
+                        <div class="search-box">
+                            @using (Html.BeginForm("Index", "Product", FormMethod.Get))
+                            {
+                                <form action="#">
+                                    <div class="input-group">
+                                        <input type="text" value="@ViewBag.SearchString" name="searchString" placeholder="Search" class="form-control">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit">Search</button>
+                                        </span>
+                                    </div>
+                                </form>
+                            }
+                            </div>
+
+                    </li>
+                    <!-- END TOP SEARCH -->
+                </ul>
+            </div>
+            <!-- END NAVIGATION -->
+        </div>
+    </div>
+    <!-- Header END -->
+    <!-- BEGIN SLIDER -->
+    @RenderSection("slide", required: false)
+    <!-- END SLIDER -->
+
+    <div class="main">
+        @RenderBody()
+    </div>
+
+    <!-- BEGIN BRANDS -->
+    
+    <!-- END BRANDS -->
+    <!-- BEGIN STEPS -->
     <div class="steps-block steps-block-red">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 steps-block-col">
                     <i class="fa fa-truck"></i>
                     <div>
-                        <h2>Free Shipp</h2>
-                        <em>Giao hàng nhanh chóng</em>
+                        <h2>Free shipping</h2>
+                        <em>Express delivery withing 3 days</em>
                     </div>
                     <span>&nbsp;</span>
                 </div>
                 <div class="col-md-4 steps-block-col">
                     <i class="fa fa-gift"></i>
                     <div>
-                        <h2>Quà tặng mỗi ngày</h2>
-                        <em>3 phần quà mỗi ngày cho khách hàng may mắn</em>
+                        <h2>Daily Gifts</h2>
+                        <em>3 Gifts daily for lucky customers</em>
                     </div>
                     <span>&nbsp;</span>
                 </div>
                 <div class="col-md-4 steps-block-col">
                     <i class="fa fa-phone"></i>
                     <div>
-                        <h2>037 695 2431</h2>
-                        <em>Hỗ trợ 24/7</em>
+                        <h2>477 505 8877</h2>
+                        <em>24/7 customer care available</em>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-     <div class="footer">
-            <div class="wrap">
-                <div class="section group">
-                    <div class="col_1_of_4 span_1_of_4">
-                        <h4>Thông tin</h4>
-                        <ul>
-                            <li><a href="#">Cửa hàng</a></li>
-                            <li><a href="#">Dịch vị</a></li>
-                            <li><a href="#">Hỗ trợ</a></li>
-                            <li><a href="#">Giải quyết đơn hàng</a></li>
-                            <li><a href="#">Tư vấn</a></li>
-                        </ul>
-                    </div>
-                    <div class="col_1_of_4 span_1_of_4">
-                        <h4>Tại sao nên chọn chúng tôi</h4>
-                        <ul>
-                            <li><a href="#">Về chúng tôi</a></li>
-                            <li><a href="#">Dịch vụ CSKH</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Nguồn hàng uy tín</a></li>
-                            <li><a href="#">Chất lượng sản phẩm</a></li>
-                        </ul>
-                    </div>
-                    <div class="col_1_of_4 span_1_of_4">
-                        <h4>Tài khoản</h4>
-                        <ul>
-                            <li><a href="#">Thông tin</a></li>
-                            <li><a href="#">Hướng dẫn</a></li>
-                            <li><a href="#">Hỗ trợ</a></li>
-                        </ul>
-                    </div>
-                    <div class="col_1_of_4 span_1_of_4">
-                        <h4>Liên hệ</h4>
-                        <ul>
-                            <li><span>037 695 2431</span></li>
-                            <li><span>033 695 2431</span></li>
-                        </ul>
-                        <div class="social-icons">
-                            <h4>Theo dõi chúng tôi</h4>
-                            <ul>
-                                <li><a href="#" target="_blank"><img src="images/facebook.png" alt="" /></a></li>
-                                <li><a href="#" target="_blank"><img src="images/twitter.png" alt="" /></a></li>
-                                <li><a href="#" target="_blank"><img src="images/skype.png" alt="" /> </a></li>
-                                <li><a href="#" target="_blank"> <img src="images/dribbble.png" alt="" /></a></li>
-                                <li><a href="#" target="_blank"> <img src="images/linkedin.png" alt="" /></a></li>
-                                <div class="clear"></div>
-                            </ul>
-                        </div>
+    <!-- END STEPS -->
+    <!-- BEGIN PRE-FOOTER -->
+    <div class="pre-footer">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN BOTTOM ABOUT BLOCK -->
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2>Về chúng tôi</h2>
+                    <p>Sản phẩm chính hãng</p>
+                    <p>Giá cả hợp lý</p>
+                </div>
+                <!-- END BOTTOM ABOUT BLOCK -->
+                <!-- BEGIN BOTTOM INFO BLOCK -->
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2>Thông tin</h2>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Địa chỉ</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Dịch vụ</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Đơn hàng</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="javascript:;">Vận chuyển</a></li>
+                        <li><i class="fa fa-angle-right"></i> <a href="contacts.html">Liên hệ</a></li>
+                    </ul>
+                </div>
+                <!-- END INFO BLOCK -->
+                <!-- BEGIN TWITTER BLOCK -->
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2 class="margin-bottom-0">Đánh giá</h2>
+                    <p>Uy tín</p>
+                    <p>Chất lượng</p>
+                </div>
+                <!-- END TWITTER BLOCK -->
+                <!-- BEGIN BOTTOM CONTACTS -->
+                <div class="col-md-3 col-sm-6 pre-footer-col">
+                    <h2>Liên hệ</h2>
+                    <address class="margin-bottom-40">
+                        35, Mễ Trì, Bắc Từ Liêm<br>
+                        Hà Nội<br>
+                        Số điện thoại: 0982620541<br>
+                        Email: <a href="#">XuuShop@gmail.com</a><br>
+                    </address>
+                </div>
+                <!-- END BOTTOM CONTACTS -->
+            </div>
+            <hr>
+            <div class="row">
+                <!-- BEGIN SOCIAL ICONS -->
+                <div class="col-md-6 col-sm-6">
+                    <ul class="social-icons">
+                        <li><a class="rss" data-original-title="rss" href="javascript:;"></a></li>
+                        <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
+                        <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
+                        <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
+                        <li><a class="linkedin" data-original-title="linkedin" href="javascript:;"></a></li>
+                        <li><a class="youtube" data-original-title="youtube" href="javascript:;"></a></li>
+                        <li><a class="vimeo" data-original-title="vimeo" href="javascript:;"></a></li>
+                        <li><a class="skype" data-original-title="skype" href="javascript:;"></a></li>
+                    </ul>
+                </div>
+                <!-- END SOCIAL ICONS -->
+                <!-- BEGIN NEWLETTER -->
+                <div class="col-md-6 col-sm-6">
+                    <div class="pre-footer-subscribe-box pull-right">
+                        <h2>Newsletter</h2>
+                        <form action="#">
+                            <div class="input-group">
+                                <input type="text" placeholder="youremail@mail.com" class="form-control">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary" type="submit">Subscribe</button>
+                                </span>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </div>
-            <div class="copy_right">
-                <p>&copy; 2013 Xuu shop. All rights reserved | Design by <a href="http://w3layouts.com/">Xuu Shop</a></p>
+                <!-- END NEWLETTER -->
             </div>
         </div>
+    </div>
+    <!-- END PRE-FOOTER -->
+    <!-- BEGIN FOOTER -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <!-- BEGIN COPYRIGHT -->
+                <div class="col-md-4 col-sm-4 padding-top-10">
+                    Xuu Shop
+                </div>
+                <!-- END COPYRIGHT -->
+                <!-- BEGIN PAYMENTS -->
+                <div class="col-md-4 col-sm-4">
+                    <ul class="list-unstyled list-inline pull-right">
+                        <li><img src="~/assets/corporate/img/payments/western-union.jpg" alt="We accept Western Union" title="We accept Western Union"></li>
+                        <li><img src="~/assets/corporate/img/payments/american-express.jpg" alt="We accept American Express" title="We accept American Express"></li>
+                        <li><img src="~/assets/corporate/img/payments/MasterCard.jpg" alt="We accept MasterCard" title="We accept MasterCard"></li>
+                        <li><img src="~/assets/corporate/img/payments/PayPal.jpg" alt="We accept PayPal" title="We accept PayPal"></li>
+                        <li><img src="~/assets/corporate/img/payments/visa.jpg" alt="We accept Visa" title="We accept Visa"></li>
+                    </ul>
+                </div>
+                <!-- END PAYMENTS -->
+                <!-- BEGIN POWERED -->
+                <div class="col-md-4 col-sm-4 text-right">
+                    <p class="powered">Powered by: <a href="#">XuuShop.com</a></p>
+                </div>
+                <!-- END POWERED -->
+            </div>
+        </div>
+    </div>
+    <!-- END FOOTER -->
+    <!-- BEGIN fast view of a product -->
+    <div id="product-pop-up" style="display: none; width: 700px;">
+        <div class="product-page product-pop-up">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-3">
+                    <div class="product-main-image">
+                        <img src="~/assets/pages/img/products/model7.jpg" alt="Cool green dress with red bell" class="img-responsive">
+                    </div>
+                    <div class="product-other-images">
+                        <a href="javascript:;" class="active"><img alt="Berry Lace Dress" src="~/assets/pages/img/products/model3.jpg"></a>
+                        <a href="javascript:;"><img alt="Berry Lace Dress" src="~/assets/pages/img/products/model4.jpg"></a>
+                        <a href="javascript:;"><img alt="Berry Lace Dress" src="~/assets/pages/img/products/model5.jpg"></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6 col-xs-9">
+                    <h2>Cool green dress with red bell</h2>
+                    <div class="price-availability-block clearfix">
+                        <div class="price">
+                            <strong><span>$</span>47.00</strong>
+                            <em>$<span>62.00</span></em>
+                        </div>
+                        <div class="availability">
+                            Availability: <strong>In Stock</strong>
+                        </div>
+                    </div>
+                    <div class="description">
+                        <p>Lorem ipsum dolor ut sit ame dolore  adipiscing elit, sed nonumy nibh sed euismod laoreet dolore magna aliquarm erat volutpat Nostrud duis molestie at dolore.</p>
+                    </div>
+                    <div class="product-page-options">
+                        <div class="pull-left">
+                            <label class="control-label">Size:</label>
+                            <select class="form-control input-sm">
+                                <option>L</option>
+                                <option>M</option>
+                                <option>XL</option>
+                            </select>
+                        </div>
+                        <div class="pull-left">
+                            <label class="control-label">Color:</label>
+                            <select class="form-control input-sm">
+                                <option>Red</option>
+                                <option>Blue</option>
+                                <option>Black</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="product-page-cart">
+                        <div class="product-quantity">
+                            <input id="product-quantity" type="text" value="1" readonly name="product-quantity" class="form-control input-sm">
+                        </div>
+                        <button class="btn btn-primary" type="submit">Add to cart</button>
+                        <a href="shop-item.html" class="btn btn-default">More details</a>
+                    </div>
+                </div>
+
+                <div class="sticker sticker-sale"></div>
+            </div>
+        </div>
+    </div>
+    <!-- END fast view of a product -->
+    <!-- Load javascripts at bottom, this will reduce page load time -->
+    <!-- BEGIN CORE PLUGINS (REQUIRED FOR ALL PAGES) -->
+    <!--[if lt IE 9]>
+    <script src="~/assets/plugins/respond.min.js"></script>
+    <![endif]-->
+    <script src="~/assets/plugins/jquery.min.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/jquery-migrate.min.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="~/assets/corporate/scripts/back-to-top.js" type="text/javascript"></script>
+    <script src="~/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- END CORE PLUGINS -->
+    <!-- BEGIN PAGE LEVEL JAVASCRIPTS (REQUIRED ONLY FOR CURRENT PAGE) -->
+    <script src="~/assets/plugins/fancybox/source/jquery.fancybox.pack.js" type="text/javascript"></script><!-- pop up -->
+    <script src="~/assets/plugins/owl.carousel/owl.carousel.min.js" type="text/javascript"></script><!-- slider for products -->
+    <script src='~/assets/plugins/zoom/jquery.zoom.min.js' type="text/javascript"></script><!-- product zoom -->
+    <script src="~/assets/plugins/bootstrap-touchspin/bootstrap.touchspin.js" type="text/javascript"></script><!-- Quantity -->
+
+    <script src="~/assets/corporate/scripts/layout.js" type="text/javascript"></script>
+    <script src="~/assets/pages/scripts/bs-carousel.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            Layout.init();
+            Layout.initOWL();
+            Layout.initImageZoom();
+            Layout.initTouchspin();
+            Layout.initTwitter();
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
             $().UItoTop({ easingType: 'easeOutQuart' });
@@ -222,8 +476,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 alert(message);
             }
         });</script>
-
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
     @RenderSection("jsFooter", required: false)
+    <!-- END PAGE LEVEL JAVASCRIPTS -->
 </body>
+<!-- END BODY -->
 </html>

@@ -24,6 +24,8 @@ namespace DataLayer.EF
         public virtual DbSet<Shipping> Shippings { get; set; }
         public virtual DbSet<Supplier> Suppliers { get; set; }
         public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Size> Sizes { get; set; }
+        public virtual DbSet<Color> Colors { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

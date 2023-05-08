@@ -69,6 +69,7 @@
     <Compile Include="Dao\UserDao.cs" />
     <Compile Include="Dao\OrderDao.cs" />
     <Compile Include="EF\Category.cs" />
+    <Compile Include="EF\Color.cs" />
     <Compile Include="EF\Contact.cs" />
     <Compile Include="EF\Content.cs" />
     <Compile Include="EF\Export.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="EF\Product.cs" />
     <Compile Include="EF\Review.cs" />
     <Compile Include="EF\Shipping.cs" />
+    <Compile Include="EF\Size.cs" />
     <Compile Include="EF\Supplier.cs" />
     <Compile Include="EF\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

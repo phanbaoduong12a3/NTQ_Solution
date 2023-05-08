@@ -35,7 +35,8 @@ namespace DataLayer.Dao
                                  UserName = c.UserName,
                                  Image = d.Image,
                                  Color = d.Color,
-                                 Size = d.Size
+                                 Size = d.Size,
+                                 ImportPrice = d.ImportPrice
                              });
                 if (!string.IsNullOrEmpty(searchString))
                 {

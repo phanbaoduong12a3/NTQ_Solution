@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
 }
 
-<h2>Tạo mới tài khoản</h2>
+<h2>Thêm tài khoản</h2>
 
 @using (Html.BeginForm("CreateUser", "User", FormMethod.Post))
 {
@@ -46,8 +46,8 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <a class="btn btn-primary" href="/Admin/ListUser/Index">Quay lại</a>
-                <input type="submit" value="Tạo mới" class="btn btn-primary" />
+                <a class="btn btn-primary" href="/Admin/User/Index">Quay lại</a>
+                <input type="submit" value="Thêm" class="btn btn-primary" />
             </div>
         </div>
     </div>
