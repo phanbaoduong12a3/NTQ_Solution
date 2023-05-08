@@ -108,10 +108,23 @@ namespace NTQ_Solution.Controllers
             try
             {
                 OrderDao.Delete(id);
-                TempData["success"] = "Xóa sản phẩm khỏi giỏ hàng thành công";
+                TempData["success"] = "Xoa san pham khoi gio hang thanh cong";
                 return RedirectToAction("Index","Order");
             }
             catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
+        public ActionResult DeleteOrder(int id)
+        {
+            try { 
+                OrderDao.DeleteOrder(id);
+                TempData["success"] = "Huy don hang thanh cong";
+                return RedirectToAction("Index", "Order");
+            }
+            catch(Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
@@ -236,9 +249,12 @@ namespace NTQ_Solution.Controllers
                 throw;
             }
         }
-        public ActionResult UpdateOrder(int OrderId, string productCount)
+        public ActionResult UpdateOrder(List<int> OrderId, List<string> productCount)
         {
-            OrderDao.UpdateOrderCount(OrderId,productCount);
+            for(int i = 0; i<OrderId.Count;i++)
+            {
+                OrderDao.UpdateOrderCount(OrderId[i], productCount[i]);
+            }
             return RedirectToAction("OrderDemo", "Order");
         }
 

@@ -23,6 +23,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 ViewBag.listColor = productDao.listcolor();
                 ViewBag.listSize = productDao.listsize();
+                ViewBag.listSupplier = productDao.listSupplier();
                 ViewBag.SearchString = searchString;
                 ViewBag.Size = size;
                 ViewBag.Color = color;

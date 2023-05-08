@@ -213,6 +213,20 @@ namespace DataLayer.Dao
 				throw;
 			}
 		}
+        public void DeleteOrder(int id)
+        {
+            try
+            {
+                var model = db.Orders.Find(id);
+                model.Status = 5;
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+        }
         public void PaymentSuccess(OrderModel orderModel,string shipMode,int shipMoney)
         {
             var order = db.Orders.Find(orderModel.ID);

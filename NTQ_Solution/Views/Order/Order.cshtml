@@ -5,155 +5,171 @@
     var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
     var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
 }
+@using (Html.BeginForm("Payment", "Order", FormMethod.Post))
+{
+    <div class="main">
+        <div class="container">
+            <ul class="breadcrumb">
+                <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
+                <li>@Html.ActionLink("Giỏ hàng", "OrderDemo", "Order")</li>
+            </ul>
+            <!-- BEGIN SIDEBAR & CONTENT -->
+            <div class="row margin-bottom-40">
+                <!-- BEGIN CONTENT -->
+                <div class="col-md-12 col-sm-12">
+                    <h1>Thanh toán</h1>
 
-<div class="container mt-4">
-    @using (Html.BeginForm("Payment","Order",FormMethod.Post))
-    {
-        <form class="needs-validation">
-            
-
-            <div class="py-5 text-center">
-                <i class="fa fa-credit-card fa-4x" aria-hidden="true"></i>
-                <h2>Thanh toán</h2>
-                <p class="lead">Vui lòng kiểm tra thông tin Khách hàng, thông tin Giỏ hàng trước khi Đặt hàng.</p>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4 order-md-2 mb-4">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Đơn hàng</span>
-                        <span class="badge badge-secondary badge-pill">1</span>
-                    </h4>
-
-                    <ul class="list-group mb-3">
-                        @foreach (var item1 in Model)
+                    <!-- BEGIN CHECKOUT PAGE -->
+                    <div class="panel-group checkout-page accordion scrollable" id="checkout-page">
+                        @for (int i = 0; i < Model.Count; i++)
                         {
-                            <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                <div class="my-0">
-                                    <p>Tên sản phẩm</p>
-                                    <p><small class="text-muted">Màu sắc</small></p>
-                                    <p><small class="text-muted">Size</small></p>
-                                    <p><small class="text-muted">Đơn giá</small></p>
-                                    <p><small class="text-muted">Số lượng</small></p>
+                            if (i == 0)
+                            {
+                                <!-- BEGIN CHECKOUT -->
+                                <div id="checkout" class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h2 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#checkout-page" href="#checkout-content" class="accordion-toggle">
+                                                Nhập thông tin giao hàng
+                                            </a>
+                                        </h2>
+                                    </div>
+                                    <div id="checkout-content" class="panel-collapse collapse in">
+                                        <div class="panel-body row">
+                                            <div class="col-md-6 col-sm-6">
+                                                <h4 class="mb-3">Hình thức thanh toán</h4>
+
+                                                <div class="d-block my-3">
+                                                    <div class="custom-control custom-radio">
+                                                        <input id="1" name="payment" type="radio" class="custom-control-input" required=""
+                                                               value="1">
+                                                        <label class="custom-control-label" for="1">Tiền mặt</label>
+                                                    </div>
+
+                                                </div>
+                                                <h4 class="mb-3">Hình thức vận chuyển</h4>
+
+                                                <div class="d-block my-3">
+                                                    <div class="custom-control custom-radio">
+                                                        <input id="ship1" name="ship" type="radio" class="custom-control-input" required=""
+                                                               value="1">
+                                                        <label class="custom-control-label" for="ship1">Giao hàng tiết kiệm(20000)</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6">
+                                                <h3>Thông tin khách hàng</h3>
+                                                <div class="form-group">
+                                                    <label for="kh_ten">Họ tên</label>
+                                                    <input type="text" class="form-control" name="kh_ten" id="kh_ten"
+                                                           value="@Model[i].UserName" readonly="">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kh_diachi">Địa chỉ</label>
+                                                    <input type="text" class="form-control" name="address" id="kh_diachi"
+                                                           value="@Model[i].Address">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kh_dienthoai">Điện thoại</label>
+                                                    <input type="number" class="form-control" name="phone" id="kh_dienthoai"
+                                                           value="@Model[i].Phone" />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="kh_email">Email</label>
+                                                    <input type="text" class="form-control" name="kh_email" id="kh_email"
+                                                           value="@Model[i].Email" readonly="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="my-0" style="text-align: right">
-                                    <p>@item1.ProductName</p>
-                                    <p>
 
-                                        @foreach (var color in listColor)
-                                        {
-
-                                            if (item1.Color == color.ID)
-                                            {
-                                                <small class="text-muted">
-                                                    @color.ColorName
-                                                </small>
-                                            }
-                                        }
-                                    </p>
-                                    <p>
-
-                                        @foreach (var size in listSize)
-                                        {
-
-                                            if (item1.Size == size.ID)
-                                            {
-                                                <small class="text-muted">
-                                                    @size.SizeName
-                                                </small>
-                                            }
-                                        }
-                                    </p>
-                                    <p><small class="text-muted">@item1.Price</small></p>
-                                    <p><small class="text-muted">@item1.Count</small></p>
-                                </div>
-
-
-                            </li>
+                            }
                         }
-
-
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Tổng tiền</span>
-                            <strong>@ViewBag.TongTien</strong>
-                        </li>
-                    </ul>
-                    @for (int i = 0; i < Model.Count; i++)
-                    {
-                        if (i == 0)
-                        {
-                            <div class="col-md-8 order-md-1">
-                                <h4 class="mb-3">Thông tin khách hàng</h4>
-                                <input type="hidden" name="kh_tendangnhap" value="dnpcuong">
-                                <input type="text" class="form-control" name="count" id="kh_diachi" value="@Model[i].Count" hidden>
-                                <input type="text" class="form-control" name="id" id="kh_diachi" value="@Model[i].ID" hidden>
-                                <input type="text" class="form-control" name="color" id="kh_diachi" value="@Model[i].Color" hidden>
-                                <input type="text" class="form-control" name="size" id="kh_diachi" value="@Model[i].Size" hidden>
-                                <input type="text" class="form-control" name="price" id="kh_diachi" value="@Model[i].Price" hidden>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="kh_ten">Họ tên</label>
-                                        <input type="text" class="form-control" name="kh_ten" id="kh_ten"
-                                               value="@Model[i].UserName" readonly="">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="kh_diachi">Địa chỉ</label>
-                                        <input type="text" class="form-control" name="address" id="kh_diachi"
-                                               value="@Model[i].Address">
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="kh_dienthoai">Điện thoại</label>
-                                        <input type="number" class="form-control" name="phone" id="kh_dienthoai"
-                                               value="@Model[i].Phone" />
-                                    </div>
-                                    <div class="col-md-12">
-                                        <label for="kh_email">Email</label>
-                                        <input type="text" class="form-control" name="kh_email" id="kh_email"
-                                               value="@Model[i].Email" readonly="">
-                                    </div>
-                                </div>
-
-                                <h4 class="mb-3">Hình thức thanh toán</h4>
-
-                                <div class="d-block my-3">
-                                    <div class="custom-control custom-radio">
-                                        <input id="1" name="payment" type="radio" class="custom-control-input" required=""
-                                               value="1">
-                                        <label class="custom-control-label" for="1">Tiền mặt</label>
-                                    </div>
-                                    @* <div class="custom-control custom-radio">
-                            <input id="2" name="payment" type="radio" class="custom-control-input" required=""
-                                   value="2">
-                            <label class="custom-control-label" for="2">Chuyển khoản</label>
-                        </div>*@
-                                </div>
-                                <hr class="mb-4">
-                                <h4 class="mb-3">Hình thức vận chuyển</h4>
-
-                                <div class="d-block my-3">
-                                    <div class="custom-control custom-radio">
-                                        <input id="ship1" name="ship" type="radio" class="custom-control-input" required=""
-                                               value="1">
-                                        <label class="custom-control-label" for="ship1">Giao hàng tiết kiệm(20000)</label>
-                                    </div>
-                                    @* <div class="custom-control custom-radio">
-                            <input id="ship2" name="ship" type="radio" class="custom-control-input" required=""
-                                   value="2">
-                            <label class="custom-control-label" for="ship2">Giao hàng hỏa tốc(25000)</label>
-                        </div>*@
-                                </div>
-                                <hr class="mb-4">
-                                <button class="btn btn-primary btn-lg btn-block" type="submit" name="btnDatHang">
-                                    Đặt hàng
-                                </button>
+                        <!-- END CHECKOUT -->
+                        <!-- END PAYMENT ADDRESS -->
+                        <!-- END PAYMENT METHOD -->
+                        <!-- BEGIN CONFIRM -->
+                        <div id="confirm" class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#checkout-page" href="#confirm-content" class="accordion-toggle">
+                                        Thông tin đơn hàng
+                                    </a>
+                                </h2>
                             </div>
-                        }
-                    }
-                </div>
-                
-            </div>
-        </form>
-    }
+                            <div id="confirm-content" class="panel-collapse collapse">
+                                <div class="panel-body row">
+                                    <div class="col-md-12 clearfix">
+                                        <div class="table-wrapper-responsive">
+                                            <table>
+                                                <tr>
+                                                    <th class="checkout-image">Hình ảnh</th>
+                                                    <th>Màu sắc</th>
+                                                    <th class="checkout-quantity">Size mặt kính</th>
+                                                    <th>Số lượng</th>
+                                                    <th class="checkout-price">Tổng tiền</th>
+                                                </tr>
+                                                @foreach (var item in Model)
+                                                {
+                                                    <tr>
+                                                        <td class="checkout-image">
+                                                            <a href="javascript:;"><img src="@item.Image" alt="@item.ProductName"></a>
+                                                        </td>
+                                                        @foreach (var color in listColor)
+                                                        {
 
-</div>
+                                                            if (item.Color == color.ID)
+                                                            {
+                                                                <td class="text-muted">
+                                                                    @color.ColorName
+                                                                </td>
+                                                            }
+                                                        }
+                                                        @foreach (var size in listSize)
+                                                        {
+
+                                                            if (item.Size == size.ID)
+                                                            {
+                                                                <td class="text-muted">
+                                                                    @size.SizeName
+                                                                </td>
+                                                            }
+                                                        }
+
+                                                        <td>@item.Count</td>
+                                                        <td>@item.Price</td>
+                                                    </tr>
+                                                }
+                                            </table>
+                                        </div>
+                                        <div class="checkout-total-block">
+                                            <ul>
+
+                                                <li class="checkout-total-price">
+                                                    <em>Tổng tiền:</em>
+                                                    <strong class="price"><span>@ViewBag.TongTien</span>đ</strong>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <button class="btn btn-primary pull-right" type="submit" id="button-confirm">Đặt hàng</button>
+                                        <a class="btn btn-default" href="/Order/OrderDemo">Quay lại</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END CONFIRM -->
+                    </div>
+
+
+                    <!-- END CHECKOUT PAGE -->
+                </div>
+                <!-- END CONTENT -->
+            </div>
+            <!-- END SIDEBAR & CONTENT -->
+        </div>
+    </div>}
+
 

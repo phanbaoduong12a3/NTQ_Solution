@@ -71,7 +71,7 @@
                                                         <em><span>@(Model.Price+20000)đ</span></em>
                                                 </div>
                                                 <div class="availability">
-                                                    Nhà cung cấp: <strong>@(Model.SupplierID == 1? "Teelab" : Model.SupplierID == 2 ? "Bad Habits" : "ClowZ")</strong>
+                                                    Nhà cung cấp: <strong>@(Model.SupplierID == 1? "Gucci" : "Rolex")</strong>
                                                 </div>
                                             </div>
                                             <div class="product-page-options">
@@ -178,7 +178,7 @@
                         {
                             var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
                             <div>
-                                <div class="product-item">
+                                <div class="product-item" style="height:300px">
                                     <div class="pi-img-wrapper">
                                         <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
                                         <div>

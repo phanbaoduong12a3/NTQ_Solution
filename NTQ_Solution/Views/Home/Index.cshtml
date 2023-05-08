@@ -78,15 +78,15 @@
                 {
                     var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
                     <div>
-                        <div class="product-item">
-                            <div class="pi-img-wrapper">
-                                <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                        <div class="product-item" style="height: 350px">
+                            <div class="pi-img-wrapper" >
+                                <img src="@item.Image" class="img-responsive" alt="@item.ProductName" >
                                 <div>
                                     <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
                                     <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
                                 </div>
                             </div>
-                            <h3><a href="@url">@item.ProductName</a></h3>
+                            <h3><a href="@url" style="padding: 10px 0">@item.ProductName</a></h3>
                             <div class="pi-price">@item.Price<span>đ</span></div>
                             <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
                         </div>
@@ -114,7 +114,7 @@
                 {
                     var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
                     <div>
-                        <div class="product-item">
+                        <div class="product-item" style="height: 350px">
                             <div class="pi-img-wrapper">
                                 <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
                                 <div>
@@ -143,7 +143,7 @@
                 {
                     var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
                     <div>
-                        <div class="product-item">
+                        <div class="product-item" style="height: 350px">
                             <div class="pi-img-wrapper">
                                 <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
                                 <div>

@@ -61,11 +61,11 @@ namespace NTQ_Solution.Controllers
                     }
                     else if (result == -2)
                     {
-                        ModelState.AddModelError("", "Password không chính xác");
+                        ModelState.AddModelError("", "Mật khẩu không chính xác");
                     }
                     else
                     {
-                        ModelState.AddModelError("", "Login thất bại");
+                        ModelState.AddModelError("", "Đăng nhập thất bại");
                     }
                 }
                 return View("Index");

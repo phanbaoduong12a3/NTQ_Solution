@@ -5,6 +5,8 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
     var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
     var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
+    var listSupplier = (List<DataLayer.EF.Supplier>)ViewBag.listSupplier;
+
 }
 @section header{
     Danh sách sản phẩm
@@ -36,9 +38,10 @@
                         <span>Nhà cung cấp</span>
                         <select name="supplier">
                             <option></option>
-                            <option value="1">Teelab</option>
-                            <option value="2">Bad Habits</option>
-                            <option value="3">Degrey</option>
+                            @foreach (var item in listSupplier)
+                            {
+                                <option value="@item.ID">@item.SupplierName</option>
+                            }
                         </select>
 
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
@@ -122,15 +125,11 @@
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Trending == true ? "Hot Trend" : "No Trend")</a></td>
                                             @if (item.SupplierID == 1)
                                             {
-                                                <td>Teelab</td>
-                                            }
-                                            else if (item.SupplierID == 2)
-                                            {
-                                                <td>Bad Habits</td>
+                                                <td>Gucci</td>
                                             }
                                             else
                                             {
-                                                <td>Degrey</td>
+                                                <td>Rolex</td>
                                             }
                                             <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Count > 0 ? "Còn hàng" : "Hết hàng")</a></td>
                                             <td>

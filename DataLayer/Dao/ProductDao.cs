@@ -311,6 +311,10 @@ namespace DataLayer.Dao
         {
             return db.Colors.OrderBy(x=>x.ID).ToList();
         }
+        public List<Supplier> listSupplier()
+        {
+            return db.Suppliers.OrderBy(x => x.ID).ToList();
+        }
 
     }
 }
