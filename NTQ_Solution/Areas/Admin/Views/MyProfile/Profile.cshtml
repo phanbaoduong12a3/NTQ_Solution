@@ -26,50 +26,64 @@
                         {
                             @Html.AntiForgeryToken()
 
-                            <div class="form-horizontal">
-                                <hr />
-                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
-                                    <div class="col-md-10">
-                                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })
-                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
-                                    <div class="col-md-10">
-                                        <input type="password" placeholder="Password" id="password" class="masked form-control form-control-user" name="password" value="@Model.Password" />
-                                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                                        <i class="fa fa-eye " id="eye"></i>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
-                                    <div class="col-md-10">
-                                        @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control form-control-user" })
-                                        @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-                                        <i class="fa fa-eye " id="eye"></i>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
-                                    <div class="col-md-10">
-                                        @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user" })
-                                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-offset-2 col-md-10">
-                                        <a class="btn btn-primary" href="/Logout/Index">Đăng suất</a>
-                                        <input type="submit" value="Sửa" class="btn btn-primary" />
-                                    </div>
-                                </div>
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @autofocus = "autofocus", @readonly = "true" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                <input type="password" placeholder="Password" id="password" class="masked form-control form-control-user" name="password" value="@Model.Password" />
+                                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                                <i class="fa fa-eye " id="eye"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control form-control-user" })
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                <i class="fa fa-eye " id="eye"></i>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user" })
+                                @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Phone, new { @class = "form-control form-control-user" })
+                                @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label" })
+                            <div class="col-md-10">
+                                @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user" })
+                                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <a class="btn btn-primary" href="/Logout/Index">Đăng suất</a>
+                                <input type="submit" value="Sửa" class="btn btn-primary" />
+                            </div>
+                        </div>
+                    </div>
                         }
                     </div>
                  </div>

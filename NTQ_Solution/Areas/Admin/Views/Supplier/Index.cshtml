@@ -9,15 +9,11 @@
 @section header{
     @if (ViewBag.supplierID == 1)
     {
-        <h2>Danh sách sản phẩm của Teelab</h2>
-    }
-    else if (ViewBag.supplierID == 2)
-    {
-        <h2>Danh sách sản phẩm của Bad Habits</h2>
+        <h2>Danh sách sản phẩm của Gucci</h2>
     }
     else
     {
-        <h2>Danh sách sản phẩm của Degrey</h2>
+        <h2>Danh sách sản phẩm của Rolex</h2>
     }
 }
 @{var session = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];}
@@ -67,7 +63,7 @@
                                     <th>Hình ảnh sản phẩm</th>
                                     <th>Giá nhập</th>
                                     <th>Giá xuất</th>
-                                    <th>Size</th>
+                                    <th>Size mặt kính</th>
                                     <th>Màu sắc</th>
                                     <th></th>
                                 </tr>

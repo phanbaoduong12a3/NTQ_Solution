@@ -31,6 +31,7 @@ namespace DataLayer.ViewModel
         public int? Phone { get; set; }
         public string Email { get; set; }
         public int? Color {get;set;}
+        [DisplayName("Size mặt kính")]
         public int? Size{get;set;}
         public int ShipMoney { get; set; }
         public string ShipMode { get; set; }

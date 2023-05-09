@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace DataLayer.ViewModel
         public string SupplierName { get; set; }
         public string UserName { get; set; }
         public string Image { get; set; }
+        [DisplayName("Size mặt kính")]
         public int? Color {get;set;}
         public int? Size{get;set;}
     }
