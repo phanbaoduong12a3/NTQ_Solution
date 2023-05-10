@@ -47,27 +47,30 @@
                                             <td>
                                                 <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                             </td>
-                                            @foreach (var size in listSize)
-                                            {
-                                                
-                                                if(item.Size == size.ID)
+                                            <td>
+                                                @foreach (var size in listSize)
                                                 {
-                                                    <td>
-                                                        @size.SizeName
-                                                    </td>
-                                                }
-                                            }
 
-                                            @foreach (var color in listColor)
-                                            {
-                                                
-                                                if(item.Color == color.ID)
-                                                {
-                                                    <td>
-                                                        @color.ColorName
-                                                    </td>
+                                                    if (item.Size == size.ID)
+                                                    {
+
+                                                        @size.SizeName
+
+                                                    }
                                                 }
-                                            }
+                                            </td>
+                                            <td>
+                                                @foreach (var color in listColor)
+                                                {
+
+                                                    if (item.Color == color.ID)
+                                                    {
+
+                                                        @color.ColorName
+
+                                                    }
+                                                }
+                                            </td>
                                             <td>@item.Price</td>
                                             <td>
                                                 @item.Count

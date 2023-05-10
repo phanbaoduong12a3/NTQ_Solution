@@ -47,7 +47,7 @@ namespace NTQ_Solution.Controllers
                         }
                         else
                         {
-                            return Redirect("/Admin/Product/Index");
+                            return Redirect("/Admin/Order/Index");
                         }
                        
                     }

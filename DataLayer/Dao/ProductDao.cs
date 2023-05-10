@@ -113,29 +113,42 @@ namespace DataLayer.Dao
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Product> ListAllPagingProduct(string size, string color, string supplier, string searchString, int page, int pageSize)
+        public IEnumerable<Product> ListAllPagingProduct(string size, string color,string categoryID, string supplier, string searchString, int page, int pageSize)
         {
             try
             {
-                IQueryable<Product> model = db.Products;
-                if (!string.IsNullOrEmpty(searchString))
-                {
-                    model = model.Where(x => x.ProductName.Contains(searchString));
-                }
-                if (!string.IsNullOrEmpty(color))
-                {
-                    model = model.Where(x => x.Color == int.Parse(color));
-                }
-                if (!string.IsNullOrEmpty(size))
-                {
-                    model = model.Where(x => x.Size == int.Parse(size));
-                }
-                if (!string.IsNullOrEmpty(supplier))
-                {
-                    int supplierModel = int.Parse(supplier);
-                    model = model.Where(x => x.SupplierID == supplierModel);
-                }
-                return model.Where(x => x.Color != 0 && x.Size != 0).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
+               
+                
+                    IQueryable<Product> model = db.Products;
+                    if (!string.IsNullOrEmpty(searchString))
+                    {
+                        model = model.Where(x => x.ProductName.Contains(searchString));
+                    }
+                    if (!string.IsNullOrEmpty(color))
+                    {
+                        int Color = int.Parse(color);
+                        model = model.Where(x => x.Color == Color);
+                    }
+                    if (!string.IsNullOrEmpty(size))
+                    {
+                        int Size = int.Parse(size);
+                        model = model.Where(x => x.Size == Size);
+                    }
+                    if (!string.IsNullOrEmpty(supplier))
+                    {
+                        int supplierModel = int.Parse(supplier);
+                        model = model.Where(x => x.SupplierID == supplierModel);
+                    }
+                
+                    int categoryid = int.Parse(categoryID);
+                    if (categoryid == 6)
+                    {
+
+                        return model.Where(x => x.CategoryID == 6).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
+                    }
+                    return model.Where(x => x.Color != 0 && x.Size != 0 && x.CategoryID == categoryid).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
+
+                
 
             }
             catch (Exception ex)
@@ -315,6 +328,13 @@ namespace DataLayer.Dao
         {
             return db.Suppliers.OrderBy(x => x.ID).ToList();
         }
-
+        public List<Product> listSize(string productName)
+        {
+            return db.Products.Where(x=>x.ProductName == productName && x.Size != 0 && x.Count > 0).OrderBy(x=>x.Size).ToList();
+        }
+        public List<Product> listColor(string productName)
+        {
+            return db.Products.Where(x => x.ProductName == productName && x.Color != 0 && x.Count>0).OrderBy(x =>x.Color).ToList();
+        }
     }
 }

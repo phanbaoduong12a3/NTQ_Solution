@@ -37,6 +37,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 shipDao.UpdateShip(id);
+                TempData["success"] = "Giao hang thanh cong";
                 return RedirectToAction("Index", "Shipping");
             }
             catch (Exception ex)

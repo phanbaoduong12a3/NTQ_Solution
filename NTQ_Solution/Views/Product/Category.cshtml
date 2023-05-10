@@ -1,55 +1,68 @@
 ﻿@model PagedList.IPagedList<DataLayer.EF.Product>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Category";
+    ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var hotProduct = (List<DataLayer.EF.Product>)ViewBag.HotProduct;
 }
 
-<div class="content">
-    @using (Html.BeginForm("Index", "Product", FormMethod.Get))
-    {
+<div class="main">
+    <div class="container">
+        <ul class="breadcrumb">
+            <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
+            <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-5">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    @{ Html.RenderAction("ProductCategory", "Product");}
 
-        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-                <span style="margin-right:20px">Trending:</span><input type="checkbox" name="trending" />
-            </div>
-            <div class="input-group" style="margin-top:20px;margin-bottom:20px">
-
-                <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="search" name="searchString"
-                       aria-label="Search" aria-describedby="basic-addon2" style="margin-right:5px">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
+                </ul>
+                <div class="sidebar-products clearfix">
+                    <h2>Sản phẩm hot</h2>
+                    @foreach (var item in hotProduct)
+                    {
+                        var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                        <div class="item">
+                            <a href="@url"><img src="@item.Image" alt="@item.ProductName"></a>
+                            <h3><a href="@url">@item.ProductName</a></h3>
+                            <div class="price">@item.Price<span>đ</span></div>
+                        </div>
+                    }
 
                 </div>
             </div>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-9 col-sm-7">
 
-        </form>
-    }
-    <div class="section group">
-        @foreach (var item in Model)
-        {
-            /* if (item.Status == 1)
-             {*/
-            var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
-            <div class="grid_1_of_4 images_1_of_4" style="height: 380px;max-height: 400px;">
-                <a href="@url"><img src="@item.Image" alt="@item" style="width:193px;height:193px" /></a>
-                <h2 style="height:50px;padding:10px 0">@item.ProductName </h2>
-                <i class="fa fa-eye " id="eye">@item.NumberViews</i>
-                <div class="price-details">
-                    <div class="price-number">
-                        <p><span class="rupees">@(item.Price.HasValue?item.Price.Value.ToString("N0"):"Connect with shop")đ</span></p>
-                    </div>
-                    <div class="add-cart">
-                        <h4><a href="@url">Thêm vào giỏ hàng</a></h4>
-                    </div>
-                    <div class="clear"></div>
+                <!-- BEGIN PRODUCT LIST -->
+                <div class="row product-list">
+                    @foreach (var item in Model)
+                    {
+                        <!-- PRODUCT ITEM START -->
+                        var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="product-item" style="height:400px">
+                                <div class="pi-img-wrapper">
+                                    <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                                    <div>
+                                        <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
+                                        <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
+                                    </div>
+                                </div>
+                                <h3><a style="padding: 10px 0" href="@url">@item.ProductName</a></h3>
+                                <div class="pi-price">@item.Price<span>đ</span></div>
+                                <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                            </div>
+                        </div>
+                    }
+                    <!-- PRODUCT ITEM END -->
                 </div>
-
             </div>
-            @*}*@
-        }
+        </div>
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
     </div>
-    @Html.PagedListPager(Model, page => Url.Action("Category", new { page, @searchString = ViewBag.SearchString }) + "&categoryID=" + ViewBag.categoryID)
 </div>

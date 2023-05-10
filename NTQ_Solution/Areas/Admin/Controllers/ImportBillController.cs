@@ -30,7 +30,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     total += item.Price;
                 }
                 ViewBag.total = total;
-                return View(model);
+                 return View(model);
             }
             catch (Exception ex)
             {

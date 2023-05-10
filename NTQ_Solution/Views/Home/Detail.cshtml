@@ -3,8 +3,10 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var listReview = (List<DataLayer.ViewModel.ReviewModel>)ViewBag.ListReview;
-    var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
-    var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
+    var listColor = (List<DataLayer.EF.Color>)ViewBag.ColorColor;
+    var listSize = (List<DataLayer.EF.Size>)ViewBag.SizeSize;
+    var listcolor = (List<DataLayer.EF.Product>)ViewBag.listcolor;
+    var listsize = (List<DataLayer.EF.Product>)ViewBag.listsize;
     var hotProduct = (List<DataLayer.EF.Product>)ViewBag.HotProduct;
 }
 @section jsFooter{
@@ -15,190 +17,253 @@
     <div class="container">
 
         <!-- BEGIN SIDEBAR & CONTENT -->
-                <ul class="breadcrumb">
-                    <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
+        <ul class="breadcrumb">
+            <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
+            <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
+        </ul>
+        <!-- BEGIN SIDEBAR & CONTENT -->
+        <div class="row margin-bottom-40">
+            <!-- BEGIN SIDEBAR -->
+            <div class="sidebar col-md-3 col-sm-5">
+                <ul class="list-group margin-bottom-25 sidebar-menu">
+                    @{ Html.RenderAction("ProductCategory", "Product");}
+
                 </ul>
-                <!-- BEGIN SIDEBAR & CONTENT -->
-                <div class="row margin-bottom-40">
-                    <!-- BEGIN SIDEBAR -->
-                    <div class="sidebar col-md-3 col-sm-5">
-                        <ul class="list-group margin-bottom-25 sidebar-menu">
-                            @{ Html.RenderAction("ProductCategory", "Product");}
-
-                        </ul>
-                        <div class="sidebar-products clearfix">
-                            <h2>Sản phẩm hot</h2>
-                            @foreach (var item in hotProduct)
-                            {
-                                var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
-                                <div class="item">
-                                    <a href="@url"><img src="@item.Image" alt="@item.ProductName"></a>
-                                    <h3><a href="@url">@item.ProductName</a></h3>
-                                    <div class="price">@item.Price<span>đ</span></div>
-                                </div>
-                            }
-
+                <div class="sidebar-products clearfix">
+                    <h2>Sản phẩm hot</h2>
+                    @foreach (var item in hotProduct)
+                    {
+                        var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                        <div class="item">
+                            <a href="@url"><img src="@item.Image" alt="@item.ProductName"></a>
+                            <h3><a href="@url">@item.ProductName</a></h3>
+                            <div class="price">@item.Price<span>đ</span></div>
                         </div>
-                    </div>
+                    }
 
-                    <!-- END SIDEBAR -->
-                    <!-- BEGIN CONTENT -->
-                    <div class="col-md-9 col-sm-7">
-                        <div class="product-page">
-                            <div class="row">
-                                @using (Html.BeginForm("AddOrder", "Order", FormMethod.Get))
-                                {
-                                    <form>
-                                        <input name="productID" value="@Model.ID" hidden />
-                                        <input name="productName" value="@Model.ProductName" hidden />
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="product-main-image">
-                                                <img src="@Model.Image" alt="@Model.ProductName" class="img-responsive" data-BigImgsrc="@Model.Image">
-                                            </div>
-                                            <div class="product-other-images">
-                                                <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
-                                                <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
-                                                <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <h1>@Model.ProductName</h1>
-                                            <div class="price-availability-block clearfix">
-                                                <div class="price">
-                                                    <strong>
-                                                        <span>@Model.Price</span>đ</strong>
-                                                        <em><span>@(Model.Price+20000)đ</span></em>
-                                                </div>
-                                                <div class="availability">
-                                                    Nhà cung cấp: <strong>@(Model.SupplierID == 1? "Gucci" : "Rolex")</strong>
-                                                </div>
-                                            </div>
-                                            <div class="product-page-options">
-                                                <div class="pull-left">
-                                                    <label class="control-label">Size mặt kính:</label>
-                                                    <select name="size">
-                                                        @foreach (var item in listSize)
-                                                        {
-                                                            <option value="@item.ID">@item.SizeName</option>
-                                                        }
-                                                    </select>
+                </div>
+            </div>
 
-                                                </div>
-                                                <div class="pull-left">
-                                                    <label class="control-label">Color:</label>
-                                                    <select name="color">
-                                                        @foreach (var item in listColor)
-                                                        {
-                                                            <option value="@item.ID">@item.ColorName</option>
-                                                        }
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="product-page-cart">
-                                                <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
-                                            </div>
-                                            <div class="review">
-                                                <input type="range" value="4" step="0.25" id="backing4">
-                                                <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false" data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
-                                                </div>
-                                            </div>
-                                            <ul class="social-icons">
-                                                <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
-                                                <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
-                                                <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
-                                                <li><a class="evernote" data-original-title="evernote" href="javascript:;"></a></li>
-                                                <li><a class="tumblr" data-original-title="tumblr" href="javascript:;"></a></li>
-                                            </ul>
+            <!-- END SIDEBAR -->
+            <!-- BEGIN CONTENT -->
+            <div class="col-md-9 col-sm-7">
+                <div class="product-page">
+                    <div class="row">
+                        @using (Html.BeginForm("AddOrder", "Order", FormMethod.Get))
+                        {
+                            <form>
+                                <input name="productID" value="@Model.ID" hidden />
+                                <input name="productName" value="@Model.ProductName" hidden />
+                                <div class="col-md-6 col-sm-6">
+                                    <div class="product-main-image">
+                                        <img src="@Model.Image" alt="@Model.ProductName" class="img-responsive" data-BigImgsrc="@Model.Image">
+                                    </div>
+                                    <div class="product-other-images">
+                                        <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
+                                        <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
+                                        <a href="#" class="fancybox-button" rel="photos-lib"><img alt="@Model.ProductName" src="@Model.Image"></a>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <h1>@Model.ProductName</h1>
+                                    <div class="price-availability-block clearfix">
+                                        <div class="price">
+                                            <strong>
+                                                <span>@Model.Price</span>đ
+                                            </strong>
+                                            <em><span>@(Model.Price+20000)đ</span></em>
                                         </div>
-                                    </form>
-                                }
-
-                                <div class="product-page-content">
-                                    <ul id="myTab" class="nav nav-tabs">
-                                        <li><a href="#Description" data-toggle="tab">Mô tả</a></li>
-                                        <li class="active"><a href="#Reviews" data-toggle="tab">Bình luận</a></li>
-                                    </ul>
-                                    <div id="myTabContent" class="tab-content">
-                                        <div class="tab-pane fade" id="Description">
-                                            @Html.Raw(Model.Detail)
+                                        <div class="availability">
+                                            Nhà cung cấp: <strong>@(Model.SupplierID == 1? "Gucci" : "Rolex")</strong>
                                         </div>
-                                        <div class="tab-pane fade in active" id="Reviews">
-                                            <!--<p>There are no reviews for this product.</p>-->
-                                            <!-- BEGIN FORM-->
-                                            <div class="review-item clearfix">
-                                                <h2>Bình luận</h2>
-                                                <div id="div_allreview">
-                                                    @foreach (var itemcomment in listReview)
-                                                    {
-                                                        if (itemcomment.ParentID == 0 && itemcomment.Status == 0)
+                                    </div>
+                                    <div class="product-page-options">
+                                        @if (listsize.Count != 0)
+                                        {
+                                            <div class="pull-left">
+                                                <label class="control-label">Size mặt kính:</label>
+                                                <select name="size">
+                                                    @{int a = 0;
+                                                        for (int i = 0; i < listsize.Count; i++)
                                                         {
-                                                            <div class="review-item clearfix">
-                                                                <div class="review-item-submitted">
-                                                                    <strong>@itemcomment.UserName</strong>
-                                                                    <em>@itemcomment.CreateAt</em>
-                                                                    <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-                                                                </div>
-                                                                <div class="review-item-content">
-                                                                    <p>@itemcomment.Title</p>
-                                                                </div>
-                                                            </div>
+                                                            if (i == a)
+                                                            {
+                                                                for (int j = i + 1; j < listsize.Count; j++)
+                                                                {
+                                                                    if (listsize[i].Size == listsize[j].Size)
+                                                                    {
+                                                                        continue;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        a = j;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                foreach (var item in listSize)
+                                                                {
+                                                                    if (listsize[i].Size == item.ID)
+                                                                    {
+                                                                        <option value="@item.ID">@item.SizeName</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                continue;
+                                                            }
 
                                                         }
                                                     }
-                                                </div>
+                                                </select>
+
                                             </div>
-                                            <form action="#" class="reviews-form" role="form">
-                                                <h2>Thêm bình luận</h2>
-                                                <div class="form-group">
-                                                    <label for="name">Nội dung <span class="require">*</span></label>
-                                                    <input input type="text" id="txtReviewNew">
-                                                </div>
-                                                <div class="padding-top-20">
-                                                    <button id="btnReviewNew" data-productid="@Model.ID" data-userid="@ViewBag.UserID">Bình luận</button>
-                                                </div>
-                                            </form>
+                                        }
+                                        @if (listcolor.Count != 0)
+                                        {
+                                            <div class="pull-left">
+                                                <label class="control-label">Color:</label>
+                                                <select name="color">
+                                                    @{int b = 0;
+                                                        for (int i = 0; i < listcolor.Count; i++)
+                                                        {
+                                                            if (i == b)
+                                                            {
+                                                                for (int j = i + 1; j < listcolor.Count; j++)
+                                                                {
+                                                                    if (listcolor[i].Color == listcolor[j].Color)
+                                                                    {
+                                                                        continue;
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        b = j;
+                                                                        break;
+                                                                    }
+                                                                }
+                                                                foreach (var item in listColor)
+                                                                {
+                                                                    if (listcolor[i].Color == item.ID)
+                                                                    {
+                                                                        <option value="@item.ID">@item.ColorName</option>
+                                                                    }
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                continue;
+                                                            }
+
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="product-page-cart">
+                                        <button class="btn btn-primary" type="submit">Thêm vào giỏ hàng</button>
+                                    </div>
+                                    <div class="review">
+                                        <input type="range" value="4" step="0.25" id="backing4">
+                                        <div class="rateit" data-rateit-backingfld="#backing4" data-rateit-resetable="false" data-rateit-ispreset="true" data-rateit-min="0" data-rateit-max="5">
                                         </div>
                                     </div>
-                                    <!-- END FORM-->
+                                    <ul class="social-icons">
+                                        <li><a class="facebook" data-original-title="facebook" href="javascript:;"></a></li>
+                                        <li><a class="twitter" data-original-title="twitter" href="javascript:;"></a></li>
+                                        <li><a class="googleplus" data-original-title="googleplus" href="javascript:;"></a></li>
+                                        <li><a class="evernote" data-original-title="evernote" href="javascript:;"></a></li>
+                                        <li><a class="tumblr" data-original-title="tumblr" href="javascript:;"></a></li>
+                                    </ul>
                                 </div>
+                            </form>
+                        }
+
+                        <div class="product-page-content">
+                            <ul id="myTab" class="nav nav-tabs">
+                                <li><a href="#Description" data-toggle="tab">Mô tả</a></li>
+                                <li class="active"><a href="#Reviews" data-toggle="tab">Bình luận</a></li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div class="tab-pane fade" id="Description">
+                                    @Html.Raw(Model.Detail)
+                                </div>
+                                <div class="tab-pane fade in active" id="Reviews">
+                                    <!--<p>There are no reviews for this product.</p>-->
+                                    <!-- BEGIN FORM-->
+                                    <div class="review-item clearfix">
+                                        <h2>Bình luận</h2>
+                                        <div id="div_allreview">
+                                            @foreach (var itemcomment in listReview)
+                                            {
+                                                if (itemcomment.ParentID == 0 && itemcomment.Status == 0)
+                                                {
+                                                    <div class="review-item clearfix">
+                                                        <div class="review-item-submitted">
+                                                            <strong>@itemcomment.UserName</strong>
+                                                            <em>@itemcomment.CreateAt</em>
+                                                            <div class="rateit" data-rateit-value="5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                                                        </div>
+                                                        <div class="review-item-content">
+                                                            <p>@itemcomment.Title</p>
+                                                        </div>
+                                                    </div>
+
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                    <form action="#" class="reviews-form" role="form">
+                                        <h2>Thêm bình luận</h2>
+                                        <div class="form-group">
+                                            <label for="name">Nội dung <span class="require">*</span></label>
+                                            <input input type="text" id="txtReviewNew">
+                                        </div>
+                                        <div class="padding-top-20">
+                                            <button id="btnReviewNew" data-productid="@Model.ID" data-userid="@ViewBag.UserID">Bình luận</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- END FORM-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sticker sticker-sale"></div>
+            </div>
+        </div>
+        <!-- END SIDEBAR & CONTENT -->
+        <!-- BEGIN SIMILAR PRODUCTS -->
+        <div class="row margin-bottom-40">
+            <div class="col-md-12 col-sm-12">
+                <h2>Sản phẩm bán chạy</h2>
+                <div class="owl-carousel owl-carousel4">
+                    @foreach (var item in hotProduct)
+                    {
+                        var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                        <div>
+                            <div class="product-item" style="height:300px">
+                                <div class="pi-img-wrapper">
+                                    <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
+                                    <div>
+                                        <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
+                                        <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
+                                    </div>
+                                </div>
+                                <h3><a href="@url">@item.ProductName</a></h3>
+                                <div class="pi-price">@item.Price<span>đ</span></div>
+                                <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                                <div class="sticker sticker-new"></div>
                             </div>
                         </div>
-
-                        <div class="sticker sticker-sale"></div>
-                    </div>
-                </div>
-            <!-- END SIDEBAR & CONTENT -->
-            <!-- BEGIN SIMILAR PRODUCTS -->
-            <div class="row margin-bottom-40">
-                <div class="col-md-12 col-sm-12">
-                    <h2>Sản phẩm bán chạy</h2>
-                    <div class="owl-carousel owl-carousel4">
-                        @foreach (var item in hotProduct)
-                        {
-                            var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
-                            <div>
-                                <div class="product-item" style="height:300px">
-                                    <div class="pi-img-wrapper">
-                                        <img src="@item.Image" class="img-responsive" alt="@item.ProductName">
-                                        <div>
-                                            <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
-                                            <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
-                                        </div>
-                                    </div>
-                                    <h3><a href="@url">@item.ProductName</a></h3>
-                                    <div class="pi-price">@item.Price<span>đ</span></div>
-                                    <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
-                                    <div class="sticker sticker-new"></div>
-                                </div>
-                            </div>
-                        }
-                    </div>
+                    }
                 </div>
             </div>
-            <!-- END SIMILAR PRODUCTS -->
         </div>
+        <!-- END SIMILAR PRODUCTS -->
     </div>
+</div>
 
 
 

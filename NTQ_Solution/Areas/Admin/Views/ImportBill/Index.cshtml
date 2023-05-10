@@ -17,7 +17,7 @@
                     @using (Html.BeginForm("Index", "ImportBill", FormMethod.Get))
                     {
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                           
+
                             <div class="input-group" style="margin-top:20px;margin-bottom:20px">
                                 <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="search" name="searchString"
                                        aria-label="Search" aria-describedby="basic-addon2" style="margin-right:5px">
@@ -61,27 +61,30 @@
                                             <td>
                                                 <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                             </td>
-                                            @foreach (var size in listSize)
-                                            {
-
-                                                if (item.Size == size.ID)
+                                            <td>
+                                                @foreach (var size in listSize)
                                                 {
-                                                    <td>
+
+                                                    if (item.Size == size.ID)
+                                                    {
+
                                                         @size.SizeName
-                                                    </td>
+
+                                                    }
                                                 }
-                                            }
-
-                                            @foreach (var color in listColor)
-                                            {
-
-                                                if (item.Color == color.ID)
+                                            </td>
+                                            <td>
+                                                @foreach (var color in listColor)
                                                 {
-                                                    <td>
+
+                                                    if (item.Color == color.ID)
+                                                    {
+
                                                         @color.ColorName
-                                                    </td>
+
+                                                    }
                                                 }
-                                            }
+                                            </td>
                                             <td style="text-align:center">@item.Count</td>
 
                                             <td style="text-align:center">@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>

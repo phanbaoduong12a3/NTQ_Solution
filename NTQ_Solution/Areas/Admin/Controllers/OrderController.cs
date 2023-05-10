@@ -1,4 +1,5 @@
 ﻿using DataLayer.Dao;
+using DataLayer.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,6 +39,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 orderDao.UpdateOrderBE(OrderId, userid);
+                TempData["success"] = "Xac nhan don hang thanh cong";
                 return RedirectToAction("Index","Order");
             }
             catch(Exception ex)
@@ -60,6 +62,11 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+        [ChildActionOnly]
+        public ActionResult StatusOrder()
+        {
+            return View();
         }
     }
 }

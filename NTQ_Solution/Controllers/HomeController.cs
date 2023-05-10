@@ -51,8 +51,10 @@ namespace NTQ_Solution.Controllers
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
                 if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
                 ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
+                ViewBag.ColorColor = productDao.listcolor();
+                ViewBag.SizeSize = productDao.listsize();
+                ViewBag.listcolor = productDao.listColor(product.ProductName);
+                ViewBag.listsize = productDao.listSize(product.ProductName);
                 productDao.UpdateView(product.ID);
                 ViewBag.HotProduct = productDao.ListNewProduct(4);
                 return View(product);

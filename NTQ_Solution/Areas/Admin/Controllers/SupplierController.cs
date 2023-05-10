@@ -44,7 +44,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                
+
                 var temp = productDao.GetProductById(id);
                 bool status, checkTrending;
                 if (temp.Status == 1) status = true;
@@ -83,7 +83,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 return View(productModel);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
@@ -94,18 +94,28 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                
+                if(productModel.ImportPrice == null || productModel.ImportCount == 0)
+                {
+                    TempData["success"] = "Du lieu nhap hang chua dung";
+                    return RedirectToAction("ImportProduct","Supplier");
+                }
                 var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-                    int UserID = model.UserID;
-                    supplierDao.UpdateImport(productModel, UserID);
-                    TempData["success"] = "Nhap hang thanh cong";
-                    return RedirectToAction("Index", "ImportBill"); 
+                int UserID = model.UserID;
+                supplierDao.UpdateImport(productModel, UserID);
+                TempData["success"] = "Nhap hang thanh cong";
+                return RedirectToAction("Index", "ImportBill");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+        [ChildActionOnly]
+        public ActionResult ListSupplier()
+        {
+            var model = supplierDao.ListSupplier();
+            return View(model);
         }
     }
 }

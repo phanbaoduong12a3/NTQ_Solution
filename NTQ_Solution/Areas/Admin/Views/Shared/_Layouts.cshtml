@@ -51,9 +51,7 @@
                 </a>
                 <div id="collapseSystem" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/Admin/Supplier?supplierID=1&size=&color=">Gucci</a>
-                        <a class="collapse-item" href="/Admin/Supplier?supplierID=2&size=&color=">Rolex</a>
-                        @*<a class="collapse-item" href="/Admin/Supplier?supplierID=3&size=&color=">ClownZ</a>*@
+                        @{ Html.RenderAction("ListSupplier","Supplier"); }
                     </div>
                 </div>
             </li>
@@ -70,19 +68,26 @@
             <hr class="sidebar-divider  my-0">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/ImportBill/Index">
+                <a class="nav-link" href="/Admin/ImportBill/Index" >
                     <i class="fas fa-fw fa-money-bill"></i>
                     <span>Quản lý phiếu nhập</span>
                 </a>
+                
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider  my-0">
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item active">
-                <a class="nav-link" href="/Admin/Product/Index">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#category"
+                   aria-expanded="true" aria-controls="category">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Quản lý sản phẩm</span>
                 </a>
+                <div id="category" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        @{ Html.RenderAction("ProductMenu", "Product");}
+                    </div>
+                </div>
             </li>
             <!-- Đơn hàng -->
             <li class="nav-item active">
@@ -93,9 +98,7 @@
                 </a>
                 <div id="order" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/Admin/Order/Index">Chờ xác nhận</a>
-                        <a class="collapse-item" href="/Admin/Shipping/Index">Đang giao hàng</a>
-                        <a class="collapse-item" href="/Admin/Order/OrderSuccess">Đã nhận hàng</a>
+                        @{ Html.RenderAction("StatusOrder", "Order");}
                     </div>
                 </div>
             </li>

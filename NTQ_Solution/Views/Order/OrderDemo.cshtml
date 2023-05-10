@@ -51,32 +51,35 @@
                                                 <td>
                                                     <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                                 </td>
-                                                @foreach (var size in listSize)
-                                                {
-
-                                                    if (item.Size == size.ID)
+                                                <td>
+                                                    @foreach (var size in listSize)
                                                     {
-                                                        <td>
+
+                                                        if (item.Size == size.ID)
+                                                        {
+
                                                             @size.SizeName
-                                                        </td>
+
+                                                        }
                                                     }
-                                                }
-
-                                                @foreach (var color in listColor)
-                                                {
-
-                                                    if (item.Color == color.ID)
+                                                </td>
+                                                <td>
+                                                    @foreach (var color in listColor)
                                                     {
-                                                        <td>
+
+                                                        if (item.Color == color.ID)
+                                                        {
+
                                                             @color.ColorName
-                                                        </td>
+
+                                                        }
                                                     }
-                                                }
+                                                </td>
                                                 <td>@item.Price</td>
                                                 <td>
                                                     @if (item.Status < 2)
                                                     {
-                                                        <input type="number" name="productCount" value="@item.Count" min="1" max="@item.ProductCount"/>
+                                                        <input type="number" name="productCount" value="@item.Count" min="1" max="@item.ProductCount" />
                                                     }
                                                     else
                                                     {
@@ -89,7 +92,7 @@
 
                                                 </td>
                                                 <td>
-                                                    
+
                                                     <a class="btn btn-danger" style="text-decoration:none" href="/Order/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
                                                 </td>
                                             </tr>
@@ -110,7 +113,7 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="7"></td>
-                                                <td><a class="btn btn-success" style="text-decoration:none" href="/Order/Order"  >Đặt hàng</a></td>
+                                                <td><a class="btn btn-success" style="text-decoration:none" href="/Order/Order">Đặt hàng</a></td>
                                                 <td></td>
                                             </tr>
                                             </form>

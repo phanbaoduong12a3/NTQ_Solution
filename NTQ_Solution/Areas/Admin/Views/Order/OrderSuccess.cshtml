@@ -70,50 +70,52 @@
                                                 <td>
                                                     <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                                 </td>
-                                                @foreach (var size in listSize)
-                                                {
-                                                    
-                                                    if(item.Size == size.ID)
+                                                <td>
+                                                    @foreach (var size in listSize)
                                                     {
-                                                        <td>
+
+                                                        if (item.Size == size.ID)
+                                                        {
+
                                                             @size.SizeName
-                                                        </td>
-                                                    }
-                                                }
 
-                                                @foreach (var color in listColor)
-                                                {
-                                                    
-                                                    if(item.Color == color.ID)
+                                                        }
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @foreach (var color in listColor)
                                                     {
-                                                        <td>
+
+                                                        if (item.Color == color.ID)
+                                                        {
+
                                                             @color.ColorName
-                                                        </td>
-                                                    }
-                                                }
-                                                <td>@item.Price</td>
-                                                <td>
-                                                    @item.Count
-                                                </td>
-                                                <td>
-                                                    @if (session.Role == 1)
-                                                    {
-                                                        if (item.Status == 2)
-                                                        {
-                                                            <input type="submit" class="btn btn-success" style="text-decoration:none" @*href="/Order/Order?OrderId=@item.ID"*@ value="Xác nhận" />
-                                                        }
-                                                        if (item.Status == 3)
-                                                        {
-                                                            <a class="btn btn-success" style="text-decoration:none">Đang giao hàng</a>
-                                                        }
-                                                        if (item.Status == 4)
-                                                        {
-                                                            <a class="btn btn-success" style="text-decoration:none">Đã nhận hàng</a>
-                                                        }
 
-                                                    }
-                                                </td>
-                                            </tr>
+                                                        }
+                                                    }</td>
+<td>@item.Price</td>
+                                                    <td>
+                                                        @item.Count
+                                                    </td>
+                                                    <td>
+                                                        @if (session.Role == 1)
+                                                        {
+                                                            if (item.Status == 2)
+                                                            {
+                                                                <input type="submit" class="btn btn-success" style="text-decoration:none" @*href="/Order/Order?OrderId=@item.ID"*@ value="Xác nhận" />
+                                                            }
+                                                            if (item.Status == 3)
+                                                            {
+                                                                <a class="btn btn-success" style="text-decoration:none">Đang giao hàng</a>
+                                                            }
+                                                            if (item.Status == 4)
+                                                            {
+                                                                <a class="btn btn-success" style="text-decoration:none">Đã nhận hàng</a>
+                                                            }
+
+                                                        }
+                                                    </td>
+                                                </tr>
                                             </form>
                                         }
                                     }

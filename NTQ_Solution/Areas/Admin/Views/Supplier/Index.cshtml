@@ -24,9 +24,8 @@
                 <div class="card-body">
                     @using (Html.BeginForm("Index", "Supplier", FormMethod.Get))
                     {
-                        <span>Size</span>
+                        <span>Size mặt kính</span>
                         <select name="size">
-                            <option></option>
                             @foreach (var item in listSize)
                             {
                                 <option value="@item.ID">@item.SizeName</option>
@@ -34,7 +33,6 @@
                         </select>
                         <span>Màu sắc</span>
                         <select name="color">
-                            <option></option>
                             @foreach (var item in listColor)
                             {
                                 <option value="@item.ID">@item.ColorName</option>
@@ -88,27 +86,30 @@
                                             </td>
                                             <td style="text-align:center">@item.ImportPrice</td>
                                             <td style="text-align:center">@item.Price</td>
-                                            @foreach (var size in listSize)
-                                            {
-                                                
-                                                if(item.Size == size.ID)
+                                            <td>
+                                                @foreach (var size in listSize)
                                                 {
-                                                    <td>
-                                                        @size.SizeName
-                                                    </td>
-                                                }
-                                            }
 
-                                            @foreach (var color in listColor)
-                                            {
-                                                
-                                                if(item.Color == color.ID)
-                                                {
-                                                    <td>
-                                                        @color.ColorName
-                                                    </td>
+                                                    if (item.Size == size.ID)
+                                                    {
+
+                                                        @size.SizeName
+
+                                                    }
                                                 }
-                                            }
+                                            </td>
+                                            <td>
+                                                @foreach (var color in listColor)
+                                                {
+
+                                                    if (item.Color == color.ID)
+                                                    {
+
+                                                        @color.ColorName
+
+                                                    }
+                                                }
+                                            </td>
                                             <td>
                                                 @if (session.Role == 1)
                                                 {

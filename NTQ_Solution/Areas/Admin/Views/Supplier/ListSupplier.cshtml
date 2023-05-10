@@ -1,0 +1,6 @@
+﻿@model List<DataLayer.EF.Supplier>
+@foreach (var item in Model)
+{
+    <a class="collapse-item" href="/Admin/Supplier?supplierID=@item.ID&size=&color=">@item.SupplierName</a>
+}
+

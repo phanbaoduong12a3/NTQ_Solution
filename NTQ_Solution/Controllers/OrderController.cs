@@ -35,7 +35,6 @@ namespace NTQ_Solution.Controllers
                     var product = OrderDao.findProductOrder(productName, size, color);
                     int productID = product.ID;
                     bool checkProductID = OrderDao.checkProductID(productID);
-                    int Size = int.Parse(size);
                     var cart = Session[CartSession];
                     var list = new List<OrderModel>();
                     if (!checkProductID)
@@ -49,7 +48,7 @@ namespace NTQ_Solution.Controllers
                             Status = 1,
                             Count = 1,
                             Color = product.Color,
-                            Size = Size
+                            Size = product.Size
                         };
                         OrderDao.AddNewOrder(Order);
                         var model = OrderDao.convertOrderModel(Order, size, color);
@@ -217,18 +216,20 @@ namespace NTQ_Solution.Controllers
                 ViewBag.listSize = productDao.listsize();
                 var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                 var cart = Session[CartSession];
-                if(cart != null)
-                {
-                    ViewBag.cart = "Yes";
-                }
-                else
-                {
-                    ViewBag.cart = "No";
-                }
+                
                 if (session != null)
                 {
                     var userID = session.UserID;
                     var model = OrderDao.OrderDemo(userID, page, pageSize);
+                    List<OrderModel> list = new List<OrderModel>();
+                    if(model != null)
+                    {
+                        foreach(var item in model)
+                        {
+                            list.Add(item);
+                        }
+                        Session[CartSession] = list;
+                    }
                     double? total=0;
                     foreach(var item in model)
                     {
@@ -253,8 +254,14 @@ namespace NTQ_Solution.Controllers
         {
             for(int i = 0; i<OrderId.Count;i++)
             {
+                if (productCount[i] == "")
+                {
+                    TempData["success"] = "So luong khong duoc de trong";
+                    return RedirectToAction("OrderDemo", "Order");
+                }
                 OrderDao.UpdateOrderCount(OrderId[i], productCount[i]);
             }
+            TempData["success"] = "Cap nhat gio hang thanh cong";
             return RedirectToAction("OrderDemo", "Order");
         }
 

@@ -61,27 +61,30 @@
                                             <td>
                                                 <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                             </td>
-                                            @foreach (var size in listSize)
-                                            {
-
-                                                if (item.Size == size.ID)
+                                            <td>
+                                                @foreach (var size in listSize)
                                                 {
-                                                    <td>
+
+                                                    if (item.Size == size.ID)
+                                                    {
+
                                                         @size.SizeName
-                                                    </td>
+
+                                                    }
                                                 }
-                                            }
-
-                                            @foreach (var color in listColor)
-                                            {
-
-                                                if (item.Color == color.ID)
+                                            </td>
+                                            <td>
+                                                @foreach (var color in listColor)
                                                 {
-                                                    <td>
+
+                                                    if (item.Color == color.ID)
+                                                    {
+
                                                         @color.ColorName
-                                                    </td>
+
+                                                    }
                                                 }
-                                            }
+                                            </td>
                                             <td style="text-align:center">@item.Count</td>
                                             <td style="text-align:center">@(item.CreateAt == null ? "" : item.CreateAt.Value.ToString("dd/MM/yyyy"))</td>
 

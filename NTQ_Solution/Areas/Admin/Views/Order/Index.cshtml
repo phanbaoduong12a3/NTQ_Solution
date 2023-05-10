@@ -60,7 +60,7 @@
                                         using (Html.BeginForm("ConfirmOrder", "Order", FormMethod.Post))
                                         {
                                             <form>
-                                                <input name="userid" value="@session.UserID" hidden/>
+                                                <input name="userid" value="@session.UserID" hidden />
                                                 <input name="OrderId" value="@item.ID" hidden />
                                                 <input name="color" value="@item.Color" hidden />
                                                 <input name="size" value="@item.Size" hidden />
@@ -70,26 +70,29 @@
                                                 <td>
                                                     <img style="border: 1px solid #ddd; border-radius: 4px; padding: 5px; width: 150px; " src="@item.Image" />
                                                 </td>
-                                                @foreach (var size in listSize)
-                                                {
-                                                    if(item.Size == size.ID)
+                                                <td>
+                                                    @foreach (var size in listSize)
                                                     {
-                                                        <td>
-                                                            @size.SizeName
-                                                        </td>
-                                                    }
-                                                }
+                                                        if (item.Size == size.ID)
+                                                        {
 
-                                                @foreach (var color in listColor)
-                                                {
-                                                    
-                                                    if(item.Color == color.ID)
-                                                    {
-                                                        <td>
-                                                            @color.ColorName
-                                                        </td>
+                                                            @size.SizeName
+
+                                                        }
                                                     }
-                                                }
+                                                </td>
+                                                <td>
+                                                    @foreach (var color in listColor)
+                                                    {
+
+                                                        if (item.Color == color.ID)
+                                                        {
+
+                                                            @color.ColorName
+
+                                                        }
+                                                    }
+                                                </td>
                                                 <td>@item.Price</td>
                                                 <td>
                                                     @item.Count
