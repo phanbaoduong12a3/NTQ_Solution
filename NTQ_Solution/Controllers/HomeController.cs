@@ -1,5 +1,6 @@
 ﻿using DataLayer.Dao;
 using DataLayer.EF;
+using DataLayer.ViewModel;
 using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace NTQ_Solution.Controllers
 {
     public class HomeController : Controller
     {
+        private const string CartSession = "CartSession";
         ProductData productData ;
         ReviewData reviewData ;
         OrderData orderData ;
@@ -30,7 +32,7 @@ namespace NTQ_Solution.Controllers
             try
             {
                 ViewBag.SearchString = searchString;
-                var model = productData.ListProductOnSale(trending, searchString, page, pageSize);
+                var model = productData.ListProductOnSale("", searchString, page, pageSize);
                 ViewBag.NewProductModel = productData.ListNewProduct(5);
                 ViewBag.HotProductModel = productData.ListHotProduct(3);
                 ViewBag.PopularProductModel = productData.ListNewProduct(2);
@@ -113,12 +115,28 @@ namespace NTQ_Solution.Controllers
         {
             var session = (UserLogin)Session[CommonConstant.USER_SESSION];
             int count = 0;
-
+            /*if(session != null)
+            {
+                
+            }*/
             if(session != null)
             {
                 count = productData.CartCount(session.UserID);
+                ViewBag.count = count;
             }
-            ViewBag.count = count;
+            else
+            {
+                var cart = Session["CartSession"];
+                if (cart != null)
+                {
+                    var list = (List<OrderModel>)cart;
+                    ViewBag.count = list.Count;
+                }
+                else
+                {
+                    ViewBag.count = count;
+                }
+            }
             return PartialView();
         }
     }

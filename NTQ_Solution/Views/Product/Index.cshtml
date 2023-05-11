@@ -4,65 +4,92 @@
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var hotProduct = (List<DataLayer.EF.Product>)ViewBag.HotProduct;
+    var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
+    var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
 }
+@using (Html.BeginForm("Index", "Product", FormMethod.Get))
+            {
+                <form>
 
-<div class="main">
-    <div class="container">
-        <ul class="breadcrumb">
-            <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
-            <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
-        </ul>
-        <!-- BEGIN SIDEBAR & CONTENT -->
-        <div class="row margin-bottom-40">
-            <!-- BEGIN SIDEBAR -->
-            <div class="sidebar col-md-3 col-sm-5">
-                <ul class="list-group margin-bottom-25 sidebar-menu">
-                    @{ Html.RenderAction("ProductCategory", "Product");}
+                    <div class="main">
+                        <div class="container">
+                            <ul class="breadcrumb">
+                                <li>@Html.ActionLink("Trang chủ", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Sản phẩm", "Index", "Product")</li>
+                            </ul>
+                            <!-- BEGIN SIDEBAR & CONTENT -->
+                            <div class="row margin-bottom-40">
+                                <!-- BEGIN SIDEBAR -->
+                                <div class="sidebar col-md-3 col-sm-5">
+                                    <ul class="list-group margin-bottom-25 sidebar-menu">
+                                        @{ Html.RenderAction("ProductCategory", "Product");}
 
-                </ul>
-                <div class="sidebar-products clearfix">
-                    <h2>Sản phẩm hot</h2>
-                    @foreach (var item in hotProduct)
-                    {
-                        var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
-                        <div class="item">
-                            <a href="@url"><img src="@item.Image" alt="@item.ProductName"></a>
-                            <h3><a href="@url">@item.ProductName</a></h3>
-                            <div class="price">@item.Price<span>đ</span></div>
-                        </div>
-                    }
+                                    </ul>
+                                    <div class="sidebar-products clearfix">
+                                        <h2>Sản phẩm hot</h2>
+                                        @foreach (var item in hotProduct)
+                                        {
+                                            var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                                            <div class="item">
+                                                <a href="@url"><img src="@item.Image" alt="@item.ProductName" ></a>
+                                                <h3><a href="@url">@item.ProductName</a></h3>
+                                                <div class="price">@item.Price<span>đ</span></div>
+                                            </div>
+                                        }
 
-                </div>
-            </div>
-            <!-- END SIDEBAR -->
-            <!-- BEGIN CONTENT -->
-            <div class="col-md-9 col-sm-7">
-                
-                <!-- BEGIN PRODUCT LIST -->
-                <div class="row product-list">
-                    @foreach (var item in Model)
-                    {
-                        <!-- PRODUCT ITEM START -->
-                        var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="product-item" style="height:400px">
-                                <div class="pi-img-wrapper">
-                                    <img src="@item.Image" class="img-responsive" alt="@item.ProductName" >
-                                    <div>
-                                        <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
-                                        <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
                                     </div>
                                 </div>
-                                <h3><a style="padding: 10px 0" href="@url">@item.ProductName</a></h3>
-                                <div class="pi-price">@item.Price<span>đ</span></div>
-                                <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                                <!-- END SIDEBAR -->
+                                <!-- BEGIN CONTENT -->
+                                <div class="col-md-9 col-sm-7">
+                                    <div class="row list-view-sorting clearfix">
+                                        <div class="col-md-2 col-sm-2 list-view">
+                                            <a href="javascript:;"><i class="fa fa-th-large"></i></a>
+                                            <a href="javascript:;"><i class="fa fa-th-list"></i></a>
+                                        </div>
+                                        <div class="col-md-10 col-sm-10">
+                                            <div class="pull-right">
+                                                <button class="btn btn-primary" type="submit">Tìm kiếm</button>
+                                            </div>
+                                            <div class="pull-right">
+                                                <label class="control-label">Giá bán</label>
+                                                <select class="form-control input-sm" name="price">
+                                                    <option value=""></option>
+                                                    <option value="0" style="text-align:center">0 <= 250000</option>
+                                                    <option value="250000" style="text-align:center">250000 <= 350000</option>
+                                                    <option value="350000" style="text-align:center">350000 <= 500000</option>
+                                                    <option value="500000" style="text-align:center"> > 500000</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- BEGIN PRODUCT LIST -->
+                                    <div class="row product-list">
+                                        @foreach (var item in Model)
+                                        {
+                                            <!-- PRODUCT ITEM START -->
+                                            var url = "/chi-tiet/" + item.Slug + "-" + item.ID;
+                                            <div class="col-md-4 col-sm-6 col-xs-12">
+                                                <div class="product-item" style="height:400px">
+                                                    <div class="pi-img-wrapper">
+                                                        <img src="@item.Image" class="img-responsive" alt="@item.ProductName" style="height:215px">
+                                                        <div>
+                                                            <a href="@item.Image" class="btn btn-default fancybox-button">Zoom</a>
+                                                            <a href="@url" class="btn btn-default fancybox-fast-view">View</a>
+                                                        </div>
+                                                    </div>
+                                                    <h3><a style="padding: 10px 0" href="@url">@item.ProductName</a></h3>
+                                                    <div class="pi-price">@item.Price<span>đ</span></div>
+                                                    <a href="@url" class="btn btn-default add2cart">Thêm vào giỏ hàng</a>
+                                                </div>
+                                            </div>
+                                        }
+                                        <!-- PRODUCT ITEM END -->
+                                    </div>
+                                </div>
                             </div>
+                            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString , @price = ViewBag.Price}))
                         </div>
-                    }
-                    <!-- PRODUCT ITEM END -->
-                </div>
-            </div>
-        </div>
-        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString }))
-    </div>
-</div>
+                    </div>
+                </form>
+            }

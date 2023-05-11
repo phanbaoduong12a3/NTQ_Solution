@@ -46,7 +46,7 @@ namespace DataLayer.Dao
         /// <returns></returns>
         public List<Product> ListNewProduct(int top)
         {
-            return db.Products.OrderByDescending(x => x.Price).Take(top).ToList();
+            return db.Products.OrderByDescending(x => x.CreateAt).Take(top).ToList();
         }
         /// <summary>
         /// Danh sashc sản phẩm hot
@@ -127,7 +127,7 @@ namespace DataLayer.Dao
         {
             try
             {
-                    IQueryable<Product> product = db.Products;
+                    IQueryable<Product> product = db.Products.Where(x=>x.CategoryID == categoryID);
                     if (!string.IsNullOrEmpty(searchString))
                     {
                     product = product.Where(x => x.ProductName.Contains(searchString));
@@ -149,12 +149,12 @@ namespace DataLayer.Dao
                     }
                 
                     int categoryid = categoryID;
-                    if (categoryid == 6)
+                    if (categoryid == 3)
                     {
 
-                        return product.Where(x => x.CategoryID == 6).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
+                        return product.Where(x => x.Size == 0 || x.Color == 0).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
                     }
-                    return product.Where(x => x.Color != 0 && x.Size != 0 && x.CategoryID == categoryid).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
+                    return product.Where(x => x.Color != 0 && x.Size != 0 ).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
 
             }
             catch (Exception ex)
@@ -172,19 +172,34 @@ namespace DataLayer.Dao
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Product> ListProductOnSale(string trending, string searchString, int page, int pageSize)
+        public IEnumerable<Product> ListProductOnSale(string price, string searchString, int page, int pageSize)
         {
             try
             {
                 IQueryable<Product> product = db.Products.Where(x => x.Count > 0);
-                if (!string.IsNullOrEmpty(searchString) || !string.IsNullOrEmpty(trending))
+                if (!string.IsNullOrEmpty(searchString))
                 {
                     product = product.Where(x => x.ProductName.Contains(searchString));
-                    if (trending != null)
+                }
+                if(!string.IsNullOrEmpty(price))
+                {
+                    int Price = int.Parse(price);
+                    if(Price == 0)
                     {
-                        product = product.Where(x => x.Trending == true);
+                        product = product.Where(x => x.Price > 0 && x.Price <= 250000);
                     }
-                    return product.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == 0 && x.Size == 0).ToPagedList(page, pageSize);
+                    else if(Price == 250000)
+                    {
+                        product = product.Where(x => x.Price > 250000 && x.Price <= 350000);
+                    }
+                    else if(Price == 350000)
+                    {
+                        product = product.Where(x => x.Price > 350000 && x.Price <= 500000);
+                    }
+                    else
+                    {
+                        product = product.Where(x => x.Price > 500000);
+                    }
                 }
                 return product.OrderByDescending(x => x.Price).Where(x => x.Status == 1 && x.Color == 0 && x.Size == 0).ToPagedList(page, pageSize);
             }

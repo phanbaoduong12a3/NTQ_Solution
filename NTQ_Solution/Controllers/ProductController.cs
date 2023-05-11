@@ -15,12 +15,15 @@ namespace NTQ_Solution.Controllers
             productData= new ProductData();
         }
         // GET: Product
-        public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 9)
+        public ActionResult Index( string price, string searchString, int page = 1, int pageSize = 9)
         {
             try
             {
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
                 ViewBag.SearchString = searchString;
-                var model = productData.ListProductOnSale(trending, searchString, page, pageSize);
+                ViewBag.Price = price;
+                var model = productData.ListProductOnSale(price, searchString, page, pageSize);
                 ViewBag.HotProduct = productData.ListNewProduct(4);
                 return View(model);
             }

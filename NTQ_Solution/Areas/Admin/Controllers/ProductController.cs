@@ -17,7 +17,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
         // GET: Admin/Product
         
-        public ActionResult Index(int categoryID, string size, string color,  string supplier, string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(int categoryID, string size, string color,  string supplierID, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
@@ -27,16 +27,16 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 ViewBag.SearchString = searchString;
                 ViewBag.Size = size;
                 ViewBag.Color = color;
-                ViewBag.Supplier = supplier;
+                ViewBag.Supplier = supplierID;
                 ViewBag.Category = categoryID;
-                var model = productData.ListAllPagingProduct(categoryID, size, color,  supplier, searchString, page, pageSize);
+                var model = productData.ListAllPagingProduct(categoryID, size, color,  supplierID, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
 
         [HttpGet]
-        public ActionResult CreateProduct()
+        public ActionResult CreateProduct(int id)
         {
             var listSize = productData.listsize();
             SelectList sizeList = new SelectList(listSize, "ID", "SizeName");
@@ -50,6 +50,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             ViewBag.CategoryList = cateList;
             SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
             ViewBag.SupplierList = supList;
+            ViewBag.Category = id;
             return View();
         }
 

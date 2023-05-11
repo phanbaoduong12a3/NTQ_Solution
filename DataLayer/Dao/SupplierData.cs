@@ -62,7 +62,7 @@ namespace DataLayer.Dao
                 if (!string.IsNullOrEmpty(color))
                 {
                     int Color = int.Parse(color);
-                    productModels = productModels.Where(x => x.Color == Color);
+                    productModels = productModels.Where(x => x.Size == Color);
                 }
                 return productModels.Where(x=>x.Color != 0 && x.Size != 0).OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
             }

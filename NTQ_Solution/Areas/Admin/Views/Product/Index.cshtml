@@ -19,33 +19,34 @@
                 <div class="card-body">
                     @using (Html.BeginForm("Index", "Product", FormMethod.Get))
                     {
-                        <span>Size mặt kính</span>
-                        <select name="size">
-                            @foreach (var item in listSize)
-                            {
-                                <option value="@item.ID">@item.SizeName</option>
-                            }
-                        </select>
-                        <span>Màu sắc</span>
-                        <select name="color">
-                            @foreach (var item in listColor)
-                            {
-                                <option value="@item.ID">@item.ColorName</option>
-                            }
-                        </select>
-                        <span>Nhà cung cấp</span>
-                        <select name="supplier">
-                            <option></option>
-                            @foreach (var item in listSupplier)
-                            {
-                                <option value="@item.ID">@item.SupplierName</option>
-                            }
-                        </select>
-
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <span>Size mặt kính</span>
+                            <select name="size">
+                                @foreach (var item in listSize)
+                                {
+                                    <option value="@item.ID">@item.SizeName</option>
+                                }
+                            </select>
+                            <span>Màu sắc</span>
+                            <select name="color">
+                                @foreach (var item in listColor)
+                                {
+                                    <option value="@item.ID">@item.ColorName</option>
+                                }
+                            </select>
+                            <span>Nhà cung cấp</span>
+                            <select name="supplier">
+                                <option></option>
+                                @foreach (var item in listSupplier)
+                                {
+                                    <option value="@item.ID">@item.SupplierName</option>
+                                }
+                            </select>
+
+                            <input type="text" name="categoryID" value="@ViewBag.Category" hidden />
+
 
                             <div class="input-group" style="margin-top:20px;margin-bottom:20px">
-                                <input type="text" name="categoryID" value="@ViewBag.categoryID" hidden />
                                 <input type="text" value="@ViewBag.SearchString" class="form-control bg-light border-0 small" placeholder="search" name="searchString"
                                        aria-label="Search" aria-describedby="basic-addon2" style="margin-right:5px">
                                 <div class="input-group-append">
@@ -120,41 +121,41 @@
                                                     }
                                                 }
                                             </td>
-                                                <td class="text-center">@item.NumberViews</td>
-                                                <td>@item.Count</td>
-                                                <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Trending == true ? "Hot Trend" : "No Trend")</a></td>
-                                                @if (item.SupplierID == 1)
+                                            <td class="text-center">@item.NumberViews</td>
+                                            <td>@item.Count</td>
+                                            <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Trending == true ? "Hot Trend" : "No Trend")</a></td>
+                                            @if (item.SupplierID == 1)
+                                            {
+                                                <td>Gucci</td>
+                                            }
+                                            else
+                                            {
+                                                <td>Rolex</td>
+                                            }
+                                            <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Count > 0 ? "Còn hàng" : "Hết hàng")</a></td>
+                                            <td>
+
+                                                @if (session.Role == 1)
                                                 {
-                                                    <td>Gucci</td>
+                                                    <a class="btn btn-success" style="text-decoration:none" href="/Admin/Product/UpdateProduct/@item.ID"><i class="fa fa-edit">Sửa</i></a>
+                                                    <a class="btn btn-danger" style="text-decoration:none" href="/Admin/Product/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
+
                                                 }
-                                                else
-                                                {
-                                                    <td>Rolex</td>
-                                                }
-                                                <td><a style="text-decoration:none" href="#" class="btn-active" data-id="@item.ID">@(item.Count > 0 ? "Còn hàng" : "Hết hàng")</a></td>
-                                                <td>
+                                            </td>
 
-                                                    @if (session.Role == 1)
-                                                    {
-                                                        <a class="btn btn-success" style="text-decoration:none" href="/Admin/Product/UpdateProduct/@item.ID"><i class="fa fa-edit">Sửa</i></a>
-                                                        <a class="btn btn-danger" style="text-decoration:none" href="/Admin/Product/Delete/@item.ID" onclick="return confirm('Ban co chac muon xoa?')"><i class="fa fa-trash">Xóa</i></a>
-
-                                                    }
-                                                </td>
-
-                                            </tr>
+                                        </tr>
                                     }
                                 }
 
                             </tbody>
                         </table>
-                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString, @color = ViewBag.Color, @size = ViewBag.Size, @supplier = ViewBag.Supplier, @categoryID = ViewBag.Category}))
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @searchString = ViewBag.SearchString, @color = ViewBag.Color, @size = ViewBag.Size, @supplierID = ViewBag.Supplier, @categoryID = ViewBag.Category }))
                     </div>
                     <div class="input-group-append">
 
                         @if (session.Role == 1)
                         {
-                            <a class="btn btn-primary" href="/Admin/Product/CreateProduct">Thêm sản phẩm</a>
+                            <a class="btn btn-primary" href="/Admin/Product/CreateProduct/@ViewBag.Category">Thêm sản phẩm</a>
                         }
 
                     </div>

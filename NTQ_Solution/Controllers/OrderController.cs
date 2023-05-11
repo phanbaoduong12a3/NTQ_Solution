@@ -1,9 +1,11 @@
 ﻿using DataLayer.Dao;
 using DataLayer.EF;
 using DataLayer.ViewModel;
+using Microsoft.AspNetCore.Mvc;
 using NTQ_Solution.Common;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.ModelBinding;
@@ -14,6 +16,7 @@ namespace NTQ_Solution.Controllers
     public class OrderController : Controller
     {
         private const string CartSession = "CartSession";
+        public double TyGiaUSD = 23000;
         OrderData orderData;
         ProductData productData;
         public OrderController()
@@ -299,7 +302,6 @@ namespace NTQ_Solution.Controllers
             TempData["success"] = "Cap nhat gio hang thanh cong";
             return RedirectToAction("OrderDemo", "Order");
         }
-
 
 
     }
