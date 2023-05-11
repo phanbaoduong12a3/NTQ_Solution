@@ -154,6 +154,7 @@
     <Compile Include="Common\CommonConstant.cs" />
     <Compile Include="Common\Encryptor.cs" />
     <Compile Include="Common\UserLogin.cs" />
+    <Compile Include="Controllers\ForgotPasswordController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -2633,6 +2634,7 @@
     <Content Include="assests\client\js\startstop-slider.js" />
     <Content Include="assests\client\js\wow.js" />
     <Content Include="assests\client\js\wow.min.js" />
+    <Content Include="assests\client\teamplate\newpassword.html" />
     <Content Include="assests\dist\css\latform-style-1.css" />
     <Content Include="assests\dist\css\latform-style-1.min.css" />
     <Content Include="assests\dist\css\latform-style-10.css" />
@@ -3387,6 +3389,7 @@
     <Content Include="Views\Product\Category.cshtml" />
     <Content Include="Views\Order\OrderDemo.cshtml" />
     <Content Include="Views\Home\HeaderCart.cshtml" />
+    <Content Include="Views\ForgotPassword\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3410,6 +3413,10 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{B2760F44-0299-4A5A-94AD-BEABB48F7E98}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{e9642883-f72f-4189-9aa4-f34892693f1c}</Project>
       <Name>DataLayer</Name>

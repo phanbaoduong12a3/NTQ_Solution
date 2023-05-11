@@ -17,7 +17,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         }
         // GET: Admin/Product
         
-        public ActionResult Index(string size, string color, string categoryID, string supplier, string searchString, int page = 1, int pageSize = 5)
+        public ActionResult Index(int categoryID, string size, string color,  string supplier, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 ViewBag.Color = color;
                 ViewBag.Supplier = supplier;
                 ViewBag.Category = categoryID;
-                var model = productData.ListAllPagingProduct(size, color, categoryID, supplier, searchString, page, pageSize);
+                var model = productData.ListAllPagingProduct(categoryID, size, color,  supplier, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }

@@ -26,7 +26,6 @@
                         {
                             if (i == 0)
                             {
-                                <!-- BEGIN CHECKOUT -->
                                 <div id="checkout" class="panel panel-default">
                                     <div class="panel-heading">
                                         <h2 class="panel-title">
@@ -50,7 +49,7 @@
                                                 </div>
                                                 <h4 class="mb-3">Hình thức vận chuyển</h4>
                                                 <div class="custom-control custom-radio">
-                                                    
+
                                                     <div class="d-block my-3">
                                                         <div class="custom-control custom-radio">
                                                             <input id="ship1" name="ship" type="radio" class="custom-control-input" required=""
@@ -62,7 +61,7 @@
                                                 </div>
                                                 <div class="col-md-6 col-sm-6">
                                                     <h3>Thông tin khách hàng</h3>
-                                                    <input type="text" class="form-control" name="id" id="kh_diachi" value="@Model[i].ID" hidden/>
+                                                    <input type="text" name="id"  value="@Model[i].ID" hidden />
                                                     <div class="form-group">
                                                         <label for="kh_ten">Họ tên</label>
                                                         <input type="text" class="form-control" name="kh_ten" id="kh_ten"
@@ -85,96 +84,100 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
                                     </div>
-                                </div>
 
+
+                                    <!-- END CHECKOUT -->
+                                    <!-- END PAYMENT ADDRESS -->
+                                    <!-- END PAYMENT METHOD -->
+                                    <!-- BEGIN CONFIRM -->
+                                    <div id="confirm" class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h2 class="panel-title">
+                                                <a data-toggle="collapse" data-parent="#checkout-page" href="#confirm-content" class="accordion-toggle">
+                                                    Thông tin đơn hàng
+                                                </a>
+                                            </h2>
+                                        </div>
+                                        <div id="confirm-content" class="panel-collapse collapse">
+                                            <div class="panel-body row">
+                                                <div class="col-md-12 clearfix">
+                                                    <div class="table-wrapper-responsive">
+                                                        <table>
+                                                            <tr>
+                                                                <th class="checkout-image">Hình ảnh</th>
+                                                                <th>Màu sắc</th>
+                                                                <th class="checkout-quantity">Size mặt kính</th>
+                                                                <th>Số lượng</th>
+                                                                <th class="checkout-price">Tổng tiền</th>
+                                                            </tr>
+                                                            @foreach (var item in Model)
+                                                            {
+                                                                <tr>
+                                                                    <td class="checkout-image">
+                                                                        <a href="javascript:;"><img src="@item.Image" alt="@item.ProductName"></a>
+                                                                    </td>
+                                                                    <td class="text-muted">
+                                                                        @foreach (var color in listColor)
+                                                                        {
+
+                                                                            if (item.Color == color.ID)
+                                                                            {
+
+                                                                                @color.ColorName
+
+                                                                            }
+                                                                        }
+                                                                    </td>
+                                                                    <td class="text-muted">
+                                                                        @foreach (var size in listSize)
+                                                                        {
+
+                                                                            if (item.Size == size.ID)
+                                                                            {
+
+                                                                                @size.SizeName
+
+                                                                            }
+                                                                        }
+                                                                    </td>
+
+                                                                    <td>@item.Count</td>
+                                                                    <td>@item.Price</td>
+                                                                </tr>
+                                                            }
+                                                        </table>
+                                                    </div>
+                                                    <div class="checkout-total-block">
+                                                        <ul>
+
+                                                            <li class="checkout-total-price">
+                                                                <em>Tổng tiền:</em>
+                                                                <strong class="price"><span>@ViewBag.TongTien</span>đ</strong>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="clearfix"></div>
+                                                    <button class="btn btn-primary pull-right" type="submit" id="button-confirm">Đặt hàng</button>
+                                                    <a class="btn btn-default" href="/Order/OrderDemo">Quay lại</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END CONFIRM -->
+                                </div>
                             }
                         }
-                        <!-- END CHECKOUT -->
-                        <!-- END PAYMENT ADDRESS -->
-                        <!-- END PAYMENT METHOD -->
-                        <!-- BEGIN CONFIRM -->
-                        <div id="confirm" class="panel panel-default">
-                            <div class="panel-heading">
-                                <h2 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#checkout-page" href="#confirm-content" class="accordion-toggle">
-                                        Thông tin đơn hàng
-                                    </a>
-                                </h2>
-                            </div>
-                            <div id="confirm-content" class="panel-collapse collapse">
-                                <div class="panel-body row">
-                                    <div class="col-md-12 clearfix">
-                                        <div class="table-wrapper-responsive">
-                                            <table>
-                                                <tr>
-                                                    <th class="checkout-image">Hình ảnh</th>
-                                                    <th>Màu sắc</th>
-                                                    <th class="checkout-quantity">Size mặt kính</th>
-                                                    <th>Số lượng</th>
-                                                    <th class="checkout-price">Tổng tiền</th>
-                                                </tr>
-                                                @foreach (var item in Model)
-                                                {
-                                                    <tr>
-                                                        <td class="checkout-image">
-                                                            <a href="javascript:;"><img src="@item.Image" alt="@item.ProductName"></a>
-                                                        </td>
-                                                        @foreach (var color in listColor)
-                                                        {
-
-                                                            if (item.Color == color.ID)
-                                                            {
-                                                                <td class="text-muted">
-                                                                    @color.ColorName
-                                                                </td>
-                                                            }
-                                                        }
-                                                        @foreach (var size in listSize)
-                                                        {
-
-                                                            if (item.Size == size.ID)
-                                                            {
-                                                                <td class="text-muted">
-                                                                    @size.SizeName
-                                                                </td>
-                                                            }
-                                                        }
-
-                                                        <td>@item.Count</td>
-                                                        <td>@item.Price</td>
-                                                    </tr>
-                                                }
-                                            </table>
-                                        </div>
-                                        <div class="checkout-total-block">
-                                            <ul>
-
-                                                <li class="checkout-total-price">
-                                                    <em>Tổng tiền:</em>
-                                                    <strong class="price"><span>@ViewBag.TongTien</span>đ</strong>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <button class="btn btn-primary pull-right" type="submit" id="button-confirm">Đặt hàng</button>
-                                        <a class="btn btn-default" href="/Order/OrderDemo">Quay lại</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- END CONFIRM -->
+                        <!-- BEGIN CHECKOUT -->
+                        <!-- END CHECKOUT PAGE -->
                     </div>
-                            }
-                        }
-
-                    <!-- END CHECKOUT PAGE -->
-                </div>
                 <!-- END CONTENT -->
             </div>
             <!-- END SIDEBAR & CONTENT -->
         </div>
     </div>
+        </div>
     </form>
 }
 

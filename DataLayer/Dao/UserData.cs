@@ -328,6 +328,11 @@ namespace DataLayer.Dao
                 throw;
             }
         }
-
+        public void UpdateNewPassword(User user)
+        {
+            var userupdate = db.Users.FirstOrDefault(x=>x.ID == user.ID);
+            userupdate.PassWord = "Aa12345678!";
+            db.SaveChanges();
+        }
     }
 }

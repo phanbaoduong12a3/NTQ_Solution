@@ -10,8 +10,10 @@ using System.Web.SessionState;
 
 namespace NTQ_Solution.Controllers
 {
+    
     public class LoginController : Controller
     {
+        private const string CartSession = "CartSession";
 
         UserData userData ;
         public LoginController()
@@ -79,6 +81,7 @@ namespace NTQ_Solution.Controllers
             try
             {
                 Session[CommonConstant.USER_SESSION] = null;
+                Session[CartSession] = null;
                 return RedirectToAction("Index", "Login");
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }

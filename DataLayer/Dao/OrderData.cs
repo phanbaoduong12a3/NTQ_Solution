@@ -57,9 +57,9 @@ namespace DataLayer.Dao
             try
             {
                 int Size = 0;
-                if (size != null) int.Parse(size);
+                if (size != null) Size = int.Parse(size);
                 int Color = 0;
-                if (color != null) int.Parse(color);
+                if (color != null) Color = int.Parse(color);
                 var product = db.Products.Where(x => x.ProductName == productName && x.Size == Size && x.Color == Color).FirstOrDefault();
                 return product;
             }
@@ -82,34 +82,28 @@ namespace DataLayer.Dao
         public OrderModel convertOrderModel(Order Order, string color, string size)
         {
             int Size = 0;
-            if (size != null) int.Parse(size);
+            if (size != null) Size = int.Parse(size);
             int Color = 0;
-            if (color != null) int.Parse(color);
+            if (color != null) Color = int.Parse(color);
             var orderModels = (from a in db.Orders
-                         join b in db.Users
-                         on a.UserID equals b.ID
-                         join c in db.Products
-                         on a.ProductsID equals c.ID
-                         where a.ID == Order.ID
-                         select new OrderModel
-                         {
-                             ID = a.ID,
-                             Address = b.Address,
-                             Phone = b.Phone,
-                             Email = b.Email,
-                             Color = Color,
-                             Size = Size,
-                             UserName = b.UserName,
-                             ProductName = c.ProductName,
-                             Image = c.Image,
-                             Price = c.Price,
-                             Count = Order.ID,
-                             CreateAt = a.CreateAt,
-                             UpdateAt = a.UpdateAt,
-                             DeleteAt = a.DeleteAt,
-                             Status = a.Status,
-                             Payment = ""
-                         });
+                               join b in db.Products
+                               on a.ProductsID equals b.ID
+                               where a.UserID == Order.UserID
+                               select new OrderModel
+                               {
+                                   ID = a.ID,
+                                   ProductName = b.ProductName,
+                                   Color = Color,
+                                   CreateAt = a.CreateAt,
+                                   UpdateAt = a.UpdateAt,
+                                   DeleteAt = a.DeleteAt,
+                                   Size = Size,
+                                   Image = b.Image,
+                                   Price = b.Price,
+                                   Count = a.Count,
+                                   Status = a.Status,
+                                   ProductCount = b.Count
+                               });
             return orderModels.FirstOrDefault(x=>x.ID == Order.ID);
         }
         /// <summary>
@@ -354,6 +348,31 @@ namespace DataLayer.Dao
         {
             try
             {
+                if(userID == 0)
+                {
+                    var model = (from a in db.Orders
+                                 join b in db.Products
+                                 on a.ProductsID equals b.ID
+                                 where a.UserID == userID
+                                 select new OrderModel
+                                 {
+                                     ID = a.ID,
+                                     ProductName = b.ProductName,
+                                     Color = b.Color,
+                                     CreateAt = a.CreateAt,
+                                     UpdateAt = a.UpdateAt,
+                                     DeleteAt = a.DeleteAt,
+                                     Size = b.Size,
+                                     Image = b.Image,
+                                     Price = b.Price,
+                                     Count = a.Count,
+                                     Status = a.Status,
+                                     ProductCount = b.Count
+                                 }
+                                 );
+                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 1).ToPagedList(page, pageSize);
+
+                }
                 var orderModels = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
@@ -387,6 +406,25 @@ namespace DataLayer.Dao
                 Console.WriteLine(ex.Message);
                 throw;
             }
+        }
+        public void UpdateOrderUser(int userID)
+        {
+           
+            var order = db.Orders.Where(x => x.UserID == 0).ToList();
+            for(int i=0; i<order.Count; i++)
+            {
+                order[i].UserID = userID;
+            }
+            db.SaveChanges();
+        }
+        public void Remove()
+        {
+            var model = db.Orders.Where(x => x.UserID == 0);
+            foreach(var item in model)
+            {
+                db.Orders.Remove(item);
+            }
+            db.SaveChanges();
         }
     }
 }

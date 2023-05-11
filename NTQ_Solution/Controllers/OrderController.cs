@@ -14,11 +14,11 @@ namespace NTQ_Solution.Controllers
     public class OrderController : Controller
     {
         private const string CartSession = "CartSession";
-        OrderData orderData ;
-        ProductData productData ;
-        public OrderController() 
+        OrderData orderData;
+        ProductData productData;
+        public OrderController()
         {
-            orderData= new OrderData();
+            orderData = new OrderData();
             productData = new ProductData();
         }
         public ActionResult AddOrder(string productName, string color, string size)
@@ -26,48 +26,41 @@ namespace NTQ_Solution.Controllers
             try
             {
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-                if (sessionUser == null)
+                var product = orderData.findProductOrder(productName, size, color);
+                int productID = product.ID;
+                bool checkProductID = orderData.checkProductID(productID);
+                var cart = Session[CartSession];
+                var list = new List<OrderModel>();
+                if (!checkProductID)
                 {
-                    return RedirectToAction("Index", "Login");
-                }
-                else
-                {
-                    var product = orderData.findProductOrder(productName, size, color);
-                    int productID = product.ID;
-                    bool checkProductID = orderData.checkProductID(productID);
-                    var cart = Session[CartSession];
-                    var list = new List<OrderModel>();
-                    if (!checkProductID)
+                    var Order = new Order
                     {
-                        var userID = sessionUser.UserID;
-                        var Order = new Order
-                        {
-                            ProductsID = productID,
-                            UserID = userID,
-                            CreateAt = DateTime.Now,
-                            Status = 1,
-                            Count = 1,
-                            Color = product.Color,
-                            Size = product.Size
-                        };
-                        orderData.AddNewOrder(Order);
-                        var model = orderData.convertOrderModel(Order, size, color);
-                        if(cart != null)
-                        {
-                            list = (List<OrderModel>)cart;
-                            list.Add(model);
-                            Session[CartSession] = list;
-                        }
+                        ProductsID = productID,
+                        CreateAt = DateTime.Now,
+                        UserID = 0,
+                        Status = 1,
+                        Count = 1,
+                        Color = product.Color,
+                        Size = product.Size
+                    };
+                    orderData.AddNewOrder(Order);
+                    var model = orderData.convertOrderModel(Order, size, color);
+                    if (cart != null)
+                    {
+                        list = (List<OrderModel>)cart;
                         list.Add(model);
                         Session[CartSession] = list;
                     }
-                    else
-                    {
-                        orderData.UpdateOrder(productID);
-                    }
-                    TempData["success"] = "Them san pham vao gio hang thanh cong";
-                    return RedirectToAction("OrderDemo", "Order");
+                    list.Add(model);
+                    Session[CartSession] = list;
                 }
+                else
+                {
+                    orderData.UpdateOrder(productID);
+                }
+                TempData["success"] = "Them san pham vao gio hang thanh cong";
+                return RedirectToAction("OrderDemo", "Order");
+
             }
             catch (Exception ex)
             {
@@ -81,6 +74,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
+                Session[CartSession] = null;
                 var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                 ViewBag.listColor = productData.listcolor();
                 ViewBag.listSize = productData.listsize();
@@ -94,7 +88,7 @@ namespace NTQ_Solution.Controllers
                 {
                     return RedirectToAction("Index", "Login");
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -108,7 +102,7 @@ namespace NTQ_Solution.Controllers
             {
                 orderData.Delete(id);
                 TempData["success"] = "Xoa san pham khoi gio hang thanh cong";
-                return RedirectToAction("Index","Order");
+                return RedirectToAction("Index", "Order");
             }
             catch (Exception ex)
             {
@@ -118,12 +112,28 @@ namespace NTQ_Solution.Controllers
         }
         public ActionResult DeleteOrder(int id)
         {
-            try { 
+            try
+            {
                 orderData.DeleteOrder(id);
+                var cart = Session[CartSession];
+                if (cart != null)
+                {
+                    var list = (List<OrderModel>)cart;
+                
+                    for(int i=0; i < list.Count; i++)
+                    {
+                        if (list[i].ID == id)
+                        {
+                            list.Remove(list[i]);
+                        }
+                    }
+                    Session[CartSession] = list;
+                }
+
                 TempData["success"] = "Huy don hang thanh cong";
                 return RedirectToAction("Index", "Order");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
@@ -134,46 +144,43 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-
+                var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
+                if (session == null)
+                {
+                    return RedirectToAction("Index", "Login");
+                }
                 ViewBag.listColor = productData.listcolor();
                 ViewBag.listSize = productData.listsize();
                 var cart = Session[CartSession];
                 var list = new List<OrderModel>();
-                if(cart != null)
+
+                var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
+                var orderModels = orderData.OrderDemo(sessionUser.UserID, 1, 4);
+                foreach (var item in orderModels)
                 {
-                    list = (List<OrderModel>)cart;
+                    list.Add(item);
                 }
-                else
-                {
-                    var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-                    var orderModels = orderData.OrderDemo(sessionUser.UserID,1,4);
-                    foreach(var item in orderModels)
-                    {
-                        list.Add(item);
-                    }
-                    Session[CartSession] = list;
-                }
+                Session[CartSession] = list;
+
                 double? total = 0;
-                foreach(var item in list)
+                foreach (var item in list)
                 {
                     total += item.Price * item.Count;
                 }
                 ViewBag.TongTien = total;
                 return View(list);
-                
-                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
         }
-        public ActionResult Payment(OrderModel orderModel,string payment,string ship)
+        public ActionResult Payment(OrderModel orderModel, string payment, string ship)
         {
             try
             {
-                if(payment == "1")
+                if (payment == "1")
                 {
                     int shipMoney;
                     if (ship == "1")
@@ -188,59 +195,87 @@ namespace NTQ_Solution.Controllers
                     }
                     var cart = Session[CartSession];
                     var list = (List<OrderModel>)cart;
-                    foreach(var item in list)
+                    foreach (var item in list)
                     {
-                        if(item.ID == orderModel.ID)
+                        if (item.ID == orderModel.ID)
                         {
                             item.Phone = orderModel.Phone;
                             item.Address = orderModel.Address;
                         }
                         orderData.PaymentSuccess(item, ship, shipMoney);
                     }
-                    
+
                 }
-                return RedirectToAction("Index","Order");
+                return RedirectToAction("Index", "Order");
             }
-            catch(Exception ex )
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 throw;
             }
-            
+
         }
-        public ActionResult OrderDemo(int page=1, int pageSize = 4)
+        public ActionResult OrderDemo(int page = 1, int pageSize = 4)
         {
             try
             {
+
                 ViewBag.listColor = productData.listcolor();
                 ViewBag.listSize = productData.listsize();
                 var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                 var cart = Session[CartSession];
-                
-                if (session != null)
+                if (cart == null) { orderData.Remove(); }
+                if (session == null)
                 {
-                    var userID = session.UserID;
-                    var orderModels = orderData.OrderDemo(userID, page, pageSize);
-                    List<OrderModel> list = new List<OrderModel>();
-                    if(orderModels != null)
+
+                    var orderModels = orderData.OrderDemo(0, page, pageSize);
+                    if (orderModels != null)
                     {
-                        foreach(var item in orderModels)
+                        double? total = 0;
+                        foreach (var item in orderModels)
                         {
-                            list.Add(item);
+                            total += item.Price * item.Count;
                         }
-                        Session[CartSession] = list;
+                        ViewBag.TongTien = total;
                     }
-                    double? total=0;
-                    foreach(var item in orderModels)
-                    {
-                        total += item.Price * item.Count;
-                    }
-                    ViewBag.TongTien = total;
                     return View(orderModels);
                 }
                 else
                 {
-                    return RedirectToAction("Index", "Login");
+                    var orderdemo = orderData.OrderDemo(session.UserID, page, pageSize);
+                    if (cart == null)
+                    {
+                        if (orderdemo != null) return View(orderdemo);
+                        var orderModel = orderData.OrderDemo(0, page, pageSize);
+                        return View(orderModel);
+                    }
+                    else
+                    {
+                        List<OrderModel> list = new List<OrderModel>();
+                        list = (List<OrderModel>)cart;
+                        for (int i = 0; i < list.Count; i++)
+                        {
+                            orderData.UpdateOrderUser(session.UserID);
+                        }
+                        var orderModels = orderData.OrderDemo(session.UserID, page, pageSize);
+
+                        /*if (orderModels != null)
+                        {
+                            foreach (var item in orderModels)
+                            {
+                                list.Add(item);
+                            }
+                            Session[CartSession] = list;
+                        }*/
+                        double? total = 0;
+                        foreach (var item in orderModels)
+                        {
+                            total += item.Price * item.Count;
+                        }
+                        ViewBag.TongTien = total;
+                        return View(orderModels);
+                    }
+
                 }
 
             }
@@ -252,7 +287,7 @@ namespace NTQ_Solution.Controllers
         }
         public ActionResult UpdateOrder(List<int> OrderId, List<string> productCount)
         {
-            for(int i = 0; i<OrderId.Count;i++)
+            for (int i = 0; i < OrderId.Count; i++)
             {
                 if (productCount[i] == "")
                 {
@@ -265,7 +300,7 @@ namespace NTQ_Solution.Controllers
             return RedirectToAction("OrderDemo", "Order");
         }
 
-                        
+
 
     }
 }

@@ -123,7 +123,7 @@ namespace DataLayer.Dao
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public IEnumerable<Product> ListAllPagingProduct(string size, string color,string categoryID, string supplier, string searchString, int page, int pageSize)
+        public IEnumerable<Product> ListAllPagingProduct(int categoryID,string size, string color, string supplier, string searchString, int page, int pageSize)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace DataLayer.Dao
                         product = product.Where(x => x.SupplierID == supplierModel);
                     }
                 
-                    int categoryid = int.Parse(categoryID);
+                    int categoryid = categoryID;
                     if (categoryid == 6)
                     {
 

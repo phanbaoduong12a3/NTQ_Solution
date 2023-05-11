@@ -30,8 +30,6 @@ namespace DataLayer.Dao
         {
             try
             {
-                
-                
                 var productModels = (from a in db.Products
                              where a.SupplierID == supplierID
                              select new ProductModel
