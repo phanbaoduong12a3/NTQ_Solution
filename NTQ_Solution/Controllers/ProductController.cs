@@ -38,10 +38,10 @@ namespace NTQ_Solution.Controllers
         }
         public ActionResult Category(int categoryID,int page=1, int pageSize = 8)
         {
-            var model = productData.Category(categoryID, page, pageSize);
+            var category = productData.Category(categoryID, page, pageSize);
             ViewBag.HotProduct = productData.ListNewProduct(4);
             ViewBag.categoryID = categoryID;
-            return View(model);
+            return View(category);
         }
     }
 }

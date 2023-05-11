@@ -17,6 +17,13 @@ namespace DataLayer.Dao
         {
             db = new NTQDBContext();
         }
+        /// <summary>
+        /// Danh sách phiếu nhập
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<ImportModel> ListAllImportBill(string searchString, int page, int pageSize)
         {
             try

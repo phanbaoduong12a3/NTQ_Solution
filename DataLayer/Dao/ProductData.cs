@@ -39,10 +39,20 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Danh sách sản phẩm mới
+        /// </summary>
+        /// <param name="top"></param>
+        /// <returns></returns>
         public List<Product> ListNewProduct(int top)
         {
             return db.Products.OrderByDescending(x => x.Price).Take(top).ToList();
         }
+        /// <summary>
+        /// Danh sashc sản phẩm hot
+        /// </summary>
+        /// <param name="top"></param>
+        /// <returns></returns>
         public List<Product> ListHotProduct(int top)
         {
             return db.Products.OrderByDescending(x => x.NumberViews).Take(top).ToList();
@@ -106,7 +116,7 @@ namespace DataLayer.Dao
         }
 
         /// <summary>
-        /// List All Product with Paging
+        /// Danh sách toàn bộ sản phẩm
         /// </summary>
         /// <param name="trending"></param>
         /// <param name="searchString"></param>
@@ -117,8 +127,6 @@ namespace DataLayer.Dao
         {
             try
             {
-               
-                
                     IQueryable<Product> product = db.Products;
                     if (!string.IsNullOrEmpty(searchString))
                     {
@@ -148,8 +156,6 @@ namespace DataLayer.Dao
                     }
                     return product.Where(x => x.Color != 0 && x.Size != 0 && x.CategoryID == categoryid).OrderByDescending(x => x.Price).ToPagedList(page, pageSize);
 
-                
-
             }
             catch (Exception ex)
             {
@@ -159,7 +165,7 @@ namespace DataLayer.Dao
         }
 
         /// <summary>
-        /// List Product On Sale
+        /// Danh sách sản phẩm phía khách hàng
         /// </summary>
         /// <param name="trending"></param>
         /// <param name="searchString"></param>
@@ -190,7 +196,7 @@ namespace DataLayer.Dao
         }
 
         /// <summary>
-        /// Get Product By Id
+        /// Tìm kiếm sản phẩm theo id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -208,23 +214,7 @@ namespace DataLayer.Dao
         }
 
         /// <summary>
-        /// Get Product with View
-        /// </summary>
-        /// <returns></returns>
-        public List<Product> GetProductByView()
-        {
-            try
-            {
-                return db.Products.OrderByDescending(x => x.NumberViews).ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
-        /// <summary>
-        /// Get Product with Trending
+        /// Tìm kiếm sản phẩm theo Trending
         /// </summary>
         /// <returns></returns>
         public List<Product> GetProductByTrending()
@@ -240,26 +230,9 @@ namespace DataLayer.Dao
             }
         }
 
-
-
         // Home Front-End
 
-        /// <summary>
-        /// List All Product
-        /// </summary>
-        /// <returns></returns>
-        public List<Product> GetAllProduct()
-        {
-            try
-            {
-                return db.Products.ToList();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                throw;
-            }
-        }
+        
 
         /// <summary>
         /// Detail about product
@@ -293,10 +266,21 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Danh sách danh mục
+        /// </summary>
+        /// <returns></returns>
         public List<Category> ListCategory()
         {
             return db.Categories.Where(x => x.Status == true).OrderBy(x => x.ID).ToList();
         }
+        /// <summary>
+        /// Danh sách sản phẩm theo danh mục
+        /// </summary>
+        /// <param name="categoryID"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<Product> Category(int categoryID, int page, int pageSize)
         {
             try
@@ -310,28 +294,56 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// SỐ lượng sản phẩm trong giỏ hàng
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <returns></returns>
         public int CartCount(int userID)
         {
 
             return db.Orders.Where(x => x.Status == 1 && x.UserID == userID).Count();
 
         }
+        /// <summary>
+        /// Danh sách size
+        /// </summary>
+        /// <returns></returns>
         public List<Size> listsize()
         {
             return db.Sizes.OrderBy(x=>x.ID).ToList();
         }
+
+        /// <summary>
+        /// Danh sách hình ảnh
+        /// </summary>
+        /// <returns></returns>
         public List<Color> listcolor()
         {
             return db.Colors.OrderBy(x=>x.ID).ToList();
         }
+        /// <summary>
+        /// Danh sách nhà cung cấp
+        /// </summary>
+        /// <returns></returns>
         public List<Supplier> listSupplier()
         {
             return db.Suppliers.OrderBy(x => x.ID).ToList();
         }
+        /// <summary>
+        /// Danh sách size theo sản phẩm
+        /// </summary>
+        /// <param name="productName"></param>
+        /// <returns></returns>
         public List<Product> listSize(string productName)
         {
             return db.Products.Where(x=>x.ProductName == productName && x.Size != 0 && x.Count > 0).OrderBy(x=>x.Size).ToList();
         }
+        /// <summary>
+        /// Danh sách màu sắc theo sản phẩm
+        /// </summary>
+        /// <param name="productName"></param>
+        /// <returns></returns>
         public List<Product> listColor(string productName)
         {
             return db.Products.Where(x => x.ProductName == productName && x.Color != 0 && x.Count>0).OrderBy(x =>x.Color).ToList();

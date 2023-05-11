@@ -17,6 +17,10 @@ namespace DataLayer.Dao
 		{
 			db = new NTQDBContext();
 		}
+        /// <summary>
+        /// Thêm mới đơn hàng
+        /// </summary>
+        /// <param name="Order"></param>
         public void AddNewOrder(Order Order)
         {
 			try
@@ -30,51 +34,24 @@ namespace DataLayer.Dao
 				throw;
 			}
         }
-
-		public IEnumerable<OrderModel> ListAllOrder(int userID, int page,int pageSize)
-		{
-			try
-			{
-                var orderModels = (from a in db.Orders
-                             join b in db.Users
-                             on a.UserID equals b.ID
-                             join c in db.Products
-                             on a.ProductsID equals c.ID
-                             where a.UserID == userID
-                             select new OrderModel
-                             {
-                                 ID = a.ID,
-                                 UserName = b.UserName,
-                                 ProductName = c.ProductName,
-                                 Image = c.Image,
-                                 Price = c.Price,
-                                 Count = a.Count,
-                                 CreateAt = a.CreateAt,
-                                 UpdateAt = a.UpdateAt,
-                                 DeleteAt = a.DeleteAt,
-                                 Status = a.Status,
-                                 Color = a.Color,
-                                 Size = a.Size,
-                                 ShipMode = a.ShipMode
-                             });
-				return orderModels.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-				throw;
-			}
-		}
-        public Order GetOrderByProductID(int productID)
-        {
-            return db.Orders.Where(x => x.ProductsID == productID).FirstOrDefault();
-        }
+        /// <summary>
+        /// Kiểm tra sản phẩm đã có trong giỏ hàng chưa
+        /// </summary>
+        /// <param name="productID"></param>
+        /// <returns></returns>
         public bool checkProductID(int productID)
         {
             var model = db.Orders.FirstOrDefault(x=>x.ProductsID == productID && x.Status == 1);
             if (model == null) return false;
             return true;
         }
+        /// <summary>
+        /// Tìm kiếm đơn hàng theo tên sản phẩm
+        /// </summary>
+        /// <param name="productName"></param>
+        /// <param name="size"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public Product findProductOrder(string productName, string size, string color)
         {
             try
@@ -92,45 +69,15 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Cập nhật đơn hàng
+        /// </summary>
+        /// <param name="productID"></param>
         public void UpdateOrder(int productID)
         {
             var model = db.Orders.FirstOrDefault(x => x.ProductsID == productID && x.Status == 1);
             model.Count += 1;
             db.SaveChanges();
-        }
-
-        public IEnumerable<OrderModel> getOrderModel(int OrderId,int count,string color, string size)
-        {
-            int Size = 0;
-            if (size != null) int.Parse(size);
-            int Color = 0;
-            if (color != null) int.Parse(color);
-            var orderModels = (from a in db.Orders
-                         join b in db.Users
-                         on a.UserID equals b.ID
-                         join c in db.Products
-                         on a.ProductsID equals c.ID
-                         where a.ID == OrderId
-                         select new OrderModel
-                         {
-                             ID = a.ID,
-                             Address= b.Address,
-                             Phone = b.Phone,
-                             Email = b.Email,
-                             Color = Color,
-                             Size = Size,
-                             UserName = b.UserName,
-                             ProductName = c.ProductName,
-                             Image = c.Image,
-                             Price = c.Price,
-                             Count = count, 
-                             CreateAt = a.CreateAt,
-                             UpdateAt = a.UpdateAt,
-                             DeleteAt = a.DeleteAt,
-                             Status = a.Status,
-                             Payment = ""
-                         });
-            return orderModels;
         }
         public OrderModel convertOrderModel(Order Order, string color, string size)
         {
@@ -165,7 +112,13 @@ namespace DataLayer.Dao
                          });
             return orderModels.FirstOrDefault(x=>x.ID == Order.ID);
         }
-
+        /// <summary>
+        /// Danh sách đơn hàng phía khách hàng
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<OrderModel> OrderShow(int userID, int page, int pageSize)
         {
             try
@@ -233,6 +186,12 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Xử lý đặt hàng thành công
+        /// </summary>
+        /// <param name="orderModel"></param>
+        /// <param name="shipMode"></param>
+        /// <param name="shipMoney"></param>
         public void PaymentSuccess(OrderModel orderModel,string shipMode,int shipMoney)
         {
             var order = db.Orders.Find(orderModel.ID);
@@ -246,7 +205,13 @@ namespace DataLayer.Dao
             order.ShipMode = shipMode;
             db.SaveChanges();
         }
-
+        /// <summary>
+        /// Danh sách đơn hàng hiển thị trong trang quản lý
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
 
         public IEnumerable<OrderModel> ListOrderBE(string searchString, int page, int pageSize)
         {
@@ -285,6 +250,13 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Danh sách đơn hàng giao thành công
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<OrderModel> ListOrderSuccess(string searchString, int page, int pageSize)
         {
             try
@@ -322,6 +294,11 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Function cập nhật đơn hàng trong trang quản lý
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <param name="userid"></param>
         public void UpdateOrderBE(int orderID,int userid)
         {
             var order = db.Orders.Find(orderID);
@@ -355,12 +332,24 @@ namespace DataLayer.Dao
             db.Shippings.Add(ship);
             db.SaveChanges();
         }
+        /// <summary>
+        /// Cập nhật số lượng sản phẩm
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="productCount"></param>
         public void UpdateOrderCount(int orderId, string productCount)
         {
             var orderModels = db.Orders.Where(x=>x.ID==orderId).FirstOrDefault();
             orderModels.Count = int.Parse(productCount);
             db.SaveChanges();
         }
+        /// <summary>
+        /// Danh sách giỏ hàng
+        /// </summary>
+        /// <param name="userID"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<OrderModel> OrderDemo(int userID, int page, int pageSize)
         {
             try

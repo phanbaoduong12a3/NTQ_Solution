@@ -16,6 +16,16 @@ namespace DataLayer.Dao
         {
             db = new NTQDBContext();
         }
+        /// <summary>
+        /// Danh sách sản phẩm theo nhà cung cấp
+        /// </summary>
+        /// <param name="size"></param>
+        /// <param name="color"></param>
+        /// <param name="supplierID"></param>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<ProductModel> GetProductOfSupplier(string size, string color, int supplierID, string searchString, int page, int pageSize)
         {
             try
@@ -64,6 +74,11 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Cập nhật khi nhập hàng
+        /// </summary>
+        /// <param name="productModel"></param>
+        /// <param name="userID"></param>
         public void UpdateImport(ProductModel productModel, int userID)
         {
             var product = db.Products.Find(productModel.ID);
@@ -84,6 +99,10 @@ namespace DataLayer.Dao
             db.Imports.Add(import);
             db.SaveChanges();
         }
+        /// <summary>
+        /// Danh sách nhà cung cấp
+        /// </summary>
+        /// <returns></returns>
         public List<Supplier> ListSupplier()
         {
             return db.Suppliers.OrderBy(x => x.ID).ToList();

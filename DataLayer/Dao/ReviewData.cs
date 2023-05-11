@@ -17,7 +17,11 @@ namespace DataLayer.Dao
         {
             db = new NTQDBContext();
         }
-
+        /// <summary>
+        /// Thêm mới bình luận
+        /// </summary>
+        /// <param name="review"></param>
+        /// <returns></returns>
         public bool InsertReview(Review review)
         {
             try
@@ -28,7 +32,11 @@ namespace DataLayer.Dao
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
-
+        /// <summary>
+        /// Tìm kiếm bình luận theo id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Review GetReviewById(int id)
         {
             try
@@ -37,7 +45,10 @@ namespace DataLayer.Dao
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
-
+        /// <summary>
+        /// Cập nhật bình luận
+        /// </summary>
+        /// <param name="review"></param>
         public void UpdateReview(Review review)
         {
             try
@@ -49,7 +60,14 @@ namespace DataLayer.Dao
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
         }
-
+        /// <summary>
+        /// Danh sách sản phẩm theo khách hàng
+        /// </summary>
+        /// <param name="parentID"></param>
+        /// <param name="userID"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<ReviewModel> ListMyReview(int parentID,int userID, int page, int pageSize)
         {
             try
@@ -84,7 +102,14 @@ namespace DataLayer.Dao
                 throw;
             }
         }
-
+        /// <summary>
+        /// Danh sách tất cả bình luận
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="parentID"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<ReviewModel> ListAllPagingReview(string searchString,int parentID,int page,int pageSize)
         {
             try
@@ -158,7 +183,12 @@ namespace DataLayer.Dao
                 throw;
             }
         }
-
+        /// <summary>
+        /// Danh sách bình luận phía khách hàng
+        /// </summary>
+        /// <param name="parentID"></param>
+        /// <param name="productID"></param>
+        /// <returns></returns>
         public List<ReviewModel> ListReviewViewModel(int parentID, int productID)
         {
             try

@@ -16,6 +16,12 @@ namespace DataLayer.Dao
         {
             db = new NTQDBContext();
         }
+        /// <summary>
+        /// Danh sách đơn hàng đang giao
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<ShippingModel> ListShip(int page, int pageSize)
         {
             try
@@ -55,6 +61,10 @@ namespace DataLayer.Dao
                 throw;
             }
         }
+        /// <summary>
+        /// Cập nhật trạng thái giao hàng
+        /// </summary>
+        /// <param name="shipID"></param>
         public void UpdateShip(int shipID)
         {
             var ship = db.Shippings.Find(shipID);

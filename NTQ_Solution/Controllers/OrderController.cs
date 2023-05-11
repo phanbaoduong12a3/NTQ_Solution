@@ -146,8 +146,8 @@ namespace NTQ_Solution.Controllers
                 else
                 {
                     var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-                    var model = orderData.OrderDemo(sessionUser.UserID,1,4);
-                    foreach(var item in model)
+                    var orderModels = orderData.OrderDemo(sessionUser.UserID,1,4);
+                    foreach(var item in orderModels)
                     {
                         list.Add(item);
                     }
@@ -220,23 +220,23 @@ namespace NTQ_Solution.Controllers
                 if (session != null)
                 {
                     var userID = session.UserID;
-                    var model = orderData.OrderDemo(userID, page, pageSize);
+                    var orderModels = orderData.OrderDemo(userID, page, pageSize);
                     List<OrderModel> list = new List<OrderModel>();
-                    if(model != null)
+                    if(orderModels != null)
                     {
-                        foreach(var item in model)
+                        foreach(var item in orderModels)
                         {
                             list.Add(item);
                         }
                         Session[CartSession] = list;
                     }
                     double? total=0;
-                    foreach(var item in model)
+                    foreach(var item in orderModels)
                     {
                         total += item.Price * item.Count;
                     }
                     ViewBag.TongTien = total;
-                    return View(model);
+                    return View(orderModels);
                 }
                 else
                 {

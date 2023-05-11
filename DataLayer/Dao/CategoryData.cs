@@ -15,6 +15,13 @@ namespace DataLayer.Dao
         {
             db = new NTQDBContext();
         }
+        /// <summary>
+        /// Danh sách danh mục
+        /// </summary>
+        /// <param name="searchString"></param>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         public IEnumerable<Category> ListCategory(string searchString, int page, int pageSize)
         {
             try
@@ -36,6 +43,11 @@ namespace DataLayer.Dao
         {
             return db.Categories.Find(id);
         }
+        /// <summary>
+        /// Kiểm tra danh mục đã tồn tại chưa theo tên danh mục
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns></returns>
         public bool CheckCategoryName(string categoryName)
         {
             var categories = db.Categories.Where(x=>x.CategoryName == categoryName);
