@@ -10,22 +10,22 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class OrderController : BaseController
     {
-        OrderDao orderDao;
-        ProductDao productDao;
+        OrderData orderData;
+        ProductData productData;
         public OrderController()
         {
-            orderDao = new OrderDao();
-            productDao = new ProductDao();
+            orderData = new OrderData();
+            productData = new ProductData();
         }
         // GET: Admin/Order
         public ActionResult Index(string searchString, int page = 1, int pageSize = 4)
         {
             try
             {
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
                 ViewBag.SearchString = searchString;
-                var model = orderDao.ListOrderBE(searchString, page, pageSize);
+                var model = orderData.ListOrderBE(searchString, page, pageSize);
                 return View(model);
             }
             catch(Exception ex)
@@ -38,7 +38,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                orderDao.UpdateOrderBE(OrderId, userid);
+                orderData.UpdateOrderBE(OrderId, userid);
                 TempData["success"] = "Xac nhan don hang thanh cong";
                 return RedirectToAction("Index","Order");
             }
@@ -52,9 +52,9 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
-                var model = orderDao.ListOrderSuccess(searchString, page, pageSize);
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
+                var model = orderData.ListOrderSuccess(searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)

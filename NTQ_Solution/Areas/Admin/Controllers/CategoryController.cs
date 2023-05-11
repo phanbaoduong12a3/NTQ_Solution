@@ -10,10 +10,10 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class CategoryController : BaseController
     {
-        CategoryDao categoryDao;
+        CategoryData categoryData;
         public CategoryController()
         {
-            categoryDao = new CategoryDao();
+            categoryData = new CategoryData();
         }
         // GET: Admin/Category
         public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
@@ -21,7 +21,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 ViewBag.SearchString = searchString;
-                var model = categoryDao.ListCategory(searchString, page, pageSize);
+                var model = categoryData.ListCategory(searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)
@@ -42,11 +42,11 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool check = categoryDao.CheckCategoryName(category.CategoryName);
+                    bool check = categoryData.CheckCategoryName(category.CategoryName);
                     if(check)
                     {
                         category.Status = true;
-                        categoryDao.InsertCategory(category);
+                        categoryData.InsertCategory(category);
                         TempData["success"] = "Tao moi thanh cong";
                         return RedirectToAction("Index", "Category");
                     }
@@ -65,7 +65,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var model = categoryDao.GetByID(id);
+                var model = categoryData.GetByID(id);
                 return View(model);
             }
             catch (Exception ex)
@@ -81,12 +81,12 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    bool check = categoryDao.CheckCategoryName(category.CategoryName);
-                    var oldCategory = categoryDao.GetByID(category.ID);
+                    bool check = categoryData.CheckCategoryName(category.CategoryName);
+                    var oldCategory = categoryData.GetByID(category.ID);
                     if(oldCategory.CategoryName == category.CategoryName) check = true;
                     if (check)
                     {
-                        categoryDao.UpdateCategory(category);
+                        categoryData.UpdateCategory(category);
                         TempData["success"] = "Sua thanh cong";
                         return RedirectToAction("Index", "Category");
                     }
@@ -104,7 +104,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                categoryDao.Delete(id);
+                categoryData.Delete(id);
                 TempData["success"] = "Xoa thanh cong";
                 return RedirectToAction("Index");
             }

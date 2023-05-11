@@ -9,21 +9,21 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ShippingController : BaseController
     {
-        ShipDao shipDao;
-        ProductDao productDao;
+        ShipData shipData;
+        ProductData productData;
         public ShippingController()
         {
-            shipDao = new ShipDao();
-            productDao = new ProductDao();
+            shipData = new ShipData();
+            productData = new ProductData();
         }
         // GET: Admin/Order
         public ActionResult Index(int page = 1, int pageSize = 4)
         {
             try
             {
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
-                var model = shipDao.ListShip(page, pageSize);
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
+                var model = shipData.ListShip(page, pageSize);
                 return View(model);
             }
             catch (Exception ex)
@@ -36,7 +36,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                shipDao.UpdateShip(id);
+                shipData.UpdateShip(id);
                 TempData["success"] = "Giao hang thanh cong";
                 return RedirectToAction("Index", "Shipping");
             }

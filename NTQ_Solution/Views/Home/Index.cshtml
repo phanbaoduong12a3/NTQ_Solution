@@ -3,9 +3,9 @@
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var newProduct = (List<DataLayer.EF.Product>)ViewBag.NewProduct;
-    var hotProduct = (List<DataLayer.EF.Product>)ViewBag.HotProduct;
-    var popularProduct = (List<DataLayer.EF.Product>)ViewBag.PopularProduct;
+    var newProduct = (List<DataLayer.EF.Product>)ViewBag.NewProductModel;
+    var hotProduct = (List<DataLayer.EF.Product>)ViewBag.HotProductModel;
+    var popularProduct = (List<DataLayer.EF.Product>)ViewBag.PopularProductModel;
 }
 @section slide{
     <div class="page-slider margin-bottom-35">

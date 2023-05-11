@@ -9,10 +9,10 @@ namespace NTQ_Solution.Controllers
 {
     public class ProductController : Controller
     {
-        ProductDao productDao ;
+        ProductData productData ;
         public ProductController()
         {
-            productDao= new ProductDao();
+            productData= new ProductData();
         }
         // GET: Product
         public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 9)
@@ -20,8 +20,8 @@ namespace NTQ_Solution.Controllers
             try
             {
                 ViewBag.SearchString = searchString;
-                var model = productDao.ListProductOnSale(trending, searchString, page, pageSize);
-                ViewBag.HotProduct = productDao.ListNewProduct(4);
+                var model = productData.ListProductOnSale(trending, searchString, page, pageSize);
+                ViewBag.HotProduct = productData.ListNewProduct(4);
                 return View(model);
             }
             catch (Exception ex)
@@ -33,13 +33,13 @@ namespace NTQ_Solution.Controllers
         [ChildActionOnly]
         public PartialViewResult ProductCategory()
         {
-            var model = productDao.ListCategory();
+            var model = productData.ListCategory();
             return PartialView(model);
         }
         public ActionResult Category(int categoryID,int page=1, int pageSize = 8)
         {
-            var model = productDao.Category(categoryID, page, pageSize);
-            ViewBag.HotProduct = productDao.ListNewProduct(4);
+            var model = productData.Category(categoryID, page, pageSize);
+            ViewBag.HotProduct = productData.ListNewProduct(4);
             ViewBag.categoryID = categoryID;
             return View(model);
         }

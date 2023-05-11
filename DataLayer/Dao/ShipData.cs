@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class ShipDao
+    public class ShipData
     {
         NTQDBContext db;
-        public ShipDao()
+        public ShipData()
         {
             db = new NTQDBContext();
         }
@@ -20,7 +20,7 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = (from a in db.Shippings
+                var shippingModels = (from a in db.Shippings
                              join d in db.Orders
                              on a.OrderID equals d.ID
                              join b in db.Users 
@@ -47,7 +47,7 @@ namespace DataLayer.Dao
                                  Size = d.Size
 
                              });
-                return model.Where(x=>x.Status==false).OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+                return shippingModels.Where(x=>x.Status==false).OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {

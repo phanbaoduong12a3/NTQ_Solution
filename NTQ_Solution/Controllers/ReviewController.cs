@@ -11,10 +11,10 @@ namespace NTQ_Solution.Controllers
 {
     public class ReviewController : Controller
     {
-        ReviewDao reviewDao ;
+        ReviewData reviewData ;
         public ReviewController()
         {
-            reviewDao = new ReviewDao();
+            reviewData = new ReviewData();
         }
         // GET: Review
         public ActionResult Index(int parentID = 0, int page = 1, int pageSize = 5)
@@ -26,7 +26,7 @@ namespace NTQ_Solution.Controllers
                 else
                 {
                     int userID = session.UserID;
-                    var model = reviewDao.ListMyReview(parentID, userID, page, pageSize);
+                    var model = reviewData.ListMyReview(parentID, userID, page, pageSize);
                     return View(model);
                 }
                 
@@ -42,7 +42,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var model = reviewDao.GetReviewById(id);
+                var model = reviewData.GetReviewById(id);
                 return View(model);
             }
             catch (Exception ex)
@@ -56,7 +56,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                reviewDao.UpdateReview(review);
+                reviewData.UpdateReview(review);
                 TempData["success"] = "Update Review success";
                 return RedirectToAction("Index", "Review");
             }
@@ -71,7 +71,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                reviewDao.Delete(id);
+                reviewData.Delete(id);
                 TempData["success"] = "Delete Review success";
                 return RedirectToAction("Index","Review");
             }

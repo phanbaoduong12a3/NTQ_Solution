@@ -9,22 +9,22 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ImportBillController : BaseController
     {
-        ImportBillDao importBillDao;
-        ProductDao productDao;
+        ImportBillData importBillData;
+        ProductData productData;
         public ImportBillController()
         {
-            importBillDao = new ImportBillDao();
-            productDao = new ProductDao();  
+            importBillData = new ImportBillData();
+            productData = new ProductData();  
         }
         // GET: Admin/ImportBill
         public ActionResult Index(string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
                 ViewBag.SearchString = searchString;
-                var model = importBillDao.ListAllImportBill(searchString, page, pageSize);
+                var model = importBillData.ListAllImportBill(searchString, page, pageSize);
                 double? total = 0;
                 foreach(var item in model){
                     total += item.Price;

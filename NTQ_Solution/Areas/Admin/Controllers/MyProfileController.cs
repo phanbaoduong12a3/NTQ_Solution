@@ -11,10 +11,10 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class MyProfileController : BaseController
     {
-        UserDao userDao ;
+        UserData userData ;
         public MyProfileController() 
         {
-            userDao = new UserDao();
+            userData = new UserData();
         }
         public ActionResult Index()
         {
@@ -27,7 +27,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
                 var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-                var user = userDao.GetById(model.UserID);
+                var user = userData.GetById(model.UserID);
                 var registerModel = new RegisterModel
                 {
                     ID = user.ID,
@@ -54,13 +54,13 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var result = userDao.GetByEmail(registerModel.Email);
+                    var result = userData.GetByEmail(registerModel.Email);
                     registerModel.ID = result.ID;
                     bool checkUserName ;
-                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
-                    var userOld = userDao.GetById(registerModel.ID);
+                    bool checkConfirmPassword = userData.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    var userOld = userData.GetById(registerModel.ID);
                     if (registerModel.UserName == userOld.UserName) checkUserName = true;
-                    else checkUserName = userDao.CheckUserName(registerModel.UserName);
+                    else checkUserName = userData.CheckUserName(registerModel.UserName);
                     if (checkUserName  && checkConfirmPassword)
                     {
                         var user = new User
@@ -71,7 +71,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             PassWord = registerModel.Password,
                             Role = registerModel.Role,
                         };
-                        userDao.Update(user);
+                        userData.Update(user);
                         TempData["success"] = "Sua thanh cong";
                         return RedirectToAction("Profile", "MyProfile");
                     }

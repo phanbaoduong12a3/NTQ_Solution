@@ -13,10 +13,10 @@ namespace NTQ_Solution.Controllers
     public class LoginController : Controller
     {
 
-        UserDao userDao ;
+        UserData userData ;
         public LoginController()
         {
-            userDao = new UserDao();
+            userData = new UserData();
         }
         // GET: Login
         public ActionResult Index()
@@ -29,10 +29,10 @@ namespace NTQ_Solution.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var result = userDao.Login(loginModel.Email, loginModel.Password);
-                    if (result == 1)
+                    var modelLogin = userData.Login(loginModel.Email, loginModel.Password);
+                    if (modelLogin == 1)
                     {
-                        var user = userDao.GetByEmail(loginModel.Email);
+                        var user = userData.GetByEmail(loginModel.Email);
                         var userSession = new UserLogin();
                         userSession.UserID = user.ID;
                         userSession.Email = user.Email;
@@ -51,15 +51,15 @@ namespace NTQ_Solution.Controllers
                         }
                        
                     }
-                    else if (result == 0)
+                    else if (modelLogin == 0)
                     {
                         ModelState.AddModelError("", "Không tìm thấy Email");
                     }
-                    else if (result == -1)
+                    else if (modelLogin == -1)
                     {
                         ModelState.AddModelError("", "Tài khoản bị khóa");
                     }
-                    else if (result == -2)
+                    else if (modelLogin == -2)
                     {
                         ModelState.AddModelError("", "Mật khẩu không chính xác");
                     }

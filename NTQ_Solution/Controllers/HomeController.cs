@@ -15,14 +15,14 @@ namespace NTQ_Solution.Controllers
 {
     public class HomeController : Controller
     {
-        ProductDao productDao ;
-        ReviewDao reviewDao ;
-        OrderDao OrderDao ;
+        ProductData productData ;
+        ReviewData reviewData ;
+        OrderData orderData ;
         public HomeController()
         {
-            productDao = new ProductDao();
-            reviewDao = new ReviewDao();
-            OrderDao = new OrderDao();
+            productData = new ProductData();
+            reviewData = new ReviewData();
+            orderData = new OrderData();
         }
         // GET: Home
         public ActionResult Index(string trending, string searchString, int page = 1, int pageSize = 8)
@@ -30,10 +30,10 @@ namespace NTQ_Solution.Controllers
             try
             {
                 ViewBag.SearchString = searchString;
-                var model = productDao.ListProductOnSale(trending, searchString, page, pageSize);
-                ViewBag.NewProduct = productDao.ListNewProduct(5);
-                ViewBag.HotProduct = productDao.ListHotProduct(3);
-                ViewBag.PopularProduct = productDao.ListNewProduct(2);
+                var model = productData.ListProductOnSale(trending, searchString, page, pageSize);
+                ViewBag.NewProductModel = productData.ListNewProduct(5);
+                ViewBag.HotProductModel = productData.ListHotProduct(3);
+                ViewBag.PopularProductModel = productData.ListNewProduct(2);
                 return View(model);
             }
             catch (Exception ex)
@@ -47,16 +47,16 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var product = productDao.ViewDetail(id);
+                var product = productData.ViewDetail(id);
                 var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
                 if(sessionUser != null) { ViewBag.UserID = sessionUser.UserID; }
-                ViewBag.ListReview = new ReviewDao().ListReviewViewModel(0, id);
-                ViewBag.ColorColor = productDao.listcolor();
-                ViewBag.SizeSize = productDao.listsize();
-                ViewBag.listcolor = productDao.listColor(product.ProductName);
-                ViewBag.listsize = productDao.listSize(product.ProductName);
-                productDao.UpdateView(product.ID);
-                ViewBag.HotProduct = productDao.ListNewProduct(4);
+                ViewBag.ListReview = new ReviewData().ListReviewViewModel(0, id);
+                ViewBag.ColorModel = productData.listcolor();
+                ViewBag.SizeModel = productData.listsize();
+                ViewBag.listcolor = productData.listColor(product.ProductName);
+                ViewBag.listsize = productData.listSize(product.ProductName);
+                productData.UpdateView(product.ID);
+                ViewBag.HotProduct = productData.ListNewProduct(4);
                 return View(product);
             }
             catch (Exception ex)
@@ -70,7 +70,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                //var dao = new ReviewDao();
+                //var dao = new reviewData();
                 Review review = new Review();
                 review.UserID = userid;
                 review.ProductsID = productid;
@@ -78,7 +78,7 @@ namespace NTQ_Solution.Controllers
                 review.Status = 0;
                 review.CreateAt = DateTime.Now;
                 review.ParentID = 0;
-                bool addReview = reviewDao.InsertReview(review);
+                bool addReview = reviewData.InsertReview(review);
                 if(addReview)
                 {
                     return Json(new { status = true });
@@ -98,7 +98,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                var data = reviewDao.ListReviewViewModel(0, productid);
+                var data = reviewData.ListReviewViewModel(0, productid);
                 return View(data);
             }
             catch (Exception ex)
@@ -116,7 +116,7 @@ namespace NTQ_Solution.Controllers
 
             if(session != null)
             {
-                count = productDao.CartCount(session.UserID);
+                count = productData.CartCount(session.UserID);
             }
             ViewBag.count = count;
             return PartialView();

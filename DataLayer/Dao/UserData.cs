@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class UserDao
+    public class UserData
     {
         NTQDBContext db;
-        public UserDao()
+        public UserData()
         {
             db = new NTQDBContext();
         }
@@ -102,9 +102,9 @@ namespace DataLayer.Dao
         {
             try
             {
-                IQueryable<User> model = db.Users;
-                if (status == 0) return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 0);
-                return model.OrderByDescending(x => x.CreateAt).Where(y => y.Status == 1);
+                IQueryable<User> user = db.Users;
+                if (status == 0) return user.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 0);
+                return user.OrderByDescending(x => x.CreateAt).Where(y => y.Status == 1);
             }
             catch (Exception ex)
             {
@@ -143,8 +143,8 @@ namespace DataLayer.Dao
         {
             try
             {
-                var name = db.Users.SingleOrDefault(x => x.UserName == userName);
-                if (name == null) return true;
+                var user = db.Users.SingleOrDefault(x => x.UserName == userName);
+                if (user == null) return true;
                 return false;
             }
             catch (Exception ex)
@@ -258,23 +258,23 @@ namespace DataLayer.Dao
         {
             try
             {
-                IQueryable<User> model = db.Users;
+                IQueryable<User> user = db.Users;
                 if (!string.IsNullOrEmpty(searchString))
                 {
 
-                    model = model.Where(x => x.UserName.Contains(searchString));
+                    user = user.Where(x => x.UserName.Contains(searchString));
                 }
                 if (!string.IsNullOrEmpty(status))
                 {
                     int Status = int.Parse(status);
-                    model = model.Where(x => x.Status == Status);
+                    user = user.Where(x => x.Status == Status);
                 }
                 if (!string.IsNullOrEmpty(role))
                 {
-                    int Role = int.Parse(role); 
-                    model = model.Where(x => x.Role == Role);
+                    int Role = int.Parse(role);
+                    user = user.Where(x => x.Role == Role);
                 }
-                return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+                return user.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {

@@ -11,25 +11,25 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class SupplierController : BaseController
     {
-        SupplierDao supplierDao;
-        ProductDao productDao;
+        SupplierData supplierData;
+        ProductData productData;
         public SupplierController()
         {
-            supplierDao = new SupplierDao();
-            productDao = new ProductDao();
+            supplierData = new SupplierData();
+            productData = new ProductData();
         }
         // GET: Admin/Supplier
         public ActionResult Index(string size, string color, int supplierID, string searchString, int page = 1, int pageSize = 5)
         {
             try
             {
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
                 ViewBag.SearchString = searchString;
                 ViewBag.Size = size;
                 ViewBag.Color = color;
                 ViewBag.supplierID = supplierID;
-                var model = supplierDao.GetProductOfSupplier(size, color, supplierID, searchString, page, pageSize);
+                var model = supplierData.GetProductOfSupplier(size, color, supplierID, searchString, page, pageSize);
 
                 return View(model);
             }
@@ -45,7 +45,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             try
             {
 
-                var temp = productDao.GetProductById(id);
+                var temp = productData.GetProductById(id);
                 bool status, checkTrending;
                 if (temp.Status == 1) status = true;
                 else status = false;
@@ -65,8 +65,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     Sale = temp.Sale,
                     Count = temp.Count
                 };
-                var listColor = productDao.listcolor();
-                var listSize = productDao.listsize();
+                var listColor = productData.listcolor();
+                var listSize = productData.listsize();
                 foreach (var item in listColor)
                 {
                     if (item.ID == temp.Color)
@@ -101,7 +101,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 }
                 var model = (NTQ_Solution.Common.UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                 int UserID = model.UserID;
-                supplierDao.UpdateImport(productModel, UserID);
+                supplierData.UpdateImport(productModel, UserID);
                 TempData["success"] = "Nhap hang thanh cong";
                 return RedirectToAction("Index", "ImportBill");
             }
@@ -114,7 +114,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         [ChildActionOnly]
         public ActionResult ListSupplier()
         {
-            var model = supplierDao.ListSupplier();
+            var model = supplierData.ListSupplier();
             return View(model);
         }
     }

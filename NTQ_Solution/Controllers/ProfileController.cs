@@ -13,10 +13,10 @@ namespace NTQ_Solution.Controllers
 {
     public class ProfileController : Controller
     {
-        UserDao userDao ;
+        UserData userData ;
         public ProfileController()
         {
-            userDao = new UserDao();
+            userData = new UserData();
         }
         // GET: Profile
         [HttpGet]
@@ -31,7 +31,7 @@ namespace NTQ_Solution.Controllers
                 }
                 else
                 {
-                    var user = userDao.GetById(model.UserID);
+                    var user = userData.GetById(model.UserID);
                     var result = new RegisterModel
                     {
                         ID = user.ID,
@@ -59,13 +59,13 @@ namespace NTQ_Solution.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var result = userDao.GetByEmail(registerModel.Email);
+                    var result = userData.GetByEmail(registerModel.Email);
                     registerModel.ID = result.ID;
                     bool checkUserName;
-                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
-                    var userOld = userDao.GetById(registerModel.ID);
+                    bool checkConfirmPassword = userData.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    var userOld = userData.GetById(registerModel.ID);
                     if (registerModel.UserName == userOld.UserName) checkUserName = true;
-                    else checkUserName = userDao.CheckUserName(registerModel.UserName);
+                    else checkUserName = userData.CheckUserName(registerModel.UserName);
                     
                     if (checkUserName && checkConfirmPassword)
                     {
@@ -77,7 +77,7 @@ namespace NTQ_Solution.Controllers
                             PassWord = registerModel.Password,
                             Role = registerModel.Role
                         };
-                        userDao.Update(user);
+                        userData.Update(user);
                         TempData["success"] = "Sua thanh cong";
                         return RedirectToAction("Profile", "Profile");
                     }

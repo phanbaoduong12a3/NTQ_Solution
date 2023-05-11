@@ -14,12 +14,12 @@ namespace NTQ_Solution.Controllers
     public class OrderController : Controller
     {
         private const string CartSession = "CartSession";
-        OrderDao OrderDao ;
-        ProductDao productDao ;
+        OrderData orderData ;
+        ProductData productData ;
         public OrderController() 
         {
-            OrderDao= new OrderDao();
-            productDao = new ProductDao();
+            orderData= new OrderData();
+            productData = new ProductData();
         }
         public ActionResult AddOrder(string productName, string color, string size)
         {
@@ -32,9 +32,9 @@ namespace NTQ_Solution.Controllers
                 }
                 else
                 {
-                    var product = OrderDao.findProductOrder(productName, size, color);
+                    var product = orderData.findProductOrder(productName, size, color);
                     int productID = product.ID;
-                    bool checkProductID = OrderDao.checkProductID(productID);
+                    bool checkProductID = orderData.checkProductID(productID);
                     var cart = Session[CartSession];
                     var list = new List<OrderModel>();
                     if (!checkProductID)
@@ -50,8 +50,8 @@ namespace NTQ_Solution.Controllers
                             Color = product.Color,
                             Size = product.Size
                         };
-                        OrderDao.AddNewOrder(Order);
-                        var model = OrderDao.convertOrderModel(Order, size, color);
+                        orderData.AddNewOrder(Order);
+                        var model = orderData.convertOrderModel(Order, size, color);
                         if(cart != null)
                         {
                             list = (List<OrderModel>)cart;
@@ -63,7 +63,7 @@ namespace NTQ_Solution.Controllers
                     }
                     else
                     {
-                        OrderDao.UpdateOrder(productID);
+                        orderData.UpdateOrder(productID);
                     }
                     TempData["success"] = "Them san pham vao gio hang thanh cong";
                     return RedirectToAction("OrderDemo", "Order");
@@ -82,12 +82,12 @@ namespace NTQ_Solution.Controllers
             try
             {
                 var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
                 if (session != null)
                 {
                     var userID = session.UserID;
-                    var model = OrderDao.OrderShow(userID, page, pageSize);
+                    var model = orderData.OrderShow(userID, page, pageSize);
                     return View(model);
                 }
                 else
@@ -106,7 +106,7 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                OrderDao.Delete(id);
+                orderData.Delete(id);
                 TempData["success"] = "Xoa san pham khoi gio hang thanh cong";
                 return RedirectToAction("Index","Order");
             }
@@ -119,7 +119,7 @@ namespace NTQ_Solution.Controllers
         public ActionResult DeleteOrder(int id)
         {
             try { 
-                OrderDao.DeleteOrder(id);
+                orderData.DeleteOrder(id);
                 TempData["success"] = "Huy don hang thanh cong";
                 return RedirectToAction("Index", "Order");
             }
@@ -135,8 +135,8 @@ namespace NTQ_Solution.Controllers
             try
             {
 
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
                 var cart = Session[CartSession];
                 var list = new List<OrderModel>();
                 if(cart != null)
@@ -146,7 +146,7 @@ namespace NTQ_Solution.Controllers
                 else
                 {
                     var sessionUser = (UserLogin)Session[Common.CommonConstant.USER_SESSION];
-                    var model = OrderDao.OrderDemo(sessionUser.UserID,1,4);
+                    var model = orderData.OrderDemo(sessionUser.UserID,1,4);
                     foreach(var item in model)
                     {
                         list.Add(item);
@@ -195,7 +195,7 @@ namespace NTQ_Solution.Controllers
                             item.Phone = orderModel.Phone;
                             item.Address = orderModel.Address;
                         }
-                        OrderDao.PaymentSuccess(item, ship, shipMoney);
+                        orderData.PaymentSuccess(item, ship, shipMoney);
                     }
                     
                 }
@@ -212,15 +212,15 @@ namespace NTQ_Solution.Controllers
         {
             try
             {
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
                 var session = (UserLogin)Session[NTQ_Solution.Common.CommonConstant.USER_SESSION];
                 var cart = Session[CartSession];
                 
                 if (session != null)
                 {
                     var userID = session.UserID;
-                    var model = OrderDao.OrderDemo(userID, page, pageSize);
+                    var model = orderData.OrderDemo(userID, page, pageSize);
                     List<OrderModel> list = new List<OrderModel>();
                     if(model != null)
                     {
@@ -259,7 +259,7 @@ namespace NTQ_Solution.Controllers
                     TempData["success"] = "So luong khong duoc de trong";
                     return RedirectToAction("OrderDemo", "Order");
                 }
-                OrderDao.UpdateOrderCount(OrderId[i], productCount[i]);
+                orderData.UpdateOrderCount(OrderId[i], productCount[i]);
             }
             TempData["success"] = "Cap nhat gio hang thanh cong";
             return RedirectToAction("OrderDemo", "Order");

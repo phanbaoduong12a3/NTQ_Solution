@@ -10,10 +10,10 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ProductController : BaseController
     {
-        ProductDao productDao ;
+        ProductData productData ;
         public ProductController()
         {
-            productDao = new ProductDao();
+            productData = new ProductData();
         }
         // GET: Admin/Product
         
@@ -21,15 +21,15 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                ViewBag.listColor = productDao.listcolor();
-                ViewBag.listSize = productDao.listsize();
-                ViewBag.listSupplier = productDao.listSupplier();
+                ViewBag.listColor = productData.listcolor();
+                ViewBag.listSize = productData.listsize();
+                ViewBag.listSupplier = productData.listSupplier();
                 ViewBag.SearchString = searchString;
                 ViewBag.Size = size;
                 ViewBag.Color = color;
                 ViewBag.Supplier = supplier;
                 ViewBag.Category = categoryID;
-                var model = productDao.ListAllPagingProduct(size, color, categoryID, supplier, searchString, page, pageSize);
+                var model = productData.ListAllPagingProduct(size, color, categoryID, supplier, searchString, page, pageSize);
                 return View(model);
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
@@ -38,14 +38,14 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult CreateProduct()
         {
-            var listSize = productDao.listsize();
+            var listSize = productData.listsize();
             SelectList sizeList = new SelectList(listSize, "ID", "SizeName");
             ViewBag.SizeList = sizeList;
-            var listColor = productDao.listcolor();
+            var listColor = productData.listcolor();
             SelectList colorList = new SelectList(listColor, "ID", "ColorName");
             ViewBag.ColorList = colorList;
-            var listCategory = productDao.ListCategory();
-            var listSupplier = new SupplierDao().ListSupplier();
+            var listCategory = productData.ListCategory();
+            var listSupplier = new SupplierData().ListSupplier();
             SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
             ViewBag.CategoryList = cateList;
             SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
@@ -58,14 +58,14 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var listSize = productDao.listsize();
+                var listSize = productData.listsize();
                 SelectList sizeList = new SelectList(listSize, "ID", "SizeName");
                 ViewBag.SizeList = sizeList;
-                var listColor = productDao.listcolor();
+                var listColor = productData.listcolor();
                 SelectList colorList = new SelectList(listColor, "ID", "ColorName");
                 ViewBag.ColorList = colorList;
-                var listCategory = productDao.ListCategory();
-                var listSupplier = new SupplierDao().ListSupplier();
+                var listCategory = productData.ListCategory();
+                var listSupplier = new SupplierData().ListSupplier();
                 SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
                 ViewBag.CategoryList = cateList;
                 SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
@@ -97,7 +97,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         CategoryID = Category,
                         SupplierID = Supplier
                     };
-                    productDao.Insert(product);
+                    productData.Insert(product);
                     TempData["success"] = "Them san pham thanh cong";
                     return RedirectToAction("Index", "Product");
                 }
@@ -111,7 +111,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var temp = productDao.GetProductById(id);
+                var temp = productData.GetProductById(id);
                 bool checkTrending,status;
                 if(temp.Status == 1) status = true;
                 else status = false;
@@ -134,14 +134,14 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                     CategoryID = temp.CategoryID,
                     SupplierID = temp.SupplierID
                 };
-                var listSize = productDao.listsize();
+                var listSize = productData.listsize();
                 SelectList sizeList = new SelectList(listSize, "ID", "SizeName");
                 ViewBag.SizeList = sizeList;
-                var listColor = productDao.listcolor();
+                var listColor = productData.listcolor();
                 SelectList colorList = new SelectList(listColor, "ID", "ColorName");
                 ViewBag.ColorList = colorList;
-                var listCategory = productDao.ListCategory();
-                var listSupplier = new SupplierDao().ListSupplier();
+                var listCategory = productData.ListCategory();
+                var listSupplier = new SupplierData().ListSupplier();
                 SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
                 ViewBag.CategoryList = cateList;
                 SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
@@ -156,14 +156,14 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var listSize = productDao.listsize();
+                var listSize = productData.listsize();
                 SelectList sizeList = new SelectList(listSize, "ID", "SizeName");
                 ViewBag.SizeList = sizeList;
-                var listColor = productDao.listcolor();
+                var listColor = productData.listcolor();
                 SelectList colorList = new SelectList(listColor, "ID", "ColorName");
                 ViewBag.ColorList = colorList;
-                var listCategory = productDao.ListCategory();
-                var listSupplier = new SupplierDao().ListSupplier();
+                var listCategory = productData.ListCategory();
+                var listSupplier = new SupplierData().ListSupplier();
                 SelectList cateList = new SelectList(listCategory, "ID", "CategoryName");
                 ViewBag.CategoryList = cateList;
                 SelectList supList = new SelectList(listSupplier, "ID", "SupplierName");
@@ -195,7 +195,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                         CategoryID = Category,
                         SupplierID = Supplier
                     };
-                    productDao.Update(product);
+                    productData.Update(product);
                     TempData["success"] = "Sua san pham thanh cong";
                     return RedirectToAction("Index", "Product");
                 }
@@ -212,7 +212,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                productDao.Delete(id);
+                productData.Delete(id);
                 TempData["success"] = "Xoa san pham thanh cong";
                 return RedirectToAction("Index");
             }
@@ -221,7 +221,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         [ChildActionOnly]
         public ActionResult ProductMenu()
         {
-            var model = productDao.ListCategory();
+            var model = productData.ListCategory();
             return View(model);
         }
     }

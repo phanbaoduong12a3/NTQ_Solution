@@ -4,49 +4,46 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class ImportBillDao
+    public class ExportBillData
     {
         NTQDBContext db;
-        public ImportBillDao()
+        public ExportBillData()
         {
             db = new NTQDBContext();
         }
-        public IEnumerable<ImportModel> ListAllImportBill(string searchString, int page, int pageSize)
+        public IEnumerable<ExportModel> ListAllExportBill(string searchString, int page, int pageSize)
         {
             try
             {
-                var model = (from a in db.Imports
-                             join b in db.Suppliers on a.SupplierID equals b.ID
+                var exportBillModels = (from a in db.Exports
                              join c in db.Users on a.UserID equals c.ID
                              join d in db.Products on a.ProductID equals d.ID
-                             select new ImportModel
+                             select new ExportModel
                              {
                                  ID = a.ID,
                                  ProductID = a.ProductID,
                                  Count = a.Count,
                                  Price = a.Price,
                                  CreateAt = a.CreateAt,
-                                 SupplierID = a.SupplierID,
                                  UserID = a.UserID,
                                  ProductName = d.ProductName,
-                                 SupplierName = b.SupplierName,
                                  UserName = c.UserName,
                                  Image = d.Image,
                                  Color = d.Color,
-                                 Size = d.Size
+                                 Size = d.Size,
+                                 ImportPrice = d.ImportPrice
                              });
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    model = model.Where(x => x.ProductName.Contains(searchString));
-                    return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+                    exportBillModels = exportBillModels.Where(x => x.ProductName.Contains(searchString));
+                    return exportBillModels.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
                 }
-                return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+                return exportBillModels.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {

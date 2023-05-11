@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class CategoryDao
+    public class CategoryData
     {
         NTQDBContext db;
-        public CategoryDao()
+        public CategoryData()
         {
             db = new NTQDBContext();
         }
@@ -19,12 +19,12 @@ namespace DataLayer.Dao
         {
             try
             {
-                IQueryable<Category> model = db.Categories;
+                IQueryable<Category> categories = db.Categories;
                 if(!string.IsNullOrEmpty(searchString))
                 {
-                    model = model.Where(x => x.CategoryName.Contains(searchString));
+                    categories = categories.Where(x => x.CategoryName.Contains(searchString));
                 }
-                return model.OrderBy(x=>x.ID).ToPagedList(page, pageSize);
+                return categories.OrderBy(x=>x.ID).ToPagedList(page, pageSize);
             }
             catch(Exception ex)
             {
@@ -38,8 +38,8 @@ namespace DataLayer.Dao
         }
         public bool CheckCategoryName(string categoryName)
         {
-            var model = db.Categories.Where(x=>x.CategoryName == categoryName);
-            if (model != null) return false;
+            var categories = db.Categories.Where(x=>x.CategoryName == categoryName);
+            if (categories != null) return false;
             return true;
         }
         public void InsertCategory(Category category)
@@ -57,17 +57,17 @@ namespace DataLayer.Dao
         }
         public void Delete(int id)
         {
-            var model = db.Categories.Find(id);
-            model.Status = false;
+            var category = db.Categories.Find(id);
+            category.Status = false;
             db.SaveChanges();
         }
         public void UpdateCategory(Category category)
         {
             try
             {
-                var model = db.Categories.Find(category.ID);
-                model.Status = category.Status;
-                model.CategoryName = category.CategoryName;
+                var categories = db.Categories.Find(category.ID);
+                categories.Status = category.Status;
+                categories.CategoryName = category.CategoryName;
                 db.SaveChanges();
             }
             catch(Exception ex)

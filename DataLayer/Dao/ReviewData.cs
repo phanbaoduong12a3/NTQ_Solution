@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class ReviewDao
+    public class ReviewData
     {
         NTQDBContext db ;
-        public ReviewDao()
+        public ReviewData()
         {
             db = new NTQDBContext();
         }
@@ -42,9 +42,9 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = db.Reviews.Find(review.ID);
-                model.Title = review.Title;
-                model.UpdateAt = DateTime.Now;
+                var reviewModel = db.Reviews.Find(review.ID);
+                reviewModel.Title = review.Title;
+                reviewModel.UpdateAt = DateTime.Now;
                 db.SaveChanges();
             }
             catch (Exception ex) { Console.WriteLine(ex.Message); throw; }
@@ -54,7 +54,7 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = (from a in db.Reviews
+                var reviewModel = (from a in db.Reviews
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
@@ -76,7 +76,7 @@ namespace DataLayer.Dao
                                  UpdateAt = a.UpdateAt,
                                  DeleteAt = a.UpdateAt
                              });
-                return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status==0).ToPagedList(page, pageSize);
+                return reviewModel.OrderByDescending(x => x.CreateAt).Where(x => x.Status==0).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = (from a in db.Reviews
+                var reviewModel = (from a in db.Reviews
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
@@ -113,9 +113,9 @@ namespace DataLayer.Dao
                              });
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.UserName.Contains(searchString)).ToPagedList(page, pageSize);
+                    return reviewModel.OrderByDescending(x => x.CreateAt).Where(x => x.UserName.Contains(searchString)).ToPagedList(page, pageSize);
                 }
-                return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+                return reviewModel.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -163,7 +163,7 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = (from a in db.Reviews
+                var reviewModel = (from a in db.Reviews
                              join b in db.Users
                              on a.UserID equals b.ID
                              where a.ParentID == parentID && a.ProductsID == productID
@@ -178,7 +178,7 @@ namespace DataLayer.Dao
                                  UserName = b.UserName,
                                  CreateAt = a.CreateAt
                              });
-                return model.OrderByDescending(y => y.ID).ToList();
+                return reviewModel.OrderByDescending(y => y.ID).ToList();
             }
             catch (Exception ex)
             {

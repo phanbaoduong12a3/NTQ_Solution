@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class SupplierDao
+    public class SupplierData
     {
         NTQDBContext db;
-        public SupplierDao()
+        public SupplierData()
         {
             db = new NTQDBContext();
         }
@@ -22,7 +22,7 @@ namespace DataLayer.Dao
             {
                 
                 
-                var model = (from a in db.Products
+                var productModels = (from a in db.Products
                              where a.SupplierID == supplierID
                              select new ProductModel
                              {
@@ -44,19 +44,19 @@ namespace DataLayer.Dao
                              }) ;
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    model = model.Where(x => x.ProductName.Contains(searchString));
+                    productModels = productModels.Where(x => x.ProductName.Contains(searchString));
                 }
                 if (!string.IsNullOrEmpty(size))
                 {
                     int Size = int.Parse(size);
-                    model = model.Where(x => x.Size == Size);
+                    productModels = productModels.Where(x => x.Size == Size);
                 }
                 if (!string.IsNullOrEmpty(color))
                 {
                     int Color = int.Parse(color);
-                    model = model.Where(x => x.Color == Color);
+                    productModels = productModels.Where(x => x.Color == Color);
                 }
-                return model.Where(x=>x.Color != 0 && x.Size != 0).OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
+                return productModels.Where(x=>x.Color != 0 && x.Size != 0).OrderByDescending(x => x.NumberViews).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {

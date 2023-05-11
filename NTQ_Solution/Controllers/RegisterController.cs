@@ -11,10 +11,10 @@ namespace NTQ_Solution.Controllers
 {
     public class RegisterController : Controller
     {
-        UserDao userDao ;
+        UserData userData ;
         public RegisterController()
         {
-            userDao= new UserDao();
+            userData= new UserData();
         }
         // GET: Register
         public ActionResult Index()
@@ -27,8 +27,8 @@ namespace NTQ_Solution.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int result = userDao.CheckUser(registerModel.UserName, registerModel.Email);
-                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    int result = userData.CheckUser(registerModel.UserName, registerModel.Email);
+                    bool checkConfirmPassword = userData.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
                     if (result == 1)
                     {
                         var user = new User
@@ -42,7 +42,7 @@ namespace NTQ_Solution.Controllers
                             Address = registerModel.Address,
                             Phone = registerModel.Phone
                         };
-                        userDao.Insert(user);
+                        userData.Insert(user);
                         TempData["success"] = "Dang ki thanh cong";
                         return RedirectToAction("Index", "Login");
                     }

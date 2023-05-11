@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 
 namespace DataLayer.Dao
 {
-    public class OrderDao
+    public class OrderData
     {
 		NTQDBContext db ;
-		public OrderDao()
+		public OrderData()
 		{
 			db = new NTQDBContext();
 		}
@@ -35,7 +35,7 @@ namespace DataLayer.Dao
 		{
 			try
 			{
-                var model = (from a in db.Orders
+                var orderModels = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
@@ -57,7 +57,7 @@ namespace DataLayer.Dao
                                  Size = a.Size,
                                  ShipMode = a.ShipMode
                              });
-				return model.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
+				return orderModels.OrderByDescending(x => x.CreateAt).ToPagedList(page, pageSize);
 			}
 			catch (Exception ex)
 			{
@@ -71,8 +71,8 @@ namespace DataLayer.Dao
         }
         public bool checkProductID(int productID)
         {
-            var result = db.Orders.FirstOrDefault(x=>x.ProductsID == productID && x.Status == 1);
-            if (result == null) return false;
+            var model = db.Orders.FirstOrDefault(x=>x.ProductsID == productID && x.Status == 1);
+            if (model == null) return false;
             return true;
         }
         public Product findProductOrder(string productName, string size, string color)
@@ -94,8 +94,8 @@ namespace DataLayer.Dao
         }
         public void UpdateOrder(int productID)
         {
-            var result = db.Orders.FirstOrDefault(x => x.ProductsID == productID && x.Status == 1);
-            result.Count += 1;
+            var model = db.Orders.FirstOrDefault(x => x.ProductsID == productID && x.Status == 1);
+            model.Count += 1;
             db.SaveChanges();
         }
 
@@ -105,7 +105,7 @@ namespace DataLayer.Dao
             if (size != null) int.Parse(size);
             int Color = 0;
             if (color != null) int.Parse(color);
-            var model = (from a in db.Orders
+            var orderModels = (from a in db.Orders
                          join b in db.Users
                          on a.UserID equals b.ID
                          join c in db.Products
@@ -130,7 +130,7 @@ namespace DataLayer.Dao
                              Status = a.Status,
                              Payment = ""
                          });
-            return model;
+            return orderModels;
         }
         public OrderModel convertOrderModel(Order Order, string color, string size)
         {
@@ -138,7 +138,7 @@ namespace DataLayer.Dao
             if (size != null) int.Parse(size);
             int Color = 0;
             if (color != null) int.Parse(color);
-            var model = (from a in db.Orders
+            var orderModels = (from a in db.Orders
                          join b in db.Users
                          on a.UserID equals b.ID
                          join c in db.Products
@@ -163,14 +163,14 @@ namespace DataLayer.Dao
                              Status = a.Status,
                              Payment = ""
                          });
-            return model.FirstOrDefault(x=>x.ID == Order.ID);
+            return orderModels.FirstOrDefault(x=>x.ID == Order.ID);
         }
 
         public IEnumerable<OrderModel> OrderShow(int userID, int page, int pageSize)
         {
             try
             {
-                var model = (from a in db.Orders
+                var orderModels = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
@@ -196,7 +196,7 @@ namespace DataLayer.Dao
                                  ShipMode = a.ShipMode,
                              });
 
-                return model.OrderBy(x => x.Status).Where(x=>x.Status >1).ToPagedList(page, pageSize);
+                return orderModels.OrderBy(x => x.Status).Where(x=>x.Status >1).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -209,8 +209,8 @@ namespace DataLayer.Dao
 		{
 			try
 			{
-                var model = db.Orders.Find(id);
-                model.Status = 0;
+                var orderModels = db.Orders.Find(id);
+                orderModels.Status = 0;
                 db.SaveChanges();
             }
 			catch (Exception ex)
@@ -223,8 +223,8 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = db.Orders.Find(id);
-                model.Status = 5;
+                var orderModels = db.Orders.Find(id);
+                orderModels.Status = 5;
                 db.SaveChanges();
             }
             catch (Exception ex)
@@ -252,7 +252,7 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = (from a in db.Orders
+                var orderModels = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
@@ -274,10 +274,10 @@ namespace DataLayer.Dao
                              });
                 if(!string.IsNullOrEmpty(searchString) )
                 {
-                    model = model.Where(x=>x.ProductName.Contains(searchString));
-                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status==2).ToPagedList(page, pageSize);
+                    orderModels = orderModels.Where(x=>x.ProductName.Contains(searchString));
+                    return orderModels.OrderByDescending(x => x.CreateAt).Where(x => x.Status==2).ToPagedList(page, pageSize);
                 }
-                return model.OrderByDescending(x => x.CreateAt).Where(x=>x.Status == 2).ToPagedList(page, pageSize);
+                return orderModels.OrderByDescending(x => x.CreateAt).Where(x=>x.Status == 2).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -289,7 +289,7 @@ namespace DataLayer.Dao
         {
             try
             {
-                var model = (from a in db.Orders
+                var orderModels = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
@@ -311,10 +311,10 @@ namespace DataLayer.Dao
                              });
                 if (!string.IsNullOrEmpty(searchString))
                 {
-                    model = model.Where(x => x.ProductName.Contains(searchString));
-                    return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 4).ToPagedList(page, pageSize);
+                    orderModels = orderModels.Where(x => x.ProductName.Contains(searchString));
+                    return orderModels.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 4).ToPagedList(page, pageSize);
                 }
-                return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 4).ToPagedList(page, pageSize);
+                return orderModels.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 4).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {
@@ -357,15 +357,15 @@ namespace DataLayer.Dao
         }
         public void UpdateOrderCount(int orderId, string productCount)
         {
-            var order = db.Orders.Where(x=>x.ID==orderId).FirstOrDefault();
-            order.Count = int.Parse(productCount);
+            var orderModels = db.Orders.Where(x=>x.ID==orderId).FirstOrDefault();
+            orderModels.Count = int.Parse(productCount);
             db.SaveChanges();
         }
         public IEnumerable<OrderModel> OrderDemo(int userID, int page, int pageSize)
         {
             try
             {
-                var model = (from a in db.Orders
+                var orderModels = (from a in db.Orders
                              join b in db.Users
                              on a.UserID equals b.ID
                              join c in db.Products
@@ -391,7 +391,7 @@ namespace DataLayer.Dao
                                  ProductCount = c.Count
                              });
 
-                return model.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 1).ToPagedList(page, pageSize);
+                return orderModels.OrderByDescending(x => x.CreateAt).Where(x => x.Status == 1).ToPagedList(page, pageSize);
             }
             catch (Exception ex)
             {

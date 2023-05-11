@@ -59,15 +59,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dao\CategoryDao.cs" />
-    <Compile Include="Dao\ExportBillDao.cs" />
-    <Compile Include="Dao\ImportBillDao.cs" />
-    <Compile Include="Dao\ProductDao.cs" />
-    <Compile Include="Dao\ReviewDao.cs" />
-    <Compile Include="Dao\ShipDao.cs" />
-    <Compile Include="Dao\SupplierDao.cs" />
-    <Compile Include="Dao\UserDao.cs" />
-    <Compile Include="Dao\OrderDao.cs" />
+    <Compile Include="Dao\CategoryData.cs" />
+    <Compile Include="Dao\ExportBillData.cs" />
+    <Compile Include="Dao\ImportBillData.cs" />
+    <Compile Include="Dao\ProductData.cs" />
+    <Compile Include="Dao\ReviewData.cs" />
+    <Compile Include="Dao\ShipData.cs" />
+    <Compile Include="Dao\SupplierData.cs" />
+    <Compile Include="Dao\UserData.cs" />
+    <Compile Include="Dao\OrderData.cs" />
     <Compile Include="EF\Category.cs" />
     <Compile Include="EF\Color.cs" />
     <Compile Include="EF\Contact.cs" />

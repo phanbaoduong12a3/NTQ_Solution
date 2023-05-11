@@ -14,10 +14,10 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class UserController : BaseController
     {
-        UserDao userDao ;
+        UserData userData ;
         public UserController() 
         {
-            userDao = new UserDao();
+            userData = new UserData();
         }
         // GET: Admin/User
         /// <summary>
@@ -38,7 +38,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 ViewBag.SearchString = searchString;
                 ViewBag.Status = status;
                 ViewBag.Role = role;
-                var model = userDao.ListAllPaging(status, role, searchString, page, pageSize);
+                var model = userData.ListAllPaging(status, role, searchString, page, pageSize);
                 
                 return View(model);
             }
@@ -64,8 +64,8 @@ namespace NTQ_Solution.Areas.Admin.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int result = userDao.CheckUser(registerModel.UserName, registerModel.Email);
-                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    int result = userData.CheckUser(registerModel.UserName, registerModel.Email);
+                    bool checkConfirmPassword = userData.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
                     if (result == 1 && checkConfirmPassword)
                     {
                         var user = new User
@@ -77,7 +77,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Role = 1,
                             Status = 1
                         };
-                        userDao.Insert(user);
+                        userData.Insert(user);
                         TempData["success"] = "Tao moi thanh cong";
                         return RedirectToAction("Index", "ListUser");
                     }
@@ -111,7 +111,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var temp = userDao.GetById(id);
+                var temp = userData.GetById(id);
                 bool status;
                 if(temp.Status == 1)
                 {
@@ -157,10 +157,10 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 {
                     int Role = registerModel.Role;
                     if (role != "") Role = int.Parse(role);
-                    bool checkUserName = userDao.CheckUserName(registerModel.UserName);
-                    bool checkEmail = userDao.CheckEmail(registerModel.Email);
-                    bool checkConfirmPassword = userDao.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
-                    var userOld = userDao.GetById(registerModel.ID);
+                    bool checkUserName = userData.CheckUserName(registerModel.UserName);
+                    bool checkEmail = userData.CheckEmail(registerModel.Email);
+                    bool checkConfirmPassword = userData.CheckConfirmPassword(registerModel.ConfirmPassword, registerModel.Password);
+                    var userOld = userData.GetById(registerModel.ID);
                     if(registerModel.UserName == userOld.UserName) checkUserName = true;
                     if(registerModel.Email == userOld.Email) checkEmail = true;
                     int status;
@@ -177,7 +177,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                             Role = Role,
                             Status = status
                         };
-                        userDao.Update(user);
+                        userData.Update(user);
                         TempData["success"] = "Sua thanh cong";
                         return RedirectToAction("Index", "ListUser");
                     }
@@ -203,7 +203,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                userDao.Delete(id);
+                userData.Delete(id);
                 TempData["success"] = "Xoa thanh cong";
                 return RedirectToAction("Index");
             }

@@ -11,17 +11,17 @@ namespace NTQ_Solution.Areas.Admin.Controllers
 {
     public class ListReviewController : BaseController
     {
-        ReviewDao reviewDao ;
+        ReviewData reviewData ;
         public ListReviewController()
         {
-            reviewDao = new ReviewDao();
+            reviewData = new ReviewData();
         }
         // GET: Admin/ListReview
         public ActionResult Index(string searchString, int parentID=0,int page=1, int pageSize = 5)
         {
             try
             {
-                var model = reviewDao.ListAllPagingReview(searchString,parentID, page, pageSize);
+                var model = reviewData.ListAllPagingReview(searchString,parentID, page, pageSize);
                 return View(model);
             }
             catch (Exception ex)
@@ -36,7 +36,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                var model = reviewDao.GetReviewById(id);
+                var model = reviewData.GetReviewById(id);
                 return View(model);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                reviewDao.UpdateReview(review);
+                reviewData.UpdateReview(review);
                 TempData["success"] = "Update Review success";
                 return RedirectToAction("Index", "ListReview");
             }
@@ -65,7 +65,7 @@ namespace NTQ_Solution.Areas.Admin.Controllers
         {
             try
             {
-                reviewDao.Delete(id);
+                reviewData.Delete(id);
                 TempData["success"] = "Delete Review success";
                 return RedirectToAction("Index");
             }
