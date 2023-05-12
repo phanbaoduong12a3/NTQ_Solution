@@ -24,7 +24,7 @@ namespace DataLayer.ViewModel
         public string UserName { get; set; }
         public string Image { get; set; }
         public int? Color {get;set;}
-        [DisplayName("Size mặt kính")]
+        [DisplayName("Size")]
         public int? Size{get;set;}
         public double? ImportPrice { get; set; }
     }

@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "CreateProduct";
     Layout = "~/Areas/Admin/Views/Shared/_Layouts.cshtml";
+    var listColor = (List<DataLayer.EF.Color>)ViewBag.listColor;
+    var listSize = (List<DataLayer.EF.Size>)ViewBag.listSize;
 }
 
 @section header{
@@ -57,77 +59,87 @@
     <div class="form-group">
         @Html.LabelFor(model => model.ImportPrice, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.ImportPrice, new { @class = "form-control form-control-user", Type = "number", @min = "0", @max = "10000000" @*, @readonly = "true"*@ })
+            @Html.TextBoxFor(model => model.ImportPrice, new
+            {
+                @class = "form-control form-control-user",
+                Type = "number",
+                @min = "0",
+                @max = "10000000"@*, @readonly = "true"*@})
             @Html.ValidationMessageFor(model => model.ImportPrice, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Price, new { @class = "form-control form-control-user", Type = "number", @min = "0" ,@max = "10000000" })
+            @Html.TextBoxFor(model => model.Price, new { @class = "form-control form-control-user", Type = "number", @min = "0", @max = "10000000" })
             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        <span>Size</span>
+        <select name="size">
+            <option></option>
+            @foreach (var item in listSize)
+            {
+                <option value="@item.ID">@item.SizeName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <span>Màu sắc</span>
+        <select name="color">
+            <option></option>
+            @foreach (var item in listColor)
+            {
+                <option value="@item.ID">@item.ColorName</option>
+            }
+        </select>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("category", (IEnumerable<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control form-control-user" })
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("color", (IEnumerable<SelectListItem>)ViewBag.ColorList, new { @class = "form-control form-control-user" })
-            @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("supplier", (IEnumerable<SelectListItem>)ViewBag.SupplierList, new { @class = "form-control form-control-user" })
+                @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Size, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("size", (IEnumerable<SelectListItem>)ViewBag.SizeList, new { @class = "form-control form-control-user" })
-            @Html.ValidationMessageFor(model => model.Size, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("category", (IEnumerable<SelectListItem>)ViewBag.CategoryList, new { @class = "form-control form-control-user" })
-            @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
+                <a id="btnSelectImage" href="#">Chọn ảnh </a>
+                @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("supplier", (IEnumerable<SelectListItem>)ViewBag.SupplierList, new { @class = "form-control form-control-user" })
-            @Html.ValidationMessageFor(model => model.SupplierName, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Image, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(model => model.Image, new { htmlAttributes = new { @class = "form-control" }, id = "txtImage" })
-            <a id="btnSelectImage" href="#">Chọn ảnh </a>
-            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
 
-        </div>
-    </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Trending, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(model => model.Trending, new { htmlAttributes = new { @class = "form-control form-control-user" } })
+                @Html.ValidationMessageFor(model => model.Trending, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Trending, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.CheckBoxFor(model => model.Trending, new { htmlAttributes = new { @class = "form-control form-control-user" } })
-            @Html.ValidationMessageFor(model => model.Trending, "", new { @class = "text-danger" })
-
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a class="btn btn-primary" href="/Admin/Product?categoryID=@ViewBag.Category">Quay lại</a>
+                <input type="submit" value="Thêm" class="btn btn-primary" />
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <a class="btn btn-primary" href="/Admin/Product?categoryID=@ViewBag.Category">Quay lại</a>
-            <input type="submit" value="Thêm" class="btn btn-primary" />
-        </div>
-    </div>
-</div>
-}
-<script>
-    var loadFile = function (event) {
-        var image = document.getElementById('output');
-        image.src = URL.createObjectURL(event.target.files[0]);
-    };
-</script>
+    }
+    <script>
+        var loadFile = function (event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        };
+    </script>
 

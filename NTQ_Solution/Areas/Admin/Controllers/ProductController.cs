@@ -73,8 +73,10 @@ namespace NTQ_Solution.Areas.Admin.Controllers
                 ViewBag.SupplierList = supList;
                 if (ModelState.IsValid)
                 {
-                    int Size = int.Parse(size);
-                    int Color = int.Parse(color);
+                    int Size =  0;
+                    int Color = 0;
+                    if (color!= null) { Size = int.Parse(color); }
+                    if(size != null) { Size = int.Parse(size); }
                     int Category = int.Parse(category);
                     int Supplier = int.Parse(supplier);
                     bool trending;

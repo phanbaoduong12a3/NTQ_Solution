@@ -50,7 +50,7 @@ namespace DataLayer.ViewModel
         public int? SupplierID { get; set; }
         [DisplayName("Màu sắc sản phẩm")]
         public int? Color { get; set; }
-        [DisplayName("Size mặt kính")]
+        [DisplayName("Size")]
         public int? Size{get;set;}
 
         public bool? Sale { get; set; }

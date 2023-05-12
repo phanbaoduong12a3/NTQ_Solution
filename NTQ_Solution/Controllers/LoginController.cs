@@ -43,9 +43,18 @@ namespace NTQ_Solution.Controllers
                         userSession.AccountName = user.AccountName;
                         Session.Add(CommonConstant.USER_SESSION, userSession);
                         var session = (UserLogin)Session[CommonConstant.USER_SESSION];
+                        var cart = Session[CartSession];
                         if(user.Role == 0) 
                         { 
-                            return RedirectToAction("Index", "Home"); 
+                            if(cart != null)
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
+                            else
+                            {
+                                return RedirectToAction("OrderDemo", "Order");
+                            }
+                            
                         }
                         else
                         {

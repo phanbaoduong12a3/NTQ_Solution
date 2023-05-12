@@ -20,8 +20,9 @@
                     @using (Html.BeginForm("Index", "Product", FormMethod.Get))
                     {
                         <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <span>Size mặt kính</span>
+                            <span>Size</span>
                             <select name="size">
+                                <option></option>
                                 @foreach (var item in listSize)
                                 {
                                     <option value="@item.ID">@item.SizeName</option>
@@ -29,6 +30,7 @@
                             </select>
                             <span>Màu sắc</span>
                             <select name="color">
+                                <option></option>
                                 @foreach (var item in listColor)
                                 {
                                     <option value="@item.ID">@item.ColorName</option>
@@ -67,7 +69,7 @@
                                     <th>Hình ảnh sản phẩm</th>
                                     <th>Giá nhập</th>
                                     <th>Giá xuất</th>
-                                    <th>Size mặt kính</th>
+                                    <th>Size</th>
                                     <th>Màu sắc</th>
                                     <th>Lượt xem</th>
                                     <th>Số lượng</th>
